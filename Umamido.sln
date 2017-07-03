@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umamido.Common", "Umamido.Common\Umamido.Common.csproj", "{D318689F-D6DE-4D84-9D0C-8B4BCF326292}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umamido.Admin", "Umamido.Admin\Umamido.Admin.csproj", "{4039FB75-3CDE-4428-A7F2-46510A2B4656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D318689F-D6DE-4D84-9D0C-8B4BCF326292}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D318689F-D6DE-4D84-9D0C-8B4BCF326292}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D318689F-D6DE-4D84-9D0C-8B4BCF326292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4039FB75-3CDE-4428-A7F2-46510A2B4656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4039FB75-3CDE-4428-A7F2-46510A2B4656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4039FB75-3CDE-4428-A7F2-46510A2B4656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4039FB75-3CDE-4428-A7F2-46510A2B4656}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
