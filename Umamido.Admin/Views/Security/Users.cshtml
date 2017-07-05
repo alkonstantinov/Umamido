@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">User management</div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="users.EditUser(null)">New user</span>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dUser" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">User Data</div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Username</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" id="tbUserName" class="form-control" />
+                        <div class="label-danger" id="lErrtbUserName">Please, enter username</div>
+                        <div class="label-danger" id="lErrUserNameUsed">Username already taken</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Password</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="password" id="tbPassword" class="form-control" /><div class="label-danger" id="lErrtbPassword">Please, enter password</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Repeat password</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="password" id="tbRePassword" class="form-control" /><div class="label-danger" id="lErrtbRePassword">Passwords do not match</div>
+                    </div>
+                </div>         
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Active</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="checkbox" id="cbIsActive" class="form-control" />
+                    </div>
+                </div>       
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="users.SetUser()"></span>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="users.CancelUser()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        users = new Users();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        users.LoadUsers();
+
+    })
+</script>

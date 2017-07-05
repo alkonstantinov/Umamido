@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UmamidoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Content" Type="varbinary(max)" />
+          <Property Name="Filename" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lang">
+          <Key>
+            <PropertyRef Name="LangId" />
+          </Key>
+          <Property Name="LangId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LangName" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="RestaurantId" />
+          </Key>
+          <Property Name="RestaurantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RestaurantDesc">
+          <Key>
+            <PropertyRef Name="RestaurantDescId" />
+          </Key>
+          <Property Name="RestaurantDescId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RestaurantTitle">
+          <Key>
+            <PropertyRef Name="RestaurantTitleId" />
+          </Key>
+          <Property Name="RestaurantTitleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Restaurant_ImageId">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantDesc_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="RestaurantDesc" Type="Self.RestaurantDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="RestaurantDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantDesc_RestaurantId">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="RestaurantDesc" Type="Self.RestaurantDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="RestaurantDesc">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantTitle_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="RestaurantTitle" Type="Self.RestaurantTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="RestaurantTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantTitle_RestaurantId">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="RestaurantTitle" Type="Self.RestaurantTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="RestaurantTitle">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UmamidoModelStoreContainer">
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lang" EntityType="Self.Lang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantDesc" EntityType="Self.RestaurantDesc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestaurantTitle" EntityType="Self.RestaurantTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Restaurant_ImageId" Association="Self.fk_Restaurant_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Restaurant" EntitySet="Restaurant" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantDesc_LangId" Association="Self.fk_RestaurantDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="RestaurantDesc" EntitySet="RestaurantDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantDesc_RestaurantId" Association="Self.fk_RestaurantDesc_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="RestaurantDesc" EntitySet="RestaurantDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantTitle_LangId" Association="Self.fk_RestaurantTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantTitle_RestaurantId" Association="Self.fk_RestaurantTitle_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UmamidoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="UmamidoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Lang" EntityType="UmamidoModel.Lang" />
+          <EntitySet Name="Image" EntityType="UmamidoModel.Image" />
+          <EntitySet Name="Restaurant" EntityType="UmamidoModel.Restaurant" />
+          <EntitySet Name="RestaurantDesc" EntityType="UmamidoModel.RestaurantDesc" />
+          <EntitySet Name="RestaurantTitle" EntityType="UmamidoModel.RestaurantTitle" />
+          <AssociationSet Name="fk_Restaurant_ImageId" Association="UmamidoModel.fk_Restaurant_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Restaurant" EntitySet="Restaurant" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantDesc_LangId" Association="UmamidoModel.fk_RestaurantDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="RestaurantDesc" EntitySet="RestaurantDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantTitle_LangId" Association="UmamidoModel.fk_RestaurantTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantDesc_RestaurantId" Association="UmamidoModel.fk_RestaurantDesc_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="RestaurantDesc" EntitySet="RestaurantDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RestaurantTitle_RestaurantId" Association="UmamidoModel.fk_RestaurantTitle_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Lang">
+          <Key>
+            <PropertyRef Name="LangId" />
+          </Key>
+          <Property Name="LangId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LangName" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="RestaurantDesc" Relationship="UmamidoModel.fk_RestaurantDesc_LangId" FromRole="Lang" ToRole="RestaurantDesc" />
+          <NavigationProperty Name="RestaurantTitle" Relationship="UmamidoModel.fk_RestaurantTitle_LangId" FromRole="Lang" ToRole="RestaurantTitle" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Image" ToRole="Restaurant" />
+        </EntityType>
+        <EntityType Name="Restaurant">
+          <Key>
+            <PropertyRef Name="RestaurantId" />
+          </Key>
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Restaurant" ToRole="Image" />
+          <NavigationProperty Name="RestaurantDesc" Relationship="UmamidoModel.fk_RestaurantDesc_RestaurantId" FromRole="Restaurant" ToRole="RestaurantDesc" />
+          <NavigationProperty Name="RestaurantTitle" Relationship="UmamidoModel.fk_RestaurantTitle_RestaurantId" FromRole="Restaurant" ToRole="RestaurantTitle" />
+        </EntityType>
+        <EntityType Name="RestaurantDesc">
+          <Key>
+            <PropertyRef Name="RestaurantDescId" />
+          </Key>
+          <Property Name="RestaurantDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_RestaurantDesc_LangId" FromRole="RestaurantDesc" ToRole="Lang" />
+          <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_RestaurantDesc_RestaurantId" FromRole="RestaurantDesc" ToRole="Restaurant" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RestaurantTitle">
+          <Key>
+            <PropertyRef Name="RestaurantTitleId" />
+          </Key>
+          <Property Name="RestaurantTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_RestaurantTitle_LangId" FromRole="RestaurantTitle" ToRole="Lang" />
+          <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_RestaurantTitle_RestaurantId" FromRole="RestaurantTitle" ToRole="Restaurant" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="fk_Restaurant_ImageId">
+          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
+          <End Type="UmamidoModel.Restaurant" Role="Restaurant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Restaurant">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.RestaurantDesc" Role="RestaurantDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="RestaurantDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantTitle_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.RestaurantTitle" Role="RestaurantTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="RestaurantTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantDesc_RestaurantId">
+          <End Type="UmamidoModel.Restaurant" Role="Restaurant" Multiplicity="1" />
+          <End Type="UmamidoModel.RestaurantDesc" Role="RestaurantDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="RestaurantDesc">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RestaurantTitle_RestaurantId">
+          <End Type="UmamidoModel.Restaurant" Role="Restaurant" Multiplicity="1" />
+          <End Type="UmamidoModel.RestaurantTitle" Role="RestaurantTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="RestaurantTitle">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UmamidoModelStoreContainer" CdmEntityContainer="UmamidoEntities">
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="UmamidoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lang">
+            <EntityTypeMapping TypeName="UmamidoModel.Lang">
+              <MappingFragment StoreEntitySet="Lang">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LangName" ColumnName="LangName" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Image">
+            <EntityTypeMapping TypeName="UmamidoModel.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Filename" ColumnName="Filename" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restaurant">
+            <EntityTypeMapping TypeName="UmamidoModel.Restaurant">
+              <MappingFragment StoreEntitySet="Restaurant">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.RestaurantDesc">
+              <MappingFragment StoreEntitySet="RestaurantDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="RestaurantDescId" ColumnName="RestaurantDescId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestaurantTitle">
+            <EntityTypeMapping TypeName="UmamidoModel.RestaurantTitle">
+              <MappingFragment StoreEntitySet="RestaurantTitle">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="RestaurantTitleId" ColumnName="RestaurantTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

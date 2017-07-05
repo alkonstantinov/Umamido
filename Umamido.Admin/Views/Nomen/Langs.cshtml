@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Languages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Language management</div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="langs.EditLang(null)">New language</span>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dLang" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Language data</div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Language</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" id="tbLangName" class="form-control" maxlength="2"/>
+                        <div class="label-danger" id="lErrtbLangName">Please, enter language</div>
+                    </div>
+                </div>                
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Active</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="checkbox" id="cbIsActive" class="form-control" />
+                    </div>
+                </div>       
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="langs.SetLang()"></span>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="langs.CancelLang()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        langs = new Langs();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        langs.LoadLangs();
+
+    })
+</script>

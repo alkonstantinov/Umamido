@@ -1,0 +1,33 @@
+﻿@if (Session["UserId"] != null)
+{
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">25 minutes Administration</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">@Html.ActionLink("Users", "users", "Security")</li>
+                    <li>@Html.ActionLink("Languages", "langs", "Nomen")</li>
+                    <li>@Html.ActionLink("Images", "images", "Nomen")</li>
+                    <li>@Html.ActionLink("Restaurants", "Restaurants", "Nomen")</li>
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+    <script>
+        $("ul.nav li").removeClass("active");
+        $("ul.nav li a").each(
+            function (i, e) {
+                if ($(e).attr("href").toLowerCase().search("@Request.RawUrl.ToLower()") > -1)
+                    $(e).parent().addClass("active");
+            });
+    </script>
+}

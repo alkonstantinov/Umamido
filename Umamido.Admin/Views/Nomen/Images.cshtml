@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Images";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Image management</div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="imgs.EditImage(null);">New Image</span>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Caption</th>
+                    <th>Image</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dImage" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Image data</div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Caption</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" id="tbImageName" class="form-control" />
+                        <div class="label-danger" id="lErrtbImageName">Please, enter caption</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Image</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="file" id="fuFile" class="form-control" onchange="imgs.AddPicture();" />
+                        <input type="hidden" id="hFileGuid" name="guid" />
+                        <div class="label-danger" id="lErrfuFile">Please, upload image</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <img width="200" height="200" alt="" id="iPreview" />
+                    </div>
+
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Active</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="checkbox" id="cbIsActive" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="imgs.SetImage()"></span>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="imgs.CancelImage()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        imgs = new Images();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        imgs.LoadImages();
+
+    })
+</script>

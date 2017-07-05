@@ -1,0 +1,36 @@
+﻿@model Umamido.Common.ErrorJSModel
+
+@{
+    ViewBag.Title = "ErrorJS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Error occured</div>
+    <div class="panel-body">
+        <div class="row form-group">
+            <div class="col-lg-12">
+                <label id="lError1" class="alert-danger">
+                    @Model.a
+                </label>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-12">
+                <label id="lError2" class="alert-danger">
+                    @Model.b
+                </label>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-lg-12">
+                <label id="lError3" class="alert-danger">
+                    @Model.c
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,41 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Navbar Template for Bootstrap</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/pages")
+    
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Static navbar -->
+        @Html.Partial("~/Views/Shared/Menu.cshtml")
+
+        <!-- Main component for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            @RenderBody()
+
+        </div>
+
+    </div> <!-- /container -->
+
+    <script src="~/Scripts/tinymce/tinymce.js"></script>
+    <script>tinymce.init({ selector: 'textarea' });</script>
+
+</body>
+</html>

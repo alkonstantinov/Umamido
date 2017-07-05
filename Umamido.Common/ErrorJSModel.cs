@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Umamido.Common
 {
-    public class Class1
+    public class ErrorJSModel
     {
+        public string a { get; set; }
+        public string b { get; set; }
+        public string c { get; set; }
     }
 }
