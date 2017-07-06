@@ -5,6 +5,34 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UmamidoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="GoodId" />
+          </Key>
+          <Property Name="GoodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantId" Type="int" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GoodDesc">
+          <Key>
+            <PropertyRef Name="GoodDescId" />
+          </Key>
+          <Property Name="GoodDescId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GoodTitle">
+          <Key>
+            <PropertyRef Name="GoodTitleId" />
+          </Key>
+          <Property Name="GoodTitleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Image">
           <Key>
             <PropertyRef Name="ImageId" />
@@ -49,6 +77,48 @@
           <Property Name="LangId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderId" />
+          </Key>
+          <Property Name="SliderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SliderDesc">
+          <Key>
+            <PropertyRef Name="SliderDescId" />
+          </Key>
+          <Property Name="SliderDescId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SliderId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SliderTitle">
+          <Key>
+            <PropertyRef Name="SliderTitleId" />
+          </Key>
+          <Property Name="SliderTitleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SliderId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Text">
+          <Key>
+            <PropertyRef Name="TextId" />
+          </Key>
+          <Property Name="TextId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TextName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TextDesc">
+          <Key>
+            <PropertyRef Name="TextDescId" />
+          </Key>
+          <Property Name="TextDescId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TextId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -58,6 +128,78 @@
           <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="fk_Good_ImageId">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_RestaurantId">
+          <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodDesc_GoodId">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="GoodDesc" Type="Self.GoodDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="GoodDesc">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodDesc_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="GoodDesc" Type="Self.GoodDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="GoodDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodTitle_GoodId">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="GoodTitle" Type="Self.GoodTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="GoodTitle">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodTitle_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="GoodTitle" Type="Self.GoodTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="GoodTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Restaurant_ImageId">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
           <End Role="Restaurant" Type="Self.Restaurant" Multiplicity="*" />
@@ -118,13 +260,129 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Slider_ImageId">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Slider" Type="Self.Slider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Slider">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderDesc_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="SliderDesc" Type="Self.SliderDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="SliderDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderDesc_SliderId">
+          <End Role="Slider" Type="Self.Slider" Multiplicity="1" />
+          <End Role="SliderDesc" Type="Self.SliderDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slider">
+              <PropertyRef Name="SliderId" />
+            </Principal>
+            <Dependent Role="SliderDesc">
+              <PropertyRef Name="SliderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderTitle_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="SliderTitle" Type="Self.SliderTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="SliderTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderTitle_SliderId">
+          <End Role="Slider" Type="Self.Slider" Multiplicity="1" />
+          <End Role="SliderTitle" Type="Self.SliderTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slider">
+              <PropertyRef Name="SliderId" />
+            </Principal>
+            <Dependent Role="SliderTitle">
+              <PropertyRef Name="SliderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TextDesc_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="TextDesc" Type="Self.TextDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="TextDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TextDesc_RestaurantId">
+          <End Role="Text" Type="Self.Text" Multiplicity="1" />
+          <End Role="TextDesc" Type="Self.TextDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Text">
+              <PropertyRef Name="TextId" />
+            </Principal>
+            <Dependent Role="TextDesc">
+              <PropertyRef Name="TextId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="UmamidoModelStoreContainer">
+          <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodTitle" EntityType="Self.GoodTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lang" EntityType="Self.Lang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantDesc" EntityType="Self.RestaurantDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantTitle" EntityType="Self.RestaurantTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SliderDesc" EntityType="Self.SliderDesc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SliderTitle" EntityType="Self.SliderTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TextDesc" EntityType="Self.TextDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Good_ImageId" Association="Self.fk_Good_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_RestaurantId" Association="Self.fk_Good_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodDesc_GoodId" Association="Self.fk_GoodDesc_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodDesc" EntitySet="GoodDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodDesc_LangId" Association="Self.fk_GoodDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="GoodDesc" EntitySet="GoodDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodTitle_GoodId" Association="Self.fk_GoodTitle_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodTitle_LangId" Association="Self.fk_GoodTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
           <AssociationSet Name="fk_Restaurant_ImageId" Association="Self.fk_Restaurant_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Restaurant" EntitySet="Restaurant" />
@@ -144,6 +402,34 @@
           <AssociationSet Name="fk_RestaurantTitle_RestaurantId" Association="Self.fk_RestaurantTitle_RestaurantId">
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Slider_ImageId" Association="Self.fk_Slider_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Slider" EntitySet="Slider" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderDesc_LangId" Association="Self.fk_SliderDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="SliderDesc" EntitySet="SliderDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderDesc_SliderId" Association="Self.fk_SliderDesc_SliderId">
+            <End Role="Slider" EntitySet="Slider" />
+            <End Role="SliderDesc" EntitySet="SliderDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderTitle_LangId" Association="Self.fk_SliderTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="SliderTitle" EntitySet="SliderTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderTitle_SliderId" Association="Self.fk_SliderTitle_SliderId">
+            <End Role="Slider" EntitySet="Slider" />
+            <End Role="SliderTitle" EntitySet="SliderTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TextDesc_LangId" Association="Self.fk_TextDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="TextDesc" EntitySet="TextDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TextDesc_RestaurantId" Association="Self.fk_TextDesc_RestaurantId">
+            <End Role="Text" EntitySet="Text" />
+            <End Role="TextDesc" EntitySet="TextDesc" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -186,6 +472,66 @@
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="RestaurantTitle" EntitySet="RestaurantTitle" />
           </AssociationSet>
+          <EntitySet Name="Good" EntityType="UmamidoModel.Good" />
+          <EntitySet Name="GoodDesc" EntityType="UmamidoModel.GoodDesc" />
+          <EntitySet Name="GoodTitle" EntityType="UmamidoModel.GoodTitle" />
+          <AssociationSet Name="fk_Good_ImageId" Association="UmamidoModel.fk_Good_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_RestaurantId" Association="UmamidoModel.fk_Good_RestaurantId">
+            <End Role="Restaurant" EntitySet="Restaurant" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodDesc_GoodId" Association="UmamidoModel.fk_GoodDesc_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodDesc" EntitySet="GoodDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodTitle_GoodId" Association="UmamidoModel.fk_GoodTitle_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodDesc_LangId" Association="UmamidoModel.fk_GoodDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="GoodDesc" EntitySet="GoodDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GoodTitle_LangId" Association="UmamidoModel.fk_GoodTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <EntitySet Name="Slider" EntityType="UmamidoModel.Slider" />
+          <EntitySet Name="SliderDesc" EntityType="UmamidoModel.SliderDesc" />
+          <EntitySet Name="SliderTitle" EntityType="UmamidoModel.SliderTitle" />
+          <AssociationSet Name="fk_Slider_ImageId" Association="UmamidoModel.fk_Slider_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Slider" EntitySet="Slider" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderDesc_LangId" Association="UmamidoModel.fk_SliderDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="SliderDesc" EntitySet="SliderDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderTitle_LangId" Association="UmamidoModel.fk_SliderTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="SliderTitle" EntitySet="SliderTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderDesc_SliderId" Association="UmamidoModel.fk_SliderDesc_SliderId">
+            <End Role="Slider" EntitySet="Slider" />
+            <End Role="SliderDesc" EntitySet="SliderDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SliderTitle_SliderId" Association="UmamidoModel.fk_SliderTitle_SliderId">
+            <End Role="Slider" EntitySet="Slider" />
+            <End Role="SliderTitle" EntitySet="SliderTitle" />
+          </AssociationSet>
+          <EntitySet Name="Text" EntityType="UmamidoModel.Text" />
+          <EntitySet Name="TextDesc" EntityType="UmamidoModel.TextDesc" />
+          <AssociationSet Name="fk_TextDesc_LangId" Association="UmamidoModel.fk_TextDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="TextDesc" EntitySet="TextDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TextDesc_RestaurantId" Association="UmamidoModel.fk_TextDesc_RestaurantId">
+            <End Role="Text" EntitySet="Text" />
+            <End Role="TextDesc" EntitySet="TextDesc" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Lang">
           <Key>
@@ -196,6 +542,11 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RestaurantDesc" Relationship="UmamidoModel.fk_RestaurantDesc_LangId" FromRole="Lang" ToRole="RestaurantDesc" />
           <NavigationProperty Name="RestaurantTitle" Relationship="UmamidoModel.fk_RestaurantTitle_LangId" FromRole="Lang" ToRole="RestaurantTitle" />
+          <NavigationProperty Name="GoodDesc" Relationship="UmamidoModel.fk_GoodDesc_LangId" FromRole="Lang" ToRole="GoodDesc" />
+          <NavigationProperty Name="GoodTitle" Relationship="UmamidoModel.fk_GoodTitle_LangId" FromRole="Lang" ToRole="GoodTitle" />
+          <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_LangId" FromRole="Lang" ToRole="SliderDesc" />
+          <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_LangId" FromRole="Lang" ToRole="SliderTitle" />
+          <NavigationProperty Name="TextDesc" Relationship="UmamidoModel.fk_TextDesc_LangId" FromRole="Lang" ToRole="TextDesc" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -207,6 +558,8 @@
           <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Image" ToRole="Restaurant" />
+          <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_Good_ImageId" FromRole="Image" ToRole="Good" />
+          <NavigationProperty Name="Slider" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Image" ToRole="Slider" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -218,6 +571,7 @@
           <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Restaurant" ToRole="Image" />
           <NavigationProperty Name="RestaurantDesc" Relationship="UmamidoModel.fk_RestaurantDesc_RestaurantId" FromRole="Restaurant" ToRole="RestaurantDesc" />
           <NavigationProperty Name="RestaurantTitle" Relationship="UmamidoModel.fk_RestaurantTitle_RestaurantId" FromRole="Restaurant" ToRole="RestaurantTitle" />
+          <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_Good_RestaurantId" FromRole="Restaurant" ToRole="Good" />
         </EntityType>
         <EntityType Name="RestaurantDesc">
           <Key>
@@ -301,6 +655,250 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="GoodId" />
+          </Key>
+          <Property Name="GoodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantId" Type="Int32" Nullable="false" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Good_ImageId" FromRole="Good" ToRole="Image" />
+          <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Good_RestaurantId" FromRole="Good" ToRole="Restaurant" />
+          <NavigationProperty Name="GoodDesc" Relationship="UmamidoModel.fk_GoodDesc_GoodId" FromRole="Good" ToRole="GoodDesc" />
+          <NavigationProperty Name="GoodTitle" Relationship="UmamidoModel.fk_GoodTitle_GoodId" FromRole="Good" ToRole="GoodTitle" />
+        </EntityType>
+        <EntityType Name="GoodDesc">
+          <Key>
+            <PropertyRef Name="GoodDescId" />
+          </Key>
+          <Property Name="GoodDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_GoodDesc_GoodId" FromRole="GoodDesc" ToRole="Good" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_GoodDesc_LangId" FromRole="GoodDesc" ToRole="Lang" />
+        </EntityType>
+        <EntityType Name="GoodTitle">
+          <Key>
+            <PropertyRef Name="GoodTitleId" />
+          </Key>
+          <Property Name="GoodTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GoodId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_GoodTitle_GoodId" FromRole="GoodTitle" ToRole="Good" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_GoodTitle_LangId" FromRole="GoodTitle" ToRole="Lang" />
+        </EntityType>
+        <Association Name="fk_Good_ImageId">
+          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_RestaurantId">
+          <End Type="UmamidoModel.Restaurant" Role="Restaurant" Multiplicity="1" />
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restaurant">
+              <PropertyRef Name="RestaurantId" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodDesc_GoodId">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="1" />
+          <End Type="UmamidoModel.GoodDesc" Role="GoodDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="GoodDesc">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodTitle_GoodId">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="1" />
+          <End Type="UmamidoModel.GoodTitle" Role="GoodTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="GoodTitle">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.GoodDesc" Role="GoodDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="GoodDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GoodTitle_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.GoodTitle" Role="GoodTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="GoodTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="SliderId" />
+          </Key>
+          <Property Name="SliderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Slider" ToRole="Image" />
+          <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_SliderId" FromRole="Slider" ToRole="SliderDesc" />
+          <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_SliderId" FromRole="Slider" ToRole="SliderTitle" />
+        </EntityType>
+        <EntityType Name="SliderDesc">
+          <Key>
+            <PropertyRef Name="SliderDescId" />
+          </Key>
+          <Property Name="SliderDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SliderId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_SliderDesc_LangId" FromRole="SliderDesc" ToRole="Lang" />
+          <NavigationProperty Name="Slider" Relationship="UmamidoModel.fk_SliderDesc_SliderId" FromRole="SliderDesc" ToRole="Slider" />
+        </EntityType>
+        <EntityType Name="SliderTitle">
+          <Key>
+            <PropertyRef Name="SliderTitleId" />
+          </Key>
+          <Property Name="SliderTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SliderId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_SliderTitle_LangId" FromRole="SliderTitle" ToRole="Lang" />
+          <NavigationProperty Name="Slider" Relationship="UmamidoModel.fk_SliderTitle_SliderId" FromRole="SliderTitle" ToRole="Slider" />
+        </EntityType>
+        <Association Name="fk_Slider_ImageId">
+          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
+          <End Type="UmamidoModel.Slider" Role="Slider" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Slider">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.SliderDesc" Role="SliderDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="SliderDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderTitle_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.SliderTitle" Role="SliderTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="SliderTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderDesc_SliderId">
+          <End Type="UmamidoModel.Slider" Role="Slider" Multiplicity="1" />
+          <End Type="UmamidoModel.SliderDesc" Role="SliderDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slider">
+              <PropertyRef Name="SliderId" />
+            </Principal>
+            <Dependent Role="SliderDesc">
+              <PropertyRef Name="SliderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SliderTitle_SliderId">
+          <End Type="UmamidoModel.Slider" Role="Slider" Multiplicity="1" />
+          <End Type="UmamidoModel.SliderTitle" Role="SliderTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Slider">
+              <PropertyRef Name="SliderId" />
+            </Principal>
+            <Dependent Role="SliderTitle">
+              <PropertyRef Name="SliderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Text">
+          <Key>
+            <PropertyRef Name="TextId" />
+          </Key>
+          <Property Name="TextId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TextName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TextDesc" Relationship="UmamidoModel.fk_TextDesc_RestaurantId" FromRole="Text" ToRole="TextDesc" />
+        </EntityType>
+        <EntityType Name="TextDesc">
+          <Key>
+            <PropertyRef Name="TextDescId" />
+          </Key>
+          <Property Name="TextDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TextId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_TextDesc_LangId" FromRole="TextDesc" ToRole="Lang" />
+          <NavigationProperty Name="Text1" Relationship="UmamidoModel.fk_TextDesc_RestaurantId" FromRole="TextDesc" ToRole="Text" />
+        </EntityType>
+        <Association Name="fk_TextDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.TextDesc" Role="TextDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="TextDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TextDesc_RestaurantId">
+          <End Type="UmamidoModel.Text" Role="Text" Multiplicity="1" />
+          <End Type="UmamidoModel.TextDesc" Role="TextDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Text">
+              <PropertyRef Name="TextId" />
+            </Principal>
+            <Dependent Role="TextDesc">
+              <PropertyRef Name="TextId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -363,6 +961,84 @@
                 <ScalarProperty Name="LangId" ColumnName="LangId" />
                 <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
                 <ScalarProperty Name="RestaurantTitleId" ColumnName="RestaurantTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Good">
+            <EntityTypeMapping TypeName="UmamidoModel.Good">
+              <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.GoodDesc">
+              <MappingFragment StoreEntitySet="GoodDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="GoodDescId" ColumnName="GoodDescId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodTitle">
+            <EntityTypeMapping TypeName="UmamidoModel.GoodTitle">
+              <MappingFragment StoreEntitySet="GoodTitle">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="GoodTitleId" ColumnName="GoodTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Slider">
+            <EntityTypeMapping TypeName="UmamidoModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="SliderId" ColumnName="SliderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SliderDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.SliderDesc">
+              <MappingFragment StoreEntitySet="SliderDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="SliderId" ColumnName="SliderId" />
+                <ScalarProperty Name="SliderDescId" ColumnName="SliderDescId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SliderTitle">
+            <EntityTypeMapping TypeName="UmamidoModel.SliderTitle">
+              <MappingFragment StoreEntitySet="SliderTitle">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="SliderId" ColumnName="SliderId" />
+                <ScalarProperty Name="SliderTitleId" ColumnName="SliderTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Text">
+            <EntityTypeMapping TypeName="UmamidoModel.Text">
+              <MappingFragment StoreEntitySet="Text">
+                <ScalarProperty Name="TextName" ColumnName="TextName" />
+                <ScalarProperty Name="TextId" ColumnName="TextId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TextDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.TextDesc">
+              <MappingFragment StoreEntitySet="TextDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="TextId" ColumnName="TextId" />
+                <ScalarProperty Name="TextDescId" ColumnName="TextDescId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

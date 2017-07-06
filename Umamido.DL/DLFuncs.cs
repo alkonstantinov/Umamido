@@ -267,6 +267,18 @@ namespace Umamido.DL
         }
 
 
+        public RestaurantRowModel GetRestaurant(int restaurantId)
+        {
+            var r = entities.Restaurant.First(item => item.RestaurantId == restaurantId);
+            RestaurantRowModel result = new RestaurantRowModel();
+            result.RestaurantId = r.RestaurantId;
+            result.ImageId = r.ImageId;
+            result.IsActive = r.IsActive;
+            var rt = r.RestaurantTitle.FirstOrDefault();
+            if (rt != null)
+                result.FirstTitle = rt.Text;
+            return result;
+        }
 
 
         public void SaveRestaurant(RestaurantRowModel model)
@@ -304,7 +316,7 @@ namespace Umamido.DL
                 }
                 else
                 {
-                    entities.RestaurantTitle.First(item => item.RestaurantTitleId == tt.ID).Text = tt.Text;                    
+                    entities.RestaurantTitle.First(item => item.RestaurantTitleId == tt.ID).Text = tt.Text;
                 }
             }
 
@@ -336,6 +348,346 @@ namespace Umamido.DL
             r.IsActive = !r.IsActive;
             entities.SaveChanges();
         }
+        #endregion
+
+
+        #region Goods
+
+        public GoodRowModel[] GetGoods(int restaurantId)
+        {
+            List<GoodRowModel> res = new List<GoodRowModel>();
+            foreach (var r in entities.Good.Where(item => item.RestaurantId == restaurantId))
+            {
+                GoodRowModel item = new GoodRowModel();
+                item.GoodId = r.GoodId;
+                item.Price = r.Price;
+                item.RestaurantId = r.RestaurantId;
+                item.ImageId = r.ImageId;
+                item.IsActive = r.IsActive;
+                List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
+                List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
+                foreach (var l in entities.Lang)
+                {
+                    var t = entities.GoodTitle.FirstOrDefault(row => row.GoodId == r.GoodId && row.LangId == l.LangId);
+                    if (t != null && item.FirstTitle == null)
+                        item.FirstTitle = t.Text;
+                    TranslatableItemModel timTitle = new TranslatableItemModel()
+                    {
+                        ID = t != null ? t.GoodTitleId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = t != null ? t.Text : ""
+                    };
+                    titles.Add(timTitle);
+
+                    var d = entities.GoodDesc.FirstOrDefault(row => row.GoodId == r.GoodId && row.LangId == l.LangId);
+                    TranslatableItemModel timDesc = new TranslatableItemModel()
+                    {
+                        ID = d != null ? d.GoodDescId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = d != null ? d.Text : ""
+                    };
+                    descs.Add(timDesc);
+                }
+
+
+                item.Descriptions = descs.ToArray();
+                item.Titles = titles.ToArray();
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
+
+
+        public void SaveGood(GoodRowModel model)
+        {
+            if (model.GoodId == -1)
+            {
+                Good r = new Good()
+                {
+                    ImageId = model.ImageId,
+                    RestaurantId = model.RestaurantId,
+                    IsActive = model.IsActive,
+                    Price = model.Price
+                };
+                entities.Good.Add(r);
+                entities.SaveChanges();
+                model.GoodId = r.GoodId;
+            }
+            else
+            {
+                Good r = entities.Good.First(item => item.GoodId == model.GoodId);
+                r.ImageId = model.ImageId;
+                r.IsActive = model.IsActive;
+                r.Price = model.Price;
+                entities.SaveChanges();
+            }
+            foreach (var tt in model.Titles)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.GoodTitle.Add(
+                        new GoodTitle()
+                        {
+                            LangId = tt.LangId,
+                            GoodId = model.GoodId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.GoodTitle.First(item => item.GoodTitleId == tt.ID).Text = tt.Text;
+                }
+            }
+
+            foreach (var tt in model.Descriptions)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.GoodDesc.Add(
+                        new GoodDesc()
+                        {
+                            LangId = tt.LangId,
+                            GoodId = model.GoodId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.GoodDesc.First(item => item.GoodDescId == tt.ID).Text = tt.Text;
+                }
+            }
+            entities.SaveChanges();
+        }
+
+
+        public void GoodChangeActive(int GoodId)
+        {
+            var r = entities.Good.First(item => item.GoodId == GoodId);
+            r.IsActive = !r.IsActive;
+            entities.SaveChanges();
+        }
+
+        #endregion
+
+
+        #region Sliders
+
+        public SliderRowModel[] GetSliders()
+        {
+            List<SliderRowModel> res = new List<SliderRowModel>();
+            foreach (var r in entities.Slider)
+            {
+                SliderRowModel item = new SliderRowModel();
+                item.SliderId = r.SliderId;
+                item.ImageId = r.ImageId;
+                item.IsActive = r.IsActive;
+                List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
+                List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
+                foreach (var l in entities.Lang)
+                {
+                    var t = entities.SliderTitle.FirstOrDefault(row => row.SliderId == r.SliderId && row.LangId == l.LangId);
+                    if (t != null && item.FirstTitle == null)
+                        item.FirstTitle = t.Text;
+                    TranslatableItemModel timTitle = new TranslatableItemModel()
+                    {
+                        ID = t != null ? t.SliderTitleId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = t != null ? t.Text : ""
+                    };
+                    titles.Add(timTitle);
+
+                    var d = entities.SliderDesc.FirstOrDefault(row => row.SliderId == r.SliderId && row.LangId == l.LangId);
+                    TranslatableItemModel timDesc = new TranslatableItemModel()
+                    {
+                        ID = d != null ? d.SliderDescId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = d != null ? d.Text : ""
+                    };
+                    descs.Add(timDesc);
+                }
+
+
+                item.Descriptions = descs.ToArray();
+                item.Titles = titles.ToArray();
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
+        public SliderRowModel GetSlider(int restaurantId)
+        {
+            var r = entities.Slider.First(item => item.SliderId == restaurantId);
+            SliderRowModel result = new SliderRowModel();
+            result.SliderId = r.SliderId;
+            result.ImageId = r.ImageId;
+            result.IsActive = r.IsActive;
+            var rt = r.SliderTitle.FirstOrDefault();
+            if (rt != null)
+                result.FirstTitle = rt.Text;
+            return result;
+        }
+
+
+        public void SaveSlider(SliderRowModel model)
+        {
+            if (model.SliderId == -1)
+            {
+                Slider r = new Slider()
+                {
+                    ImageId = model.ImageId,
+                    IsActive = model.IsActive
+                };
+                entities.Slider.Add(r);
+                entities.SaveChanges();
+                model.SliderId = r.SliderId;
+            }
+            else
+            {
+                Slider r = entities.Slider.First(item => item.SliderId == model.SliderId);
+                r.ImageId = model.ImageId;
+                r.IsActive = model.IsActive;
+                entities.SaveChanges();
+            }
+            foreach (var tt in model.Titles)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.SliderTitle.Add(
+                        new SliderTitle()
+                        {
+                            LangId = tt.LangId,
+                            SliderId = model.SliderId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.SliderTitle.First(item => item.SliderTitleId == tt.ID).Text = tt.Text;
+                }
+            }
+
+            foreach (var tt in model.Descriptions)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.SliderDesc.Add(
+                        new SliderDesc()
+                        {
+                            LangId = tt.LangId,
+                            SliderId = model.SliderId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.SliderDesc.First(item => item.SliderDescId == tt.ID).Text = tt.Text;
+                }
+            }
+            entities.SaveChanges();
+        }
+
+
+        public void SliderChangeActive(int restaurantId)
+        {
+            var r = entities.Slider.First(item => item.SliderId == restaurantId);
+            r.IsActive = !r.IsActive;
+            entities.SaveChanges();
+        }
+        #endregion
+
+        #region Texts
+
+        public TextRowModel[] GetTexts()
+        {
+            List<TextRowModel> res = new List<TextRowModel>();
+            foreach (var r in entities.Text)
+            {
+                TextRowModel item = new TextRowModel();
+                item.TextId = r.TextId;
+                item.TextName = r.TextName;
+                List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
+                foreach (var l in entities.Lang)
+                {
+                    
+                    var d = entities.TextDesc.FirstOrDefault(row => row.TextId == r.TextId && row.LangId == l.LangId);
+                    TranslatableItemModel timDesc = new TranslatableItemModel()
+                    {
+                        ID = d != null ? d.TextDescId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = d != null ? d.Text : ""
+                    };
+                    descs.Add(timDesc);
+                }
+
+
+                item.Descriptions = descs.ToArray();
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
+        
+
+
+        public void SaveText(TextRowModel model)
+        {
+            if (model.TextId == -1)
+            {
+                Text r = new Text()
+                {
+                    TextName = model.TextName
+                };
+                entities.Text.Add(r);
+                entities.SaveChanges();
+                model.TextId = r.TextId;
+            }
+            else
+            {
+                Text r = entities.Text.First(item => item.TextId == model.TextId);
+                r.TextName = model.TextName;
+                entities.SaveChanges();
+            }
+            
+
+            foreach (var tt in model.Descriptions)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.TextDesc.Add(
+                        new TextDesc()
+                        {
+                            LangId = tt.LangId,
+                            TextId = model.TextId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.TextDesc.First(item => item.TextDescId == tt.ID).Text = tt.Text;
+                }
+            }
+            entities.SaveChanges();
+        }
+
+
+        
         #endregion
 
     }

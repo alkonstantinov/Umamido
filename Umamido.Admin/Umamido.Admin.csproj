@@ -305,6 +305,9 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\Nomen\Goods.cshtml" />
+    <Content Include="Views\Nomen\Sliders.cshtml" />
+    <Content Include="Views\Nomen\Texts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -331,6 +334,9 @@
     <TypeScriptCompile Include="Scripts\pages\BasePage.ts" />
     <TypeScriptCompile Include="Scripts\pages\Comm.ts" />
     <TypeScriptCompile Include="Scripts\pages\Images.ts" />
+    <TypeScriptCompile Include="Scripts\pages\Goods.ts" />
+    <TypeScriptCompile Include="Scripts\pages\Texts.ts" />
+    <TypeScriptCompile Include="Scripts\pages\Sliders.ts" />
     <TypeScriptCompile Include="Scripts\pages\Restaurants.ts" />
     <TypeScriptCompile Include="Scripts\pages\Langs.ts" />
     <TypeScriptCompile Include="Scripts\pages\Users.ts" />

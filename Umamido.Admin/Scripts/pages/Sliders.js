@@ -8,23 +8,23 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var Restaurants = (function (_super) {
-    __extends(Restaurants, _super);
-    function Restaurants() {
+var Sliders = (function (_super) {
+    __extends(Sliders, _super);
+    function Sliders() {
         return _super.call(this) || this;
     }
-    Restaurants.prototype.LoadLogos = function () {
+    Sliders.prototype.LoadLogos = function () {
         var result = Comm.Get("/nomen/AllImages");
         for (var _i = 0, result_1 = result; _i < result_1.length; _i++) {
             var e = result_1[_i];
             $("#ddlLogo").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
         }
     };
-    Restaurants.prototype.ShowGoods = function (restaurantId) {
-        window.location.href = "/nomen/goods?restaurantId=" + restaurantId;
+    Sliders.prototype.ShowGoods = function (sliderId) {
+        window.location.href = "/nomen/goods?sliderId=" + sliderId;
     };
-    Restaurants.prototype.LoadRestaurants = function () {
-        var result = Comm.Get("/nomen/AllRestaurants");
+    Sliders.prototype.LoadSliders = function () {
+        var result = Comm.Get("/nomen/AllSliders");
         if (result == -1) {
             //BasePage.LoadLogin();
         }
@@ -36,16 +36,15 @@ var Restaurants = (function (_super) {
                 "<td>" + e.FirstTitle + "</td>" +
                 "<td><img src='/nomen/GetImageContentFromDB?imageId=" + e.ImageId + "&GUID=" + BasePage.GUID() + "' alt='' width='100' height='100'/></td>" +
                 "<td>" + e.IsActive + "</td>" +
-                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"restaurants.EditRestaurant(this)\"></span>" +
-                "<span class=\"glyphicon glyphicon-gift\" aria-hidden=\"true\" onclick=\"restaurants.ShowGoods(" + e.RestaurantId + ")\"></span>" +
-                "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"restaurants.RestaurantChangeActive(this)\"></span></td></tr>";
+                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"sliders.EditSlider(this)\"></span>" +
+                "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"sliders.SliderChangeActive(this)\"></span></td></tr>";
             tbl.append(row);
         }
     };
-    Restaurants.prototype.RedisplayLogo = function () {
+    Sliders.prototype.RedisplayLogo = function () {
         $("#iPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
     };
-    Restaurants.prototype.SetRestaurant = function () {
+    Sliders.prototype.SetSlider = function () {
         BasePage.HideErrors();
         var err = false;
         if ($("#ddlLogo").val() == null) {
@@ -55,7 +54,7 @@ var Restaurants = (function (_super) {
         if (err)
             return;
         var data = {
-            RestaurantId: this.currentId,
+            SliderId: this.currentId,
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             Titles: [],
@@ -81,22 +80,22 @@ var Restaurants = (function (_super) {
                 });
             }
         }
-        Comm.Post("/nomen/SetRestaurant", data);
-        $("#dRestaurant").modal('hide');
+        Comm.Post("/nomen/SetSlider", data);
+        $("#dSlider").modal('hide');
         //tinymce.EditorManager.editors = [];
-        this.LoadRestaurants();
+        this.LoadSliders();
     };
-    Restaurants.prototype.CancelRestaurant = function () {
+    Sliders.prototype.CancelSlider = function () {
         BasePage.HideErrors();
         //tinymce.EditorManager.editors = [];
-        $("#dRestaurant").modal('hide');
+        $("#dSlider").modal('hide');
     };
-    Restaurants.prototype.RestaurantChangeActive = function (element) {
-        var restaurantId = JSON.parse($(element).parent().parent().attr('data')).RestaurantId;
-        var result = Comm.Post("/nomen/RestaurantChangeActive", { restaurantId: restaurantId });
-        this.LoadRestaurants();
+    Sliders.prototype.SliderChangeActive = function (element) {
+        var sliderId = JSON.parse($(element).parent().parent().attr('data')).SliderId;
+        var result = Comm.Post("/nomen/SliderChangeActive", { sliderId: sliderId });
+        this.LoadSliders();
     };
-    Restaurants.prototype.EditRestaurant = function (element) {
+    Sliders.prototype.EditSlider = function (element) {
         $("#cbIsActive").prop("checked", true);
         $("#dTitles").empty();
         $("#dDescriptions").empty();
@@ -118,7 +117,7 @@ var Restaurants = (function (_super) {
             var obj = JSON.parse($(element).parent().parent().attr("data"));
             $("#cbIsActive").prop("checked", obj.IsActive);
             $("#ddlLogo").val(obj.ImageId);
-            this.currentId = obj.RestaurantId;
+            this.currentId = obj.SliderId;
             for (var _b = 0, _c = obj.Titles; _b < _c.length; _b++) {
                 var lang = _c[_b];
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='" + lang.ID + "'>" +
@@ -134,11 +133,11 @@ var Restaurants = (function (_super) {
                     "</div>");
             }
         }
-        $("#dRestaurant").modal('show');
+        $("#dSlider").modal('show');
         //tinymce.init({ selector: 'textarea' });
         BasePage.TinyMCE();
         this.RedisplayLogo();
     };
-    return Restaurants;
+    return Sliders;
 }(BasePage));
-//# sourceMappingURL=Restaurants.js.map
+//# sourceMappingURL=Sliders.js.map

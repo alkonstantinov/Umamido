@@ -19,6 +19,11 @@ namespace Umamido.DL
         {
             this.RestaurantDesc = new HashSet<RestaurantDesc>();
             this.RestaurantTitle = new HashSet<RestaurantTitle>();
+            this.GoodDesc = new HashSet<GoodDesc>();
+            this.GoodTitle = new HashSet<GoodTitle>();
+            this.SliderDesc = new HashSet<SliderDesc>();
+            this.SliderTitle = new HashSet<SliderTitle>();
+            this.TextDesc = new HashSet<TextDesc>();
         }
     
         public int LangId { get; set; }
@@ -29,5 +34,15 @@ namespace Umamido.DL
         public virtual ICollection<RestaurantDesc> RestaurantDesc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RestaurantTitle> RestaurantTitle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodDesc> GoodDesc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodTitle> GoodTitle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SliderDesc> SliderDesc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SliderTitle> SliderTitle { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TextDesc> TextDesc { get; set; }
     }
 }

@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Texts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Text management</div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="texts.EditText(null)">New text</span>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Text</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dText" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Text data</div>
+            </div>
+            <div class="modal-body" style="height:600px;overflow-y:scroll;">
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Text name</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="text" id="tbTextName" class="form-control" />
+                        <div class="label-danger" id="lErrtbTextName">Please, enter text</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label class="control-label">Descriptions</label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12" id="dDescriptions">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="texts.SetText()"></span>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="texts.CancelText()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        texts = new Texts();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        texts.LoadTexts();
+
+
+    })
+</script>

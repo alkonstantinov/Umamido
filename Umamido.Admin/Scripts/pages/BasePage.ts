@@ -1,10 +1,15 @@
-﻿
+﻿declare var tinymce: any;
 declare var $: any;
 
 class BasePage {
     static LastErrorA: String;
     static LastErrorB: String;
     static LastErrorC: String;
+
+    static TinyMCE() {
+        tinymce.EditorManager.editors = [];
+        tinymce.init({ selector: 'textarea', plugins: "code" });
+    }
 
     static GUID() {
         let d = new Date().getTime();
@@ -32,7 +37,7 @@ class BasePage {
 
 
 
-    
+
 
     public parseJsonDate(jsonDateString) {
         return new Date(parseInt(jsonDateString.replace('/Date(', '')));
@@ -56,7 +61,7 @@ class BasePage {
         $("#nMenu").hide();
     }
 
-    
+
 
 
 
@@ -64,7 +69,7 @@ class BasePage {
     static LoadError(a, b, c) {
         var myRegexp = /<h2>([\w\W]+)<\/h2>/g;
         var match = myRegexp.exec(a.responseText);
-        
+
         var form = document.createElement("form");
         form.setAttribute("method", "post");
         form.setAttribute("action", "/security/errorjs");
@@ -86,10 +91,10 @@ class BasePage {
         hiddenField.setAttribute("value", c);
         form.appendChild(hiddenField);
         document.body.appendChild(form);
-                
+
         form.submit();
 
-        
+
     }
 
 

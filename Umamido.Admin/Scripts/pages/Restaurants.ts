@@ -19,6 +19,10 @@ class Restaurants extends BasePage {
 
     }
 
+    public ShowGoods(restaurantId) {
+        window.location.href = "/nomen/goods?restaurantId=" + restaurantId;
+    }
+
     public LoadRestaurants() {
         let result = Comm.Get("/nomen/AllRestaurants");
         if (result == -1) {
@@ -31,7 +35,9 @@ class Restaurants extends BasePage {
                 "<td>" + e.FirstTitle + "</td>" +
                 "<td><img src='/nomen/GetImageContentFromDB?imageId=" + e.ImageId + "&GUID=" + BasePage.GUID() + "' alt='' width='100' height='100'/></td>" +
                 "<td>" + e.IsActive + "</td>" +
-                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"restaurants.EditRestaurant(this)\"></span><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"restaurants.RestaurantChangeActive(this)\"></span></td></tr>";
+                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"restaurants.EditRestaurant(this)\"></span>" +
+                "<span class=\"glyphicon glyphicon-gift\" aria-hidden=\"true\" onclick=\"restaurants.ShowGoods(" + e.RestaurantId + ")\"></span>" +
+                "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"restaurants.RestaurantChangeActive(this)\"></span></td></tr>";
 
             tbl.append(row);
         }
@@ -88,13 +94,13 @@ class Restaurants extends BasePage {
         }
         Comm.Post("/nomen/SetRestaurant", data);
         $("#dRestaurant").modal('hide');
-        tinymce.EditorManager.editors = []; 
+        //tinymce.EditorManager.editors = [];
         this.LoadRestaurants();
     }
 
     public CancelRestaurant() {
         BasePage.HideErrors();
-        tinymce.EditorManager.editors = []; 
+        //tinymce.EditorManager.editors = [];
         $("#dRestaurant").modal('hide');
     }
 
@@ -115,11 +121,11 @@ class Restaurants extends BasePage {
             for (let lang of Comm.Get("/nomen/AllLangs")) {
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='-1'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
-                    "<div class='col-lg-11'><textarea id='tmceTitle_" + lang.LangId +"'/></div>" +
+                    "<div class='col-lg-11'><textarea id='tmceTitle_" + lang.LangId + "'/></div>" +
                     "</div>");
                 $("#dDescriptions").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='-1'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
-                    "<div class='col-lg-11'><textarea id='tmceDescription_" + lang.LangId +"'/></div>" +
+                    "<div class='col-lg-11'><textarea id='tmceDescription_" + lang.LangId + "'/></div>" +
                     "</div>");
 
             }
@@ -137,21 +143,22 @@ class Restaurants extends BasePage {
             for (let lang of obj.Titles) {
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='" + lang.ID + "'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
-                    "<div class='col-lg-11'><textarea id='tmceTitle_" + lang.LangId +"'>" + lang.Text + "</textarea></div>" +
+                    "<div class='col-lg-11'><textarea id='tmceTitle_" + lang.LangId + "'>" + lang.Text + "</textarea></div>" +
                     "</div>");
             }
 
             for (let lang of obj.Descriptions) {
                 $("#dDescriptions").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='" + lang.ID + "'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
-                    "<div class='col-lg-11'><textarea id='tmceDescription_" + lang.LangId +"'>" + lang.Text + "</textarea></div>" +
+                    "<div class='col-lg-11'><textarea id='tmceDescription_" + lang.LangId + "'>" + lang.Text + "</textarea></div>" +
                     "</div>");
 
             }
 
         }
         $("#dRestaurant").modal('show');
-        tinymce.init({ selector: 'textarea' });
+        //tinymce.init({ selector: 'textarea' });
+        BasePage.TinyMCE();
         this.RedisplayLogo();
     }
 

@@ -16,6 +16,27 @@
         <AssociationConnector Association="UmamidoModel.fk_RestaurantTitle_LangId" />
         <AssociationConnector Association="UmamidoModel.fk_RestaurantDesc_RestaurantId" />
         <AssociationConnector Association="UmamidoModel.fk_RestaurantTitle_RestaurantId" />
+        <EntityTypeShape EntityType="UmamidoModel.Good" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="UmamidoModel.GoodDesc" Width="1.5" PointX="8.5" PointY="4.25" />
+        <EntityTypeShape EntityType="UmamidoModel.GoodTitle" Width="1.5" PointX="7.5" PointY="7.25" />
+        <AssociationConnector Association="UmamidoModel.fk_Good_ImageId" />
+        <AssociationConnector Association="UmamidoModel.fk_Good_RestaurantId" />
+        <AssociationConnector Association="UmamidoModel.fk_GoodDesc_GoodId" />
+        <AssociationConnector Association="UmamidoModel.fk_GoodTitle_GoodId" />
+        <AssociationConnector Association="UmamidoModel.fk_GoodDesc_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_GoodTitle_LangId" />
+        <EntityTypeShape EntityType="UmamidoModel.Slider" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="UmamidoModel.SliderDesc" Width="1.5" PointX="8.625" PointY="0.875" />
+        <EntityTypeShape EntityType="UmamidoModel.SliderTitle" Width="1.5" PointX="10.625" PointY="7.875" />
+        <AssociationConnector Association="UmamidoModel.fk_Slider_ImageId" />
+        <AssociationConnector Association="UmamidoModel.fk_SliderDesc_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_SliderTitle_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_SliderDesc_SliderId" />
+        <AssociationConnector Association="UmamidoModel.fk_SliderTitle_SliderId" />
+        <EntityTypeShape EntityType="UmamidoModel.Text" Width="1.5" PointX="3.375" PointY="15.875" />
+        <EntityTypeShape EntityType="UmamidoModel.TextDesc" Width="1.5" PointX="5.625" PointY="0.75" />
+        <AssociationConnector Association="UmamidoModel.fk_TextDesc_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_TextDesc_RestaurantId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

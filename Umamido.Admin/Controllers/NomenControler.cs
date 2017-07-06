@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
 using Umamido.Common;
+using Umamido.Common.Tools;
 
 namespace Umamido.Admin.Controllers
 {
@@ -176,7 +177,97 @@ namespace Umamido.Admin.Controllers
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
 
-        
+
         #endregion
+
+
+        #region Goods
+        [HttpGet]
+        public ActionResult Goods(int restaurantId)
+        {
+            RestaurantRowModel rm = DL.GetRestaurant(restaurantId);
+            rm.FirstTitle = Tools.StripHtmlTags(rm.FirstTitle);
+            return View(rm);
+        }
+        [HttpGet]
+        public ActionResult AllGoods(int restaurantId)
+        {
+            var result = this.DL.GetGoods(restaurantId);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GoodChangeActive(int restaurantId)
+        {
+            this.DL.GoodChangeActive(restaurantId);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SetGood(GoodRowModel model)
+        {
+            this.DL.SaveGood(model);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
+
+
+        #region Sliders
+        [HttpGet]
+        public ActionResult Sliders()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AllSliders()
+        {
+            var result = this.DL.GetSliders();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SliderChangeActive(int sliderId)
+        {
+            this.DL.SliderChangeActive(sliderId);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SetSlider(SliderRowModel model)
+        {
+            this.DL.SaveSlider(model);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
+
+        #region Texts
+        [HttpGet]
+        public ActionResult Texts()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AllTexts()
+        {
+            var result = this.DL.GetTexts();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        
+        [HttpPost]
+        public ActionResult SetText(TextRowModel model)
+        {
+            this.DL.SaveText(model);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
+
+
     }
 }

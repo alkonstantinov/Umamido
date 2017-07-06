@@ -12,26 +12,26 @@ namespace Umamido.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class Restaurant
+    public partial class Good
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Restaurant()
+        public Good()
         {
-            this.RestaurantDesc = new HashSet<RestaurantDesc>();
-            this.RestaurantTitle = new HashSet<RestaurantTitle>();
-            this.Good = new HashSet<Good>();
+            this.GoodDesc = new HashSet<GoodDesc>();
+            this.GoodTitle = new HashSet<GoodTitle>();
         }
     
+        public int GoodId { get; set; }
         public int RestaurantId { get; set; }
         public int ImageId { get; set; }
+        public decimal Price { get; set; }
         public bool IsActive { get; set; }
     
         public virtual Image Image { get; set; }
+        public virtual Restaurant Restaurant { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RestaurantDesc> RestaurantDesc { get; set; }
+        public virtual ICollection<GoodDesc> GoodDesc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RestaurantTitle> RestaurantTitle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Good> Good { get; set; }
+        public virtual ICollection<GoodTitle> GoodTitle { get; set; }
     }
 }

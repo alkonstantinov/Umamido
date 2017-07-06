@@ -31,5 +31,13 @@ namespace Umamido.DL
         public virtual DbSet<Restaurant> Restaurant { get; set; }
         public virtual DbSet<RestaurantDesc> RestaurantDesc { get; set; }
         public virtual DbSet<RestaurantTitle> RestaurantTitle { get; set; }
+        public virtual DbSet<Good> Good { get; set; }
+        public virtual DbSet<GoodDesc> GoodDesc { get; set; }
+        public virtual DbSet<GoodTitle> GoodTitle { get; set; }
+        public virtual DbSet<Slider> Slider { get; set; }
+        public virtual DbSet<SliderDesc> SliderDesc { get; set; }
+        public virtual DbSet<SliderTitle> SliderTitle { get; set; }
+        public virtual DbSet<Text> Text { get; set; }
+        public virtual DbSet<TextDesc> TextDesc { get; set; }
     }
 }

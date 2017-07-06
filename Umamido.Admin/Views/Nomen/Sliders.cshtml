@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Sliders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Slider management</div>
+    <div class="panel-body">
+        <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="sliders.EditSlider(null)">New slider</span>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Slider</th>
+                    <th>Logo</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dSlider" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Slider data</div>
+            </div>
+            <div class="modal-body" style="height:600px;overflow-y:scroll;">
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Active</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <input type="checkbox" id="cbIsActive" class="form-control" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-4">
+                        <label class="control-label">Logo</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select id="ddlLogo" class="form-control" onchange="sliders.RedisplayLogo()"></select>
+                        <div class="label-danger" id="lErrddlLogo">Please, select logo</div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <img id="iPreview" width="100" height="100" alt="" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label class="control-label">Titles</label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12" id="dTitles">
+
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <label class="control-label">Descriptions</label>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12" id="dDescriptions">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="sliders.SetSlider()"></span>
+                </div>
+                <div class="col-md-1 pull-right">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="sliders.CancelSlider()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        sliders = new Sliders();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        sliders.LoadSliders();
+        sliders.LoadLogos();
+
+
+    })
+</script>

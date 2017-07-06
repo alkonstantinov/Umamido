@@ -1,6 +1,10 @@
 var BasePage = (function () {
     function BasePage() {
     }
+    BasePage.TinyMCE = function () {
+        tinymce.EditorManager.editors = [];
+        tinymce.init({ selector: 'textarea', plugins: "code" });
+    };
     BasePage.GUID = function () {
         var d = new Date().getTime();
         if (window.performance && typeof window.performance.now === "function") {

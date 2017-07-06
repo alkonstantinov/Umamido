@@ -46,7 +46,11 @@
     <Compile Include="LoginModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LangRowModel.cs" />
+    <Compile Include="GoodRowModel.cs" />
+    <Compile Include="TextRowModel.cs" />
+    <Compile Include="SliderRowModel.cs" />
     <Compile Include="RestaurantRowModel.cs" />
+    <Compile Include="Tools\Tools.cs" />
     <Compile Include="TranslatableItemModel.cs" />
     <Compile Include="UserRowModel.cs" />
   </ItemGroup>
