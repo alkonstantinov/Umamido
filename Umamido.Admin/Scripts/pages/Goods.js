@@ -11,7 +11,11 @@ var __extends = (this && this.__extends) || (function () {
 var Goods = (function (_super) {
     __extends(Goods, _super);
     function Goods() {
-        return _super.call(this) || this;
+        var _this = _super.call(this) || this;
+        for (var i = 1; i < 90; i++) {
+            $("#ddlCookTime").append("<option value='" + i + "'>" + i + "</option>");
+        }
+        return _this;
     }
     Goods.prototype.LoadLogos = function () {
         var result = Comm.Get("/nomen/AllImages");
@@ -24,6 +28,14 @@ var Goods = (function (_super) {
         var result = Comm.Get("/nomen/AllGoods?restaurantId=" + $("#RestaurantId").val());
         if (result == -1) {
             //BasePage.LoadLogin();
+        }
+        if (result.length == 0) {
+            $("#tItems").hide();
+            $("#lNoItems").show();
+        }
+        else {
+            $("#tItems").show();
+            $("#lNoItems").hide();
         }
         var tbl = $("#tItems tbody");
         tbl.empty();
@@ -61,6 +73,7 @@ var Goods = (function (_super) {
             RestaurantId: $("#RestaurantId").val(),
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
+            CookTime: $("#ddlCookTime").val(),
             Titles: [],
             Descriptions: []
         };
@@ -106,6 +119,7 @@ var Goods = (function (_super) {
         if (element == null) {
             this.currentId = -1;
             $("#tbPrice").val("0");
+            $("#ddlCookTime").val("1");
             for (var _i = 0, _a = Comm.Get("/nomen/AllLangs"); _i < _a.length; _i++) {
                 var lang = _a[_i];
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='-1'>" +
@@ -123,6 +137,7 @@ var Goods = (function (_super) {
             $("#tbPrice").val(obj.Price);
             $("#cbIsActive").prop("checked", obj.IsActive);
             $("#ddlLogo").val(obj.ImageId);
+            $("#ddlCookTime").val(obj.CookTime);
             this.currentId = obj.GoodId;
             for (var _b = 0, _c = obj.Titles; _b < _c.length; _b++) {
                 var lang = _c[_b];

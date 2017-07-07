@@ -16,6 +16,15 @@ class Images extends BasePage {
         if (result == -1) {
             //BasePage.LoadLogin();
         }
+        if (result.length == 0) {
+            $("#tItems").hide();
+            $("#lNoItems").show();
+
+        }
+        else {
+            $("#tItems").show();
+            $("#lNoItems").hide();
+        }
         let tbl = $("#tItems tbody");
         tbl.empty();
         $(result).each(function (i, e) {

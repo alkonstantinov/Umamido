@@ -28,6 +28,14 @@ var Restaurants = (function (_super) {
         if (result == -1) {
             //BasePage.LoadLogin();
         }
+        if (result.length == 0) {
+            $("#tItems").hide();
+            $("#lNoItems").show();
+        }
+        else {
+            $("#tItems").show();
+            $("#lNoItems").hide();
+        }
         var tbl = $("#tItems tbody");
         tbl.empty();
         for (var _i = 0, result_2 = result; _i < result_2.length; _i++) {

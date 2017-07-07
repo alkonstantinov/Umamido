@@ -37,6 +37,14 @@
         <EntityTypeShape EntityType="UmamidoModel.TextDesc" Width="1.5" PointX="5.625" PointY="0.75" />
         <AssociationConnector Association="UmamidoModel.fk_TextDesc_LangId" />
         <AssociationConnector Association="UmamidoModel.fk_TextDesc_RestaurantId" />
+        <EntityTypeShape EntityType="UmamidoModel.PaymentType" Width="1.5" PointX="3" PointY="12.875" />
+        <EntityTypeShape EntityType="UmamidoModel.Req" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="UmamidoModel.Req2Good" Width="1.5" PointX="7.5" PointY="10.5" />
+        <EntityTypeShape EntityType="UmamidoModel.Req2Status" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Status" Width="1.5" PointX="11.375" PointY="3.75" />
+        <AssociationConnector Association="UmamidoModel.fk_Req2Good_GoodId" />
+        <AssociationConnector Association="UmamidoModel.fk_Req_PaymentTypeId" />
+        <AssociationConnector Association="UmamidoModel.fk_Req2Good_ReqId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

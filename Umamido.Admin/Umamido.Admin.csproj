@@ -279,6 +279,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NomenControler.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -308,6 +309,7 @@
     <Content Include="Views\Nomen\Goods.cshtml" />
     <Content Include="Views\Nomen\Sliders.cshtml" />
     <Content Include="Views\Nomen\Texts.cshtml" />
+    <Content Include="Views\Reports\RequestsQuery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

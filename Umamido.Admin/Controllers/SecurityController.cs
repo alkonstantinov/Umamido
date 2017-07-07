@@ -35,6 +35,14 @@ namespace Umamido.Admin.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
+        public ActionResult Logoff()
+        {
+            Session.Clear();
+            Session.Abandon();
+            return View("Index", new LoginModel());
+        }
         #region Users
         [HttpGet]
         public ActionResult Users()

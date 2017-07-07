@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Caching;
 using Umamido.Common;
+using Umamido.Common.Tools;
 
 namespace Umamido.DL
 {
@@ -363,6 +364,7 @@ namespace Umamido.DL
                 item.Price = r.Price;
                 item.RestaurantId = r.RestaurantId;
                 item.ImageId = r.ImageId;
+                item.CookTime = r.CookMinutes;
                 item.IsActive = r.IsActive;
                 List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
                 List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
@@ -412,7 +414,8 @@ namespace Umamido.DL
                     ImageId = model.ImageId,
                     RestaurantId = model.RestaurantId,
                     IsActive = model.IsActive,
-                    Price = model.Price
+                    Price = model.Price,
+                    CookMinutes = model.CookTime
                 };
                 entities.Good.Add(r);
                 entities.SaveChanges();
@@ -424,6 +427,7 @@ namespace Umamido.DL
                 r.ImageId = model.ImageId;
                 r.IsActive = model.IsActive;
                 r.Price = model.Price;
+                r.CookMinutes = model.CookTime;
                 entities.SaveChanges();
             }
             foreach (var tt in model.Titles)
@@ -621,7 +625,7 @@ namespace Umamido.DL
                 List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
                 foreach (var l in entities.Lang)
                 {
-                    
+
                     var d = entities.TextDesc.FirstOrDefault(row => row.TextId == r.TextId && row.LangId == l.LangId);
                     TranslatableItemModel timDesc = new TranslatableItemModel()
                     {
@@ -642,7 +646,7 @@ namespace Umamido.DL
         }
 
 
-        
+
 
 
         public void SaveText(TextRowModel model)
@@ -663,7 +667,7 @@ namespace Umamido.DL
                 r.TextName = model.TextName;
                 entities.SaveChanges();
             }
-            
+
 
             foreach (var tt in model.Descriptions)
             {
@@ -687,8 +691,45 @@ namespace Umamido.DL
         }
 
 
-        
+
         #endregion
 
+        #region Reports
+        public void ReqQuery(ReqQueryModel model)
+        {
+            DateTime from = DateTime.Now;
+            DateTime to = DateTime.Now;
+            switch (model.SelectedTimeFrame)
+            {
+                case 1:
+                    Tools.GetDay(DateTime.Now, ref from, ref to);
+                    break;
+                case 2:
+                    Tools.GetWeek(DateTime.Now, ref from, ref to);
+                    break;
+                case 3:
+                    Tools.GetMonth(DateTime.Now, ref from, ref to);
+                    break;
+                case 4:
+                    Tools.GetYear(DateTime.Now, ref from, ref to);
+                    break;
+                case 5:
+                    Tools.Get2Years(DateTime.Now, ref from, ref to);
+                    break;
+            }
+
+
+            var result = entities.SearchReq(from, to, model.Restaurant);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<SearchReq_Result, ReqQueryRowModel>();
+            });
+            List<ReqQueryRowModel> rows = new List<ReqQueryRowModel>();
+            foreach (var item in result)
+                rows.Add(Mapper.Map<ReqQueryRowModel>(item));
+            model.Result = rows.ToArray();
+
+        }
+        #endregion
     }
 }

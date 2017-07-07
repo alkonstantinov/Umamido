@@ -12,29 +12,21 @@ namespace Umamido.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class Good
+    public partial class Req
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Good()
+        public Req()
         {
-            this.GoodDesc = new HashSet<GoodDesc>();
-            this.GoodTitle = new HashSet<GoodTitle>();
             this.Req2Good = new HashSet<Req2Good>();
         }
     
-        public int GoodId { get; set; }
-        public int RestaurantId { get; set; }
-        public int ImageId { get; set; }
-        public decimal Price { get; set; }
-        public bool IsActive { get; set; }
-        public int CookMinutes { get; set; }
+        public int ReqId { get; set; }
+        public int PaymentTypeId { get; set; }
+        public string Receiver { get; set; }
+        public string Address { get; set; }
+        public bool Paid { get; set; }
     
-        public virtual Image Image { get; set; }
-        public virtual Restaurant Restaurant { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodDesc> GoodDesc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodTitle> GoodTitle { get; set; }
+        public virtual PaymentType PaymentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Req2Good> Req2Good { get; set; }
     }

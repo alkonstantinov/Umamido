@@ -12,6 +12,8 @@ namespace Umamido.DL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class UmamidoEntities : DbContext
     {
@@ -39,5 +41,27 @@ namespace Umamido.DL
         public virtual DbSet<SliderTitle> SliderTitle { get; set; }
         public virtual DbSet<Text> Text { get; set; }
         public virtual DbSet<TextDesc> TextDesc { get; set; }
+        public virtual DbSet<PaymentType> PaymentType { get; set; }
+        public virtual DbSet<Req> Req { get; set; }
+        public virtual DbSet<Req2Good> Req2Good { get; set; }
+        public virtual DbSet<Req2Status> Req2Status { get; set; }
+        public virtual DbSet<Status> Status { get; set; }
+    
+        public virtual ObjectResult<SearchReq_Result> SearchReq(Nullable<System.DateTime> from, Nullable<System.DateTime> to, Nullable<int> restaurantId)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(System.DateTime));
+    
+            var toParameter = to.HasValue ?
+                new ObjectParameter("to", to) :
+                new ObjectParameter("to", typeof(System.DateTime));
+    
+            var restaurantIdParameter = restaurantId.HasValue ?
+                new ObjectParameter("restaurantId", restaurantId) :
+                new ObjectParameter("restaurantId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchReq_Result>("SearchReq", fromParameter, toParameter, restaurantIdParameter);
+        }
     }
 }

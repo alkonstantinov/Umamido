@@ -142,7 +142,8 @@ create table Good
   GoodId int not null identity(1,1)
   , RestaurantId int not null 
   , ImageId int not null
-  , Price decimal (10,2)
+  , Price decimal (10,2) not null
+  , CookMinutes int not null
   , IsActive bit not null default 1
   , constraint pk_GoodId primary key(GoodId)   
   , constraint fk_Good_RestaurantId foreign key (RestaurantId) references Restaurant(RestaurantId)
@@ -262,11 +263,6 @@ go
 exec p_ak_create_fk_indeces 'SliderDesc'
 go
 
-
-
-
-
-
 if object_id('Text') is not null
 begin
   exec p_ak_drop_all_foreign_keys 'Text'
@@ -305,4 +301,119 @@ create table TextDesc
 )
 go
 exec p_ak_create_fk_indeces 'TextDesc'
+go
+
+
+if object_id('Status') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Status'
+  drop table Status
+end
+go
+
+create table Status
+( 
+  StatusId int not null
+  , StatusName nvarchar (100) not null 
+  , constraint pk_StatusId primary key(StatusId)   
+)
+go
+exec p_ak_create_fk_indeces 'Status'
+go
+
+insert into Status (StatusId, StatusName) values (1, 'New order')
+insert into Status (StatusId, StatusName) values (2, 'Started cooking')
+insert into Status (StatusId, StatusName) values (3, 'Started delivering')
+insert into Status (StatusId, StatusName) values (4, 'Delivered')
+insert into Status (StatusId, StatusName) values (5, 'Not delivered')
+go
+
+
+
+
+
+if object_id('PaymentType') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'PaymentType'
+  drop table PaymentType
+end
+go
+
+create table PaymentType
+( 
+  PaymentTypeId int not null
+  , PaymentTypeName nvarchar (100) not null 
+  , constraint pk_PaymentTypeId primary key(PaymentTypeId)   
+)
+go
+exec p_ak_create_fk_indeces 'PaymentType'
+go
+
+insert into PaymentType (PaymentTypeId, PaymentTypeName) values (1, 'Credit card')
+insert into PaymentType (PaymentTypeId, PaymentTypeName) values (2, 'Cash on delivery')
+go
+
+
+if object_id('Req') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Req'
+  drop table Req
+end
+go
+
+create table Req
+( 
+  ReqId int not null identity(1,1)
+  , PaymentTypeId int not null 
+  , Receiver nvarchar(max) not null
+  , Address nvarchar(max) not null
+  , Paid bit not null default 0 
+  , constraint pk_ReqId primary key(ReqId)   
+  , constraint fk_Req_PaymentTypeId foreign key (PaymentTypeId) references PaymentType(PaymentTypeId)  
+)
+go
+exec p_ak_create_fk_indeces 'Req'
+go
+
+if object_id('Req2Good') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Req2Good'
+  drop table Req2Good
+end
+go
+
+create table Req2Good
+( 
+  Req2GoodId int not null identity(1,1)
+  , ReqId int not null
+  , GoodId int not null
+  , Price decimal (10,2) not null
+  , Quantity int not null  
+  , constraint pk_Req2GoodId primary key(Req2GoodId)   
+  , constraint fk_Req2Good_ReqId foreign key (ReqId) references Req(ReqId)  
+  , constraint fk_Req2Good_GoodId foreign key (GoodId) references Good(GoodId)  
+)
+go
+exec p_ak_create_fk_indeces 'Req2Good'
+go
+
+if object_id('Req2Status') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Req2Status'
+  drop table Req2Status
+end
+go
+
+create table Req2Status
+( 
+  Req2StatusId int not null identity(1,1)
+  , ReqId int not null 
+  , StatusId int not null 
+  , OnDate datetime2 not null
+  , UserId  int null
+  , Note nvarchar(max)
+  , constraint pk_Req2StatusId primary key(Req2StatusId)   
+)
+go
+exec p_ak_create_fk_indeces 'Req2Status'
 go

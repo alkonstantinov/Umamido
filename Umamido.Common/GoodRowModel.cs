@@ -22,6 +22,8 @@ namespace Umamido.Common
 
         public Decimal Price { get; set; }
 
+        public Int32 CookTime { get; set; }
+
         public TranslatableItemModel[] Titles { get; set; }
 
         public TranslatableItemModel[] Descriptions { get; set; }

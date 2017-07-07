@@ -18,6 +18,14 @@ var Users = (function (_super) {
         if (result == -1) {
             //BasePage.LoadLogin();
         }
+        if (result.length == 0) {
+            $("#tItems").hide();
+            $("#lNoItems").show();
+        }
+        else {
+            $("#tItems").show();
+            $("#lNoItems").hide();
+        }
         var tbl = $("#tItems tbody");
         tbl.empty();
         $(result).each(function (i, e) {

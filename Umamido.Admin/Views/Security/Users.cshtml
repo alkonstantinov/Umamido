@@ -10,6 +10,7 @@
     <div class="panel-heading">User management</div>
     <div class="panel-body">
         <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="users.EditUser(null)">New user</span>
+        <label class="label-warning" id="lNoItems">No records found</label>
         <table id="tItems" class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
@@ -56,7 +57,7 @@
                     <div class="col-lg-8">
                         <input type="password" id="tbRePassword" class="form-control" /><div class="label-danger" id="lErrtbRePassword">Passwords do not match</div>
                     </div>
-                </div>         
+                </div>
                 <div class="row form-group">
                     <div class="col-lg-4">
                         <label class="control-label">Active</label>
@@ -64,7 +65,7 @@
                     <div class="col-lg-8">
                         <input type="checkbox" id="cbIsActive" class="form-control" />
                     </div>
-                </div>       
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-1 pull-right">

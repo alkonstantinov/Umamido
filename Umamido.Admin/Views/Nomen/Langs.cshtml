@@ -10,6 +10,7 @@
     <div class="panel-heading">Language management</div>
     <div class="panel-body">
         <span class="glyphicon glyphicon-plus btn btn-primary pull-right" aria-hidden="true" onclick="langs.EditLang(null)">New language</span>
+        <label class="label-warning" id="lNoItems">No records found</label>
         <table id="tItems" class="table table-bordered table-striped" style="width:500px">
             <thead>
                 <tr>
@@ -36,10 +37,10 @@
                         <label class="control-label">Language</label>
                     </div>
                     <div class="col-lg-8">
-                        <input type="text" id="tbLangName" class="form-control" maxlength="2"/>
+                        <input type="text" id="tbLangName" class="form-control" maxlength="2" />
                         <div class="label-danger" id="lErrtbLangName">Please, enter language</div>
                     </div>
-                </div>                
+                </div>
                 <div class="row form-group">
                     <div class="col-lg-4">
                         <label class="control-label">Active</label>
@@ -47,7 +48,7 @@
                     <div class="col-lg-8">
                         <input type="checkbox" id="cbIsActive" class="form-control" />
                     </div>
-                </div>       
+                </div>
             </div>
             <div class="modal-footer">
                 <div class="col-md-1 pull-right">

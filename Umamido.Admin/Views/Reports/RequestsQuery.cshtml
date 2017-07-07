@@ -1,0 +1,67 @@
+﻿@model Umamido.Common.ReqQueryModel
+
+@{
+    ViewBag.Title = "RequestsQuery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-info">
+    <div class="panel-heading">Requests report</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("RequestsQuery", "Reports", FormMethod.Post, new { @id = "fSearch" }))
+        {
+            <div class="row form-group">
+                <div class="col-lg-3">
+                    @Html.DropDownListFor(m => m.Restaurant, Model.Restaurants, "Choose restaurant", new { @class = "form-control" })
+                </div>
+                <div class="col-lg-3">
+                    @Html.DropDownListFor(m => m.SelectedTimeFrame, Model.TimeFrame, new { @class = "form-control" })
+                </div>
+                <div class="col-lg-6">
+                    <span class="glyphicon glyphicon-search btn btn-primary pull-right" aria-hidden="true" onclick="$('#fSearch').submit()"></span>
+                </div>
+            </div>
+        }
+        <div class="row form-group">
+            <div class="col-lg-12">
+                @if (Model.Result.Length == 0)
+                {
+                    <div class="label-warning">No results found</div>
+                }
+                else
+                {
+                    <table id="tItems" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>On date</th>
+                                <th>Receiver</th>
+                                <th>Address</th>
+                                <th>Payment type</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Result)
+                            {
+                                <tr>
+                                    <td>@item.OnDate.ToShortDateString()</td>
+                                    <td>@item.Receiver</td>
+                                    <td>@item.Address</td>
+                                    <td>@item.PaymentTypeName</td>
+                                    <td>@item.StatusName</td>
+                                    <td>@item.Total</td>
+                                    <td>@Html.Raw(item.Paid ? "Yes" : "No")</td>
+                                    <td>@item.Note</td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,9 @@ namespace Umamido.Common
 
         public String FirstTitle { get; set; }
 
+        public String FirstTitleNoHtml { get { return Tools.Tools.StripHtmlTags(FirstTitle); } }
+
+
         public Boolean IsActive { get; set; }
 
         public TranslatableItemModel[] Titles { get; set; }

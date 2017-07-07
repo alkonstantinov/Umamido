@@ -14,6 +14,7 @@
           <Property Name="ImageId" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CookMinutes" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="GoodDesc">
           <Key>
@@ -50,6 +51,44 @@
           <Property Name="LangId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LangName" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="int" Nullable="false" />
+          <Property Name="PaymentTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Req">
+          <Key>
+            <PropertyRef Name="ReqId" />
+          </Key>
+          <Property Name="ReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaymentTypeId" Type="int" Nullable="false" />
+          <Property Name="Receiver" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Paid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Req2Good">
+          <Key>
+            <PropertyRef Name="Req2GoodId" />
+          </Key>
+          <Property Name="Req2GoodId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqId" Type="int" Nullable="false" />
+          <Property Name="GoodId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Req2Status">
+          <Key>
+            <PropertyRef Name="Req2StatusId" />
+          </Key>
+          <Property Name="Req2StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqId" Type="int" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Restaurant">
           <Key>
@@ -102,6 +141,13 @@
           <Property Name="SliderId" Type="int" Nullable="false" />
           <Property Name="LangId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Text">
           <Key>
@@ -197,6 +243,42 @@
             </Principal>
             <Dependent Role="GoodTitle">
               <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req_PaymentTypeId">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Req" Type="Self.Req" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeId" />
+            </Principal>
+            <Dependent Role="Req">
+              <PropertyRef Name="PaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req2Good_GoodId">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="Req2Good" Type="Self.Req2Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Req2Good">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req2Good_ReqId">
+          <End Role="Req" Type="Self.Req" Multiplicity="1" />
+          <End Role="Req2Good" Type="Self.Req2Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Req">
+              <PropertyRef Name="ReqId" />
+            </Principal>
+            <Dependent Role="Req2Good">
+              <PropertyRef Name="ReqId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -344,18 +426,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SearchReq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="from" Type="datetime2" Mode="In" />
+          <Parameter Name="to" Type="datetime2" Mode="In" />
+          <Parameter Name="restaurantId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="UmamidoModelStoreContainer">
           <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodTitle" EntityType="Self.GoodTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lang" EntityType="Self.Lang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req" EntityType="Self.Req" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req2Good" EntityType="Self.Req2Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req2Status" EntityType="Self.Req2Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restaurant" EntityType="Self.Restaurant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantDesc" EntityType="Self.RestaurantDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestaurantTitle" EntityType="Self.RestaurantTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SliderDesc" EntityType="Self.SliderDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SliderTitle" EntityType="Self.SliderTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TextDesc" EntityType="Self.TextDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -382,6 +474,18 @@
           <AssociationSet Name="fk_GoodTitle_LangId" Association="Self.fk_GoodTitle_LangId">
             <End Role="Lang" EntitySet="Lang" />
             <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req_PaymentTypeId" Association="Self.fk_Req_PaymentTypeId">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Req" EntitySet="Req" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req2Good_GoodId" Association="Self.fk_Req2Good_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Req2Good" EntitySet="Req2Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req2Good_ReqId" Association="Self.fk_Req2Good_ReqId">
+            <End Role="Req" EntitySet="Req" />
+            <End Role="Req2Good" EntitySet="Req2Good" />
           </AssociationSet>
           <AssociationSet Name="fk_Restaurant_ImageId" Association="Self.fk_Restaurant_ImageId">
             <End Role="Image" EntitySet="Image" />
@@ -532,6 +636,28 @@
             <End Role="Text" EntitySet="Text" />
             <End Role="TextDesc" EntitySet="TextDesc" />
           </AssociationSet>
+          <EntitySet Name="PaymentType" EntityType="UmamidoModel.PaymentType" />
+          <EntitySet Name="Req" EntityType="UmamidoModel.Req" />
+          <EntitySet Name="Req2Good" EntityType="UmamidoModel.Req2Good" />
+          <EntitySet Name="Req2Status" EntityType="UmamidoModel.Req2Status" />
+          <EntitySet Name="Status" EntityType="UmamidoModel.Status" />
+          <AssociationSet Name="fk_Req2Good_GoodId" Association="UmamidoModel.fk_Req2Good_GoodId">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Req2Good" EntitySet="Req2Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req_PaymentTypeId" Association="UmamidoModel.fk_Req_PaymentTypeId">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Req" EntitySet="Req" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req2Good_ReqId" Association="UmamidoModel.fk_Req2Good_ReqId">
+            <End Role="Req" EntitySet="Req" />
+            <End Role="Req2Good" EntitySet="Req2Good" />
+          </AssociationSet>
+          <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
+            <Parameter Name="from" Mode="In" Type="DateTime" />
+            <Parameter Name="to" Mode="In" Type="DateTime" />
+            <Parameter Name="restaurantId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Lang">
           <Key>
@@ -668,6 +794,8 @@
           <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Good_RestaurantId" FromRole="Good" ToRole="Restaurant" />
           <NavigationProperty Name="GoodDesc" Relationship="UmamidoModel.fk_GoodDesc_GoodId" FromRole="Good" ToRole="GoodDesc" />
           <NavigationProperty Name="GoodTitle" Relationship="UmamidoModel.fk_GoodTitle_GoodId" FromRole="Good" ToRole="GoodTitle" />
+          <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_GoodId" FromRole="Good" ToRole="Req2Good" />
+          <Property Name="CookMinutes" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="GoodDesc">
           <Key>
@@ -899,6 +1027,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="PaymentTypeId" />
+          </Key>
+          <Property Name="PaymentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="PaymentType" ToRole="Req" />
+        </EntityType>
+        <EntityType Name="Req">
+          <Key>
+            <PropertyRef Name="ReqId" />
+          </Key>
+          <Property Name="ReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaymentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Receiver" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
+          <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
+        </EntityType>
+        <EntityType Name="Req2Good">
+          <Key>
+            <PropertyRef Name="Req2GoodId" />
+          </Key>
+          <Property Name="Req2GoodId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqId" Type="Int32" Nullable="false" />
+          <Property Name="GoodId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_Req2Good_GoodId" FromRole="Req2Good" ToRole="Good" />
+          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req2Good" ToRole="Req" />
+        </EntityType>
+        <EntityType Name="Req2Status">
+          <Key>
+            <PropertyRef Name="Req2StatusId" />
+          </Key>
+          <Property Name="Req2StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqId" Type="Int32" Nullable="false" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="fk_Req2Good_GoodId">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="1" />
+          <End Type="UmamidoModel.Req2Good" Role="Req2Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Req2Good">
+              <PropertyRef Name="GoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req_PaymentTypeId">
+          <End Type="UmamidoModel.PaymentType" Role="PaymentType" Multiplicity="1" />
+          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="PaymentTypeId" />
+            </Principal>
+            <Dependent Role="Req">
+              <PropertyRef Name="PaymentTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req2Good_ReqId">
+          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="1" />
+          <End Type="UmamidoModel.Req2Good" Role="Req2Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Req">
+              <PropertyRef Name="ReqId" />
+            </Principal>
+            <Dependent Role="Req2Good">
+              <PropertyRef Name="ReqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SearchReq_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="Boolean" Name="Paid" Nullable="false" />
+          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="OnDate" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -967,6 +1192,7 @@
           <EntitySetMapping Name="Good">
             <EntityTypeMapping TypeName="UmamidoModel.Good">
               <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="CookMinutes" ColumnName="CookMinutes" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
@@ -1042,6 +1268,71 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PaymentType">
+            <EntityTypeMapping TypeName="UmamidoModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req">
+            <EntityTypeMapping TypeName="UmamidoModel.Req">
+              <MappingFragment StoreEntitySet="Req">
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req2Good">
+            <EntityTypeMapping TypeName="UmamidoModel.Req2Good">
+              <MappingFragment StoreEntitySet="Req2Good">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="GoodId" ColumnName="GoodId" />
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Req2GoodId" ColumnName="Req2GoodId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req2Status">
+            <EntityTypeMapping TypeName="UmamidoModel.Req2Status">
+              <MappingFragment StoreEntitySet="Req2Status">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Req2StatusId" ColumnName="Req2StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="UmamidoModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

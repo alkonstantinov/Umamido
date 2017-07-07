@@ -8,6 +8,9 @@ class Goods extends BasePage {
 
     constructor() {
         super();
+        for (let i = 1; i < 90; i++) {
+            $("#ddlCookTime").append("<option value='" + i + "'>" + i + "</option>");
+        }
     }
 
 
@@ -24,6 +27,15 @@ class Goods extends BasePage {
         let result = Comm.Get("/nomen/AllGoods?restaurantId=" + $("#RestaurantId").val());
         if (result == -1) {
             //BasePage.LoadLogin();
+        }
+        if (result.length == 0) {
+            $("#tItems").hide();
+            $("#lNoItems").show();
+
+        }
+        else {
+            $("#tItems").show();
+            $("#lNoItems").hide();
         }
         let tbl = $("#tItems tbody");
         tbl.empty();
@@ -67,6 +79,7 @@ class Goods extends BasePage {
             RestaurantId: $("#RestaurantId").val(),
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
+            CookTime: $("#ddlCookTime").val(),
             Titles: [],
             Descriptions: []
         };
@@ -123,7 +136,7 @@ class Goods extends BasePage {
         if (element == null) {
             this.currentId = -1;
             $("#tbPrice").val("0");
-            
+            $("#ddlCookTime").val("1");
             for (let lang of Comm.Get("/nomen/AllLangs")) {
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='-1'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
@@ -143,6 +156,8 @@ class Goods extends BasePage {
             $("#tbPrice").val(obj.Price);
             $("#cbIsActive").prop("checked", obj.IsActive);
             $("#ddlLogo").val(obj.ImageId);
+            $("#ddlCookTime").val(obj.CookTime);
+            
             this.currentId = obj.GoodId;
 
 
