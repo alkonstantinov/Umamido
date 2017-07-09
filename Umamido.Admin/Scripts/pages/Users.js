@@ -13,11 +13,15 @@ var Users = (function (_super) {
     function Users() {
         return _super.call(this) || this;
     }
+    Users.prototype.LoadLevels = function () {
+        var result = Comm.Get("/security/GetUserLevels");
+        var ddl = $("#ddlUserLevel");
+        $(result).each(function (i, e) {
+            ddl.append("<option value='" + e.UserLevelId + "'>" + e.UserLevelName + "</option>");
+        });
+    };
     Users.prototype.LoadUsers = function () {
-        var result = Comm.Get("/security/AllUsers");
-        if (result == -1) {
-            //BasePage.LoadLogin();
-        }
+        var result = Comm.Post("/security/AllUsers", { userLevelId: -1 });
         if (result.length == 0) {
             $("#tItems").hide();
             $("#lNoItems").show();
@@ -61,6 +65,7 @@ var Users = (function (_super) {
             UserId: this.currentId,
             UserName: $("#tbUserName").val(),
             Password: $("#tbPassword").val(),
+            UserLevelId: $("#ddlUserLevel").val(),
             IsActive: $("#cbIsActive").prop("checked")
         });
         $("#dUser").modal('hide');
@@ -93,6 +98,7 @@ var Users = (function (_super) {
             $("#tbPassword").val("");
             $("#tbRePassword").val("");
             $("#cbIsActive").prop("checked", obj.IsActive);
+            $("#ddlUserLevel").val(obj.UserLevelId);
         }
         $("#dUser").modal('show');
     };

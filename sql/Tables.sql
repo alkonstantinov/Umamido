@@ -2,6 +2,27 @@ use Umamido
 go
 
 
+if object_id('UserLevel') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'UserLevel'
+  drop table UserLevel
+end
+go
+
+create table UserLevel
+( 
+  UserLevelId int not null
+  , UserLevelName nvarchar (100) not null 
+  , constraint pk_UserLevelId primary key(UserLevelId)   
+)
+go
+exec p_ak_create_fk_indeces 'UserLevel'
+go
+insert into UserLevel (UserLevelId, UserLevelName)
+values (1,'Administrator'), (2,'Delivery')
+
+
+
 if object_id('User') is not null
 begin
   exec p_ak_drop_all_foreign_keys 'User'
@@ -14,6 +35,7 @@ create table [User]
   UserId int not null identity(1,1)
   , UserName nvarchar (100) not null 
   , Password nvarchar (64) not null
+  , UserLevelId int not null
   , IsActive bit not null default 1
   , constraint pk_UserId primary key(UserId)   
 )
@@ -21,7 +43,7 @@ go
 exec p_ak_create_fk_indeces 'User'
 go
 
-insert into [User] (UserName, Password,IsActive) values ('alex', '202cb962ac59075b964b07152d234b70', 1)
+insert into [User] (UserName, Password, UserLevelId, IsActive) values ('alex', '202cb962ac59075b964b07152d234b70', 1, 1)
 go
 
 if object_id('Lang') is not null
@@ -323,9 +345,10 @@ go
 
 insert into Status (StatusId, StatusName) values (1, 'New order')
 insert into Status (StatusId, StatusName) values (2, 'Started cooking')
-insert into Status (StatusId, StatusName) values (3, 'Started delivering')
-insert into Status (StatusId, StatusName) values (4, 'Delivered')
-insert into Status (StatusId, StatusName) values (5, 'Not delivered')
+insert into Status (StatusId, StatusName) values (3, 'Dispatched for delivery')
+insert into Status (StatusId, StatusName) values (4, 'Started delivering')
+insert into Status (StatusId, StatusName) values (5, 'Delivered')
+insert into Status (StatusId, StatusName) values (6, 'Not delivered')
 go
 
 

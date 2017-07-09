@@ -12,6 +12,21 @@ namespace Umamido.DL
 {
     public class DLFuncs
     {
+        public static void MapperInitialize()
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<UserLevel, UserLevelModel>();
+                cfg.CreateMap<User, UserRowModel>();
+                cfg.CreateMap<UserRowModel, User>();
+                cfg.CreateMap<Lang, LangRowModel>();
+                cfg.CreateMap<LangRowModel, Lang>();
+                cfg.CreateMap<Image, ImageRowModel>();
+                cfg.CreateMap<Image, ImageFileModel>();
+                cfg.CreateMap<SearchReq_Result, ReqQueryRowModel>();
+                cfg.CreateMap<ForDispatch_Result, ReqModel>();
+            });
+        }
         UmamidoEntities entities;
         public DLFuncs()
         {
@@ -19,22 +34,35 @@ namespace Umamido.DL
         }
 
 
-        public int? Login(LoginModel model)
+        public UserRowModel Login(LoginModel model)
         {
             var result = entities.User.FirstOrDefault(u => u.UserName == model.Username && u.Password == model.PasswordMd5 && u.IsActive);
-            return (result == null ? null : (int?)result.UserId);
+            return (result == null ? null :
+                new UserRowModel()
+                {
+                    IsActive = true,
+                    UserId = result.UserId,
+                    UserLevelId = result.UserLevelId,
+                    UserName = result.UserName
+                }
+                );
         }
 
         #region Users
 
-        public UserRowModel[] GetUsers()
+        public UserLevelModel[] GetUserLevels()
+        {
+            List<UserLevelModel> res = new List<UserLevelModel>();
+            var lvls = entities.UserLevel.OrderBy(u => u.UserLevelId).ToArray();
+            foreach (var u in lvls)
+                res.Add(Mapper.Map<UserLevelModel>(u));
+            return res.ToArray();
+        }
+
+        public UserRowModel[] GetUsers(int userLevelId = -1)
         {
             List<UserRowModel> res = new List<UserRowModel>();
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<User, UserRowModel>();
-            });
-            var usrs = entities.User.OrderBy(u => u.UserName).ToArray();
+            var usrs = entities.User.Where(u => userLevelId == -1 || u.UserLevelId == userLevelId).OrderBy(u => u.UserName).ToArray();
             foreach (var u in usrs)
                 res.Add(Mapper.Map<UserRowModel>(u));
             return res.ToArray();
@@ -42,10 +70,6 @@ namespace Umamido.DL
 
         public UserRowModel GetUser(int userId)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<User, UserRowModel>();
-            });
             var usr = entities.User.First(u => u.UserId == userId);
             return (Mapper.Map<UserRowModel>(usr));
         }
@@ -59,10 +83,6 @@ namespace Umamido.DL
 
         public void SaveUser(UserRowModel model)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<UserRowModel, User>();
-            });
             if (model.UserId == -1)
             {
                 entities.User.Add(Mapper.Map<User>(model));
@@ -73,7 +93,7 @@ namespace Umamido.DL
                 usr.UserName = model.UserName;
                 usr.IsActive = model.IsActive;
                 usr.Password = string.IsNullOrEmpty(model.Password) ? usr.Password : model.PasswordMd5;
-
+                usr.UserLevelId = model.UserLevelId;
             }
             entities.SaveChanges();
         }
@@ -85,6 +105,8 @@ namespace Umamido.DL
             usr.IsActive = !usr.IsActive;
             entities.SaveChanges();
         }
+
+
         #endregion
 
 
@@ -93,10 +115,6 @@ namespace Umamido.DL
         public LangRowModel[] GetLangs()
         {
             List<LangRowModel> res = new List<LangRowModel>();
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Lang, LangRowModel>();
-            });
             var langs = entities.Lang.OrderBy(l => l.LangId).ToArray();
             foreach (var l in langs)
                 res.Add(Mapper.Map<LangRowModel>(l));
@@ -105,10 +123,6 @@ namespace Umamido.DL
 
         public LangRowModel GetLang(int langId)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Lang, LangRowModel>();
-            });
             var lang = entities.Lang.First(l => l.LangId == langId);
             return (Mapper.Map<LangRowModel>(lang));
         }
@@ -117,10 +131,6 @@ namespace Umamido.DL
 
         public void SaveLang(LangRowModel model)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<LangRowModel, Lang>();
-            });
             if (model.LangId == -1)
             {
                 entities.Lang.Add(Mapper.Map<Lang>(model));
@@ -148,10 +158,6 @@ namespace Umamido.DL
         public ImageRowModel[] GetImages()
         {
             List<ImageRowModel> res = new List<ImageRowModel>();
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Image, ImageRowModel>();
-            });
             var images = entities.Image.OrderBy(i => i.ImageId).ToArray();
             foreach (var i in images)
             {
@@ -164,10 +170,6 @@ namespace Umamido.DL
 
         public ImageRowModel GetImage(int imageId)
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Image, ImageRowModel>();
-            });
             var image = entities.Image.First(i => i.ImageId == imageId);
             return (Mapper.Map<ImageRowModel>(image));
         }
@@ -177,10 +179,6 @@ namespace Umamido.DL
             var image = entities.Image.FirstOrDefault(i => i.ImageId == imageId);
             if (image == null)
                 return null;
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Image, ImageFileModel>();
-            });
             return Mapper.Map<ImageFileModel>(image);
         }
 
@@ -720,16 +718,41 @@ namespace Umamido.DL
 
 
             var result = entities.SearchReq(from, to, model.Restaurant);
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<SearchReq_Result, ReqQueryRowModel>();
-            });
             List<ReqQueryRowModel> rows = new List<ReqQueryRowModel>();
             foreach (var item in result)
                 rows.Add(Mapper.Map<ReqQueryRowModel>(item));
             model.Result = rows.ToArray();
 
         }
+        #endregion
+
+        #region Dispatch
+        public ReqModel[] GetReqsForDispatch()
+        {
+            List<ReqModel> result = new List<ReqModel>();
+            foreach (var item in entities.ForDispatch())
+            {
+                result.Add(Mapper.Map<ReqModel>(item));
+            }
+            return result.ToArray();
+        }
+
+        public void Dispatch(DispatchModel model)
+        {
+            Req2Status r2s = new Req2Status()
+            {
+                UserId = model.UserId,
+                OnDate = DateTime.Now,
+                ReqId = model.ReqId,
+                StatusId = 3
+            };
+            entities.Req2Status.Add(r2s);
+            entities.SaveChanges();
+
+
+        }
+
+
         #endregion
     }
 }

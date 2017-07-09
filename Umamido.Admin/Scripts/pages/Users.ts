@@ -12,11 +12,21 @@ class Users extends BasePage {
 
 
 
+    public LoadLevels() {
+        let result = Comm.Get("/security/GetUserLevels");
+
+        let ddl = $("#ddlUserLevel");
+
+        $(result).each(function (i, e) {
+
+            ddl.append("<option value='" + e.UserLevelId + "'>" + e.UserLevelName + "</option>");
+        });
+
+    }
+
     public LoadUsers() {
-        let result = Comm.Get("/security/AllUsers");
-        if (result == -1) {
-            //BasePage.LoadLogin();
-        }
+        let result = Comm.Post("/security/AllUsers", { userLevelId: -1 });
+
         if (result.length == 0) {
             $("#tItems").hide();
             $("#lNoItems").show();
@@ -64,12 +74,15 @@ class Users extends BasePage {
 
         if (err)
             return;
+
         let rslt = Comm.Post("/security/setuser", {
             UserId: this.currentId,
             UserName: $("#tbUserName").val(),
             Password: $("#tbPassword").val(),
+            UserLevelId: $("#ddlUserLevel").val(),
             IsActive: $("#cbIsActive").prop("checked")
         });
+
 
         $("#dUser").modal('hide');
         this.LoadUsers();
@@ -107,6 +120,7 @@ class Users extends BasePage {
             $("#tbPassword").val("");
             $("#tbRePassword").val("");
             $("#cbIsActive").prop("checked", obj.IsActive);
+            $("#ddlUserLevel").val(obj.UserLevelId);
 
         }
         $("#dUser").modal('show');

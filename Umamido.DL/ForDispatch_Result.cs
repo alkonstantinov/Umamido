@@ -10,14 +10,11 @@
 namespace Umamido.DL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User
+    public partial class ForDispatch_Result
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public bool IsActive { get; set; }
-        public int UserLevelId { get; set; }
+        public int ReqId { get; set; }
+        public string Receiver { get; set; }
+        public string Address { get; set; }
     }
 }

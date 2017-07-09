@@ -16,6 +16,8 @@ var Comm = (function () {
                 return;
             }
         });
+        if (result == -1)
+            BasePage.LoadLogin();
         return result;
     };
     Comm.Post = function (url, data) {
@@ -35,6 +37,8 @@ var Comm = (function () {
                 BasePage.LoadError(a, b, c);
             }
         });
+        if (result == -1)
+            BasePage.LoadLogin();
         return result;
     };
     return Comm;

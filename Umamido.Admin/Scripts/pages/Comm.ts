@@ -21,6 +21,8 @@ class Comm {
             }
 
         });
+        if (result == -1)
+            BasePage.LoadLogin();
         return result;
     }
 
@@ -43,6 +45,8 @@ class Comm {
                 BasePage.LoadError(a, b, c);
             }
         });
+        if (result == -1)
+            BasePage.LoadLogin();
         return result;
     }
 

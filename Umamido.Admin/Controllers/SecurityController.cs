@@ -22,9 +22,9 @@ namespace Umamido.Admin.Controllers
             else
             {
                 var result = this.DL.Login(model);
-                if (result.HasValue)
+                if (result != null)
                 {
-                    this.UserId = result.Value;
+                    this.UserData = result;
                     if (model.ReturnUrl != null)
                         return Redirect(model.ReturnUrl);
                     else
@@ -49,16 +49,28 @@ namespace Umamido.Admin.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public ActionResult AllUsers()
+        [HttpPost]
+        public ActionResult AllUsers(int userLevelId = -1)
         {
-            var result = this.DL.GetUsers();
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+            var result = this.DL.GetUsers(userLevelId);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetUserLevels()
+        {
+            var result = this.DL.GetUserLevels();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult UserChangeActive(int userId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.UserChangeActive(userId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -66,6 +78,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetUser(UserRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveUser(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -73,12 +88,18 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult GetUser(int userId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             return Json(this.DL.GetUser(userId), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult UserExists(string userName)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             return Json(this.DL.UserExists(userName), JsonRequestBehavior.AllowGet);
         }
 

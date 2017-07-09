@@ -13,8 +13,8 @@
           <Property Name="RestaurantId" Type="int" Nullable="false" />
           <Property Name="ImageId" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CookMinutes" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="GoodDesc">
           <Key>
@@ -172,7 +172,15 @@
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="UserLevelId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="UserLevelId" />
+          </Key>
+          <Property Name="UserLevelId" Type="int" Nullable="false" />
+          <Property Name="UserLevelName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="fk_Good_ImageId">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
@@ -426,6 +434,52 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="f_ak_split_string" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="delim" Type="nvarchar(max)" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="int" Nullable="false" />
+                <Property Name="line" Type="nvarchar(max)" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="f_ak_trim" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
+          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="ForDispatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="p_ak_close_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileHandle" Type="int" Mode="In" />
+        </Function>
+        <Function Name="p_ak_close_file_system" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileSystem" Type="int" Mode="In" />
+        </Function>
+        <Function Name="p_ak_create_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileSystem" Type="int" Mode="In" />
+          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="p_ak_create_file_system" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="p_ak_create_fk_indeces" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="p_ak_delete_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileSystem" Type="int" Mode="In" />
+          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="p_ak_drop_all_foreign_keys" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="p_ak_rename_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileSystem" Type="int" Mode="In" />
+          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="NewFileName" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="p_ak_write_to_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FileHandle" Type="int" Mode="In" />
+          <Parameter Name="text" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="SearchReq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="from" Type="datetime2" Mode="In" />
           <Parameter Name="to" Type="datetime2" Mode="In" />
@@ -451,6 +505,7 @@
           <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TextDesc" EntityType="Self.TextDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserLevel" EntityType="Self.UserLevel" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_Good_ImageId" Association="Self.fk_Good_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Good" EntitySet="Good" />
@@ -548,6 +603,7 @@
           <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UserLevelId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityContainer Name="UmamidoEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="User" EntityType="Self.User" />
@@ -657,6 +713,42 @@
             <Parameter Name="from" Mode="In" Type="DateTime" />
             <Parameter Name="to" Mode="In" Type="DateTime" />
             <Parameter Name="restaurantId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="UserLevel" EntityType="UmamidoModel.UserLevel" />
+          <FunctionImport Name="f_ak_split_string" IsComposable="true" ReturnType="Collection(UmamidoModel.f_ak_split_string_Result)">
+            <Parameter Name="str" Mode="In" Type="String" />
+            <Parameter Name="delim" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
+          <FunctionImport Name="p_ak_close_file">
+            <Parameter Name="FileHandle" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_close_file_system">
+            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_create_file">
+            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
+            <Parameter Name="Filename" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_create_file_system" />
+          <FunctionImport Name="p_ak_create_fk_indeces">
+            <Parameter Name="tableName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_delete_file">
+            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
+            <Parameter Name="Filename" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_drop_all_foreign_keys">
+            <Parameter Name="tableName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_rename_file">
+            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
+            <Parameter Name="Filename" Mode="In" Type="String" />
+            <Parameter Name="NewFileName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="p_ak_write_to_file">
+            <Parameter Name="FileHandle" Mode="In" Type="Int32" />
+            <Parameter Name="text" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Lang">
@@ -1124,6 +1216,22 @@
           <Property Type="String" Name="Note" Nullable="true" />
           <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
+        <EntityType Name="UserLevel">
+          <Key>
+            <PropertyRef Name="UserLevelId" />
+          </Key>
+          <Property Name="UserLevelId" Type="Int32" Nullable="false" />
+          <Property Name="UserLevelName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="f_ak_split_string_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="line" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ForDispatch_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1133,6 +1241,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="UmamidoModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserLevelId" ColumnName="UserLevelId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1333,6 +1442,40 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="UserLevel">
+            <EntityTypeMapping TypeName="UmamidoModel.UserLevel">
+              <MappingFragment StoreEntitySet="UserLevel">
+                <ScalarProperty Name="UserLevelName" ColumnName="UserLevelName" />
+                <ScalarProperty Name="UserLevelId" ColumnName="UserLevelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="f_ak_split_string" FunctionName="UmamidoModel.Store.f_ak_split_string">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.f_ak_split_string_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="line" ColumnName="line" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForDispatch" FunctionName="UmamidoModel.Store.ForDispatch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForDispatch_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="p_ak_close_file" FunctionName="UmamidoModel.Store.p_ak_close_file" />
+          <FunctionImportMapping FunctionImportName="p_ak_close_file_system" FunctionName="UmamidoModel.Store.p_ak_close_file_system" />
+          <FunctionImportMapping FunctionImportName="p_ak_create_file" FunctionName="UmamidoModel.Store.p_ak_create_file" />
+          <FunctionImportMapping FunctionImportName="p_ak_create_file_system" FunctionName="UmamidoModel.Store.p_ak_create_file_system" />
+          <FunctionImportMapping FunctionImportName="p_ak_create_fk_indeces" FunctionName="UmamidoModel.Store.p_ak_create_fk_indeces" />
+          <FunctionImportMapping FunctionImportName="p_ak_delete_file" FunctionName="UmamidoModel.Store.p_ak_delete_file" />
+          <FunctionImportMapping FunctionImportName="p_ak_drop_all_foreign_keys" FunctionName="UmamidoModel.Store.p_ak_drop_all_foreign_keys" />
+          <FunctionImportMapping FunctionImportName="p_ak_rename_file" FunctionName="UmamidoModel.Store.p_ak_rename_file" />
+          <FunctionImportMapping FunctionImportName="p_ak_write_to_file" FunctionName="UmamidoModel.Store.p_ak_write_to_file" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

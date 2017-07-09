@@ -45,6 +45,7 @@
         <AssociationConnector Association="UmamidoModel.fk_Req2Good_GoodId" />
         <AssociationConnector Association="UmamidoModel.fk_Req_PaymentTypeId" />
         <AssociationConnector Association="UmamidoModel.fk_Req2Good_ReqId" />
+        <EntityTypeShape EntityType="UmamidoModel.UserLevel" Width="1.5" PointX="10.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

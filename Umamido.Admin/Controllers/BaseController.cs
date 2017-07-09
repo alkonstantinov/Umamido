@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Umamido.Common;
 
 namespace Umamido.Admin.Controllers
 {
@@ -10,9 +11,9 @@ namespace Umamido.Admin.Controllers
     {
         public DL.DLFuncs DL { get; set; }
 
-        public int? UserId
+        public UserRowModel UserData
         {
-            get { return (Session["UserId"] == null ? null : (int?)int.Parse(Session["UserId"].ToString())); }
+            get { return (Session["UserId"] == null ? null : (UserRowModel)Session["UserId"]); }
             set { Session["UserId"] = value; }
         }
 
@@ -20,6 +21,11 @@ namespace Umamido.Admin.Controllers
         public BaseController()
         {
             this.DL = new Umamido.DL.DLFuncs();
+        }
+
+        public bool HasLevel(int level)
+        {
+            return this.UserData != null && this.UserData.UserLevelId == level;
         }
     }
 }

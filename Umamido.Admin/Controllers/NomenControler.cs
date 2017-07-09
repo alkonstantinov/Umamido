@@ -21,6 +21,8 @@ namespace Umamido.Admin.Controllers
         [HttpGet]
         public ActionResult AllLangs()
         {
+            
+
             var result = this.DL.GetLangs();
             return Json(result, JsonRequestBehavior.AllowGet);            
         }
@@ -28,6 +30,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult LangChangeActive(int langId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.LangChangeActive(langId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -35,13 +40,19 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetLang(LangRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveLang(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public ActionResult GetLang(int langId)
-        {            
+        {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             return Json(this.DL.GetLang(langId), JsonRequestBehavior.AllowGet);
         }
 
@@ -57,6 +68,9 @@ namespace Umamido.Admin.Controllers
         [HttpGet]
         public ActionResult AllImages()
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             var result = this.DL.GetImages();            
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -65,6 +79,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult StoreImageInCache(string guid, string content, string filename)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             ImageFileModel ifm = new ImageFileModel();
             ifm.Content = Convert.FromBase64String(content.Split(',')[1]); 
             ifm.Guid = guid;
@@ -78,6 +95,9 @@ namespace Umamido.Admin.Controllers
         [HttpGet]
         public ActionResult GetImageContentFromCache(string guid)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             ImageFileModel ifm = (ImageFileModel)HttpContext.Cache[guid];
             string filename = ifm.FileName;            
             byte[] filedata = ifm.Content;
@@ -100,6 +120,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetImage(ImageRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             if (!string.IsNullOrEmpty(model.Guid))
             {
                 ImageFileModel ifm = (ImageFileModel)HttpContext.Cache[model.Guid];
@@ -116,6 +139,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult GetImage(int imageId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             var img = this.DL.GetImage(imageId);
             img.Content = null;
             return Json(img, JsonRequestBehavior.AllowGet);
@@ -144,6 +170,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult ImageChangeActive(int imageId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.ImageChangeActive(imageId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -159,6 +188,8 @@ namespace Umamido.Admin.Controllers
         [HttpGet]
         public ActionResult AllRestaurants()
         {
+           
+
             var result = this.DL.GetRestaurants();
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -166,6 +197,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult RestaurantChangeActive(int restaurantId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.RestaurantChangeActive(restaurantId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -173,6 +207,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetRestaurant(RestaurantRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveRestaurant(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -185,6 +222,7 @@ namespace Umamido.Admin.Controllers
         [HttpGet]
         public ActionResult Goods(int restaurantId)
         {
+
             RestaurantRowModel rm = DL.GetRestaurant(restaurantId);
             rm.FirstTitle = Tools.StripHtmlTags(rm.FirstTitle);
             return View(rm);
@@ -199,6 +237,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult GoodChangeActive(int restaurantId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.GoodChangeActive(restaurantId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -206,6 +247,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetGood(GoodRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveGood(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -230,6 +274,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SliderChangeActive(int sliderId)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SliderChangeActive(sliderId);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -237,6 +284,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetSlider(SliderRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveSlider(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }
@@ -261,6 +311,9 @@ namespace Umamido.Admin.Controllers
         [HttpPost]
         public ActionResult SetText(TextRowModel model)
         {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
             this.DL.SaveText(model);
             return Json("ОК", JsonRequestBehavior.AllowGet);
         }

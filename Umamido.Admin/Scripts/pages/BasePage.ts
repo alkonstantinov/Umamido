@@ -103,6 +103,10 @@ class BasePage {
         $("div[id^='lErr']").hide();
     }
 
+    static LoadLogin() {
+        window.location.href = "/security/logoff";
+
+    }
 
     static ValidEGN(s: String) {
         var t = [2, 4, 8, 5, 10, 9, 7, 3, 6];

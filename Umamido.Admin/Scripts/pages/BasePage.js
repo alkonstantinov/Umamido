@@ -70,6 +70,9 @@ var BasePage = (function () {
     BasePage.HideErrors = function () {
         $("div[id^='lErr']").hide();
     };
+    BasePage.LoadLogin = function () {
+        window.location.href = "/security/logoff";
+    };
     BasePage.ValidEGN = function (s) {
         var t = [2, 4, 8, 5, 10, 9, 7, 3, 6];
         //if (typeof s != 'string') return false;

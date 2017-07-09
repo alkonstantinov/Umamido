@@ -37,6 +37,7 @@ namespace Umamido.Common
 
         }
         
+        public int UserLevelId { get; set; }
 
         public Boolean IsActive { get; set; }
     }

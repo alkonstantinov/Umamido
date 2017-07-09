@@ -12,8 +12,11 @@ namespace Umamido.Admin.Controllers
     {
         // GET: Reports
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+
         public ActionResult RequestsQuery(ReqQueryModel model)
         {
+            if (this.UserData.UserLevelId != 1)
+                return RedirectToAction("logoff", "security");
             if (this.Request.HttpMethod.ToUpper() == "GET")
             {
                 model.Restaurant = -1;

@@ -22,3 +22,24 @@ begin
 	)
   order by r.ReqId
 end
+go
+
+if OBJECT_ID('ForDispatch') is not null
+  drop procedure ForDispatch
+go
+
+
+create procedure ForDispatch  as 
+begin
+  select 
+    r.ReqId, r.Receiver, r.Address
+  from Req r
+  join Req2Status r2s on r2s.ReqId = r.ReqId
+  left join Req2Status r2s2 on r2s2.ReqId = r.ReqId and r2s2.Req2StatusId > r2s.Req2StatusId
+  where 
+    r2s2.Req2StatusId is null and 
+	r2s.StatusId = 2
+  order by r.ReqId
+end
+go
+
