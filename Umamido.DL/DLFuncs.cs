@@ -25,6 +25,10 @@ namespace Umamido.DL
                 cfg.CreateMap<Image, ImageFileModel>();
                 cfg.CreateMap<SearchReq_Result, ReqQueryRowModel>();
                 cfg.CreateMap<ForDispatch_Result, ReqModel>();
+                cfg.CreateMap<ForCollect_Result, ReqModel>();
+                cfg.CreateMap<CollectDetails_Result, CollectDetailsModel>();
+                cfg.CreateMap<ForDeliver_Result, ReqModel>();
+
             });
         }
         UmamidoEntities entities;
@@ -85,7 +89,12 @@ namespace Umamido.DL
         {
             if (model.UserId == -1)
             {
-                entities.User.Add(Mapper.Map<User>(model));
+                var usr = new User();
+                usr.UserName = model.UserName;
+                usr.IsActive = model.IsActive;
+                usr.Password = model.PasswordMd5;
+                usr.UserLevelId = model.UserLevelId;
+                entities.User.Add(usr);
             }
             else
             {
@@ -748,10 +757,60 @@ namespace Umamido.DL
             };
             entities.Req2Status.Add(r2s);
             entities.SaveChanges();
-
-
         }
 
+        public ReqModel[] GetReqsForCollect(int userId)
+        {
+            List<ReqModel> result = new List<ReqModel>();
+            foreach (var item in entities.ForCollect(userId))
+                result.Add(Mapper.Map<ReqModel>(item));
+            return result.ToArray();
+        }
+
+        public CollectDetailsModel[] CollectDetails(int reqId)
+        {
+            List<CollectDetailsModel> result = new List<CollectDetailsModel>();
+            foreach (var item in entities.CollectDetails(reqId))
+                result.Add(Mapper.Map<CollectDetailsModel>(item));
+            return result.ToArray();
+        }
+
+        public void Collected(DispatchModel model)
+        {
+            Req2Status r2s = new Req2Status()
+            {
+                UserId = model.UserId,
+                OnDate = DateTime.Now,
+                ReqId = model.ReqId,
+                StatusId = 4
+            };
+            entities.Req2Status.Add(r2s);
+            entities.SaveChanges();
+        }
+
+
+        public ReqModel[] GetReqsForDelivery(int userId)
+        {
+            List<ReqModel> result = new List<ReqModel>();
+            foreach (var item in entities.ForDeliver(userId))
+                result.Add(Mapper.Map<ReqModel>(item));
+            return result.ToArray();
+        }
+
+
+        public void Delivered(DispatchModel model)
+        {
+            Req2Status r2s = new Req2Status()
+            {
+                UserId = model.UserId,
+                OnDate = DateTime.Now,
+                ReqId = model.ReqId,
+                StatusId = model.NewStatus,
+                Note = model.Note
+            };
+            entities.Req2Status.Add(r2s);
+            entities.SaveChanges();
+        }
 
         #endregion
     }

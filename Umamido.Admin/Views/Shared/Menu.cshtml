@@ -26,6 +26,11 @@
                         <li>@Html.ActionLink("Report", "RequestsQuery", "Reports")</li>
                         <li>@Html.ActionLink("Dispatch", "Index", "Dispatch")</li>
                     }
+                    @if (Model.UserLevelId == 2)
+                    {
+                        <li>@Html.ActionLink("Collect", "ForCollect", "Dispatch")</li>
+                        <li>@Html.ActionLink("Deliver", "ForDeliver", "Dispatch")</li>
+                    }
                     <li>@Html.ActionLink("Logoff", "Logoff", "Security")</li>
 
 

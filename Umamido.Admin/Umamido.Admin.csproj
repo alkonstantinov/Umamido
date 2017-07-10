@@ -316,6 +316,8 @@
     <Content Include="Views\Nomen\Texts.cshtml" />
     <Content Include="Views\Reports\RequestsQuery.cshtml" />
     <Content Include="Views\Dispatch\Index.cshtml" />
+    <Content Include="Views\Dispatch\ForCollect.cshtml" />
+    <Content Include="Views\Dispatch\ForDeliver.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -341,6 +343,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\pages\BasePage.ts" />
     <TypeScriptCompile Include="Scripts\pages\Comm.ts" />
+    <TypeScriptCompile Include="Scripts\pages\ForDeliver.ts" />
+    <TypeScriptCompile Include="Scripts\pages\ForCollect.ts" />
     <TypeScriptCompile Include="Scripts\pages\Images.ts" />
     <TypeScriptCompile Include="Scripts\pages\Goods.ts" />
     <TypeScriptCompile Include="Scripts\pages\Dispatch.ts" />

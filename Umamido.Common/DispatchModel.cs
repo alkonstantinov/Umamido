@@ -11,5 +11,9 @@ namespace Umamido.Common
         public int ReqId { get; set; }
 
         public int UserId { get; set; }
+
+        public int NewStatus { get; set; }
+
+        public string Note { get; set; }
     }
 }

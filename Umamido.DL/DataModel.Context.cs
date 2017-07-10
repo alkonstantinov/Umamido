@@ -180,5 +180,32 @@ namespace Umamido.DL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_write_to_file", fileHandleParameter, textParameter);
         }
+    
+        public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
+        {
+            var reqIdParameter = reqId.HasValue ?
+                new ObjectParameter("reqId", reqId) :
+                new ObjectParameter("reqId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CollectDetails_Result>("CollectDetails", reqIdParameter);
+        }
+    
+        public virtual ObjectResult<ForCollect_Result> ForCollect(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ForCollect_Result>("ForCollect", userIdParameter);
+        }
+    
+        public virtual ObjectResult<ForDeliver_Result> ForDeliver(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("userId", userId) :
+                new ObjectParameter("userId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ForDeliver_Result>("ForDeliver", userIdParameter);
+        }
     }
 }

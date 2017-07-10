@@ -434,6 +434,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CollectDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="reqId" Type="int" Mode="In" />
+        </Function>
         <Function Name="f_ak_split_string" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="delim" Type="nvarchar(max)" Mode="In" />
@@ -448,6 +451,12 @@
         </Function>
         <Function Name="f_ak_trim" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
           <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="ForCollect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ForDeliver" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
         <Function Name="ForDispatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="p_ak_close_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -721,10 +730,10 @@
           </FunctionImport>
           <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
           <FunctionImport Name="p_ak_close_file">
-            <Parameter Name="FileHandle" Mode="In" Type="Int32" />
+          <Parameter Name="FileHandle" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="p_ak_close_file_system">
-            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
+          <Parameter Name="FileSystem" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="p_ak_create_file">
             <Parameter Name="FileSystem" Mode="In" Type="Int32" />
@@ -732,14 +741,14 @@
           </FunctionImport>
           <FunctionImport Name="p_ak_create_file_system" />
           <FunctionImport Name="p_ak_create_fk_indeces">
-            <Parameter Name="tableName" Mode="In" Type="String" />
+          <Parameter Name="tableName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="p_ak_delete_file">
             <Parameter Name="FileSystem" Mode="In" Type="Int32" />
             <Parameter Name="Filename" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="p_ak_drop_all_foreign_keys">
-            <Parameter Name="tableName" Mode="In" Type="String" />
+          <Parameter Name="tableName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="p_ak_rename_file">
             <Parameter Name="FileSystem" Mode="In" Type="Int32" />
@@ -749,6 +758,15 @@
           <FunctionImport Name="p_ak_write_to_file">
             <Parameter Name="FileHandle" Mode="In" Type="Int32" />
             <Parameter Name="text" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CollectDetails" ReturnType="Collection(UmamidoModel.CollectDetails_Result)">
+          <Parameter Name="reqId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForCollect" ReturnType="Collection(UmamidoModel.ForCollect_Result)">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForDeliver" ReturnType="Collection(UmamidoModel.ForDeliver_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Lang">
@@ -1232,6 +1250,23 @@
           <Property Type="String" Name="Receiver" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="CollectDetails_Result">
+          <Property Type="Int32" Name="reqId" Nullable="false" />
+          <Property Type="String" Name="Good" Nullable="true" />
+          <Property Type="Int32" Name="CookMinutes" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="Restaurant" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ForCollect_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ForDeliver_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1476,6 +1511,35 @@
           <FunctionImportMapping FunctionImportName="p_ak_drop_all_foreign_keys" FunctionName="UmamidoModel.Store.p_ak_drop_all_foreign_keys" />
           <FunctionImportMapping FunctionImportName="p_ak_rename_file" FunctionName="UmamidoModel.Store.p_ak_rename_file" />
           <FunctionImportMapping FunctionImportName="p_ak_write_to_file" FunctionName="UmamidoModel.Store.p_ak_write_to_file" />
+          <FunctionImportMapping FunctionImportName="CollectDetails" FunctionName="UmamidoModel.Store.CollectDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.CollectDetails_Result">
+                <ScalarProperty Name="reqId" ColumnName="reqId" />
+                <ScalarProperty Name="Good" ColumnName="Good" />
+                <ScalarProperty Name="CookMinutes" ColumnName="CookMinutes" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Restaurant" ColumnName="Restaurant" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForCollect" FunctionName="UmamidoModel.Store.ForCollect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForCollect_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForDeliver" FunctionName="UmamidoModel.Store.ForDeliver">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForDeliver_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

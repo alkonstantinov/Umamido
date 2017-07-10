@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Collect management</div>
+    <div class="panel-body">
+        <label class="label-warning" id="lNoItems">No records found</label>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Receiver</th>
+                    <th>Address</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dCollect" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Dispatch data for order <label class="control-label" id="lReqId"></label></div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <table id="tDetails" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Restaurant</th>
+                                    <th>Good</th>
+                                    <th>Cooking time [minutes]</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <button type="button" id="bCollected" class="btn btn-primary" onclick="forCollect.Collected();">Collected all!!!</button>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-md-1 pull-right">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="forCollect.CancelCollect()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        forCollect = new ForCollect();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        forCollect.LoadReqs();
+
+
+    })
+</script>
+

@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">Delivery management</div>
+    <div class="panel-body">
+        <label class="label-warning" id="lNoItems">No records found</label>
+        <table id="tItems" class="table table-bordered table-striped" style="width:500px">
+            <thead>
+                <tr>
+                    <th>Receiver</th>
+                    <th>Address</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="modal fade" id="dDeliver" style="z-index:1400">
+    <div class="modal-dialog" style="min-height: 300px; min-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="name">Data for order <label class="control-label" id="lReqId"></label></div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-lg-12">
+                        <table id="tDetails" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Restaurant</th>
+                                    <th>Good</th>
+                                    <th>Cooking time [minutes]</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row form-group">
+
+                    <div class="col-lg-12">
+                        <input type="text" id="tbNote" class="form-control" />
+                    </div>
+                </div>
+                <div class="row form-group">
+
+                    <div class="col-lg-6">
+                        <button type="button" id="bDelivered" class="btn btn-primary" onclick="forDeliver.Delivered(true);">Delivered</button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" id="bNotDelivered" class="btn btn-danger" onclick="forDeliver.Delivered(false);">Not delivered</button>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-md-1 pull-right">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="forDeliver.CancelDeliver()"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        forDeliver = new ForDeliver();
+        BasePage.HideErrors();
+        BasePage.ApplyNumbersOnly();
+        forDeliver.LoadReqs();
+
+
+    })
+</script>
+

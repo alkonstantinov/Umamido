@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LangRowModel.cs" />
     <Compile Include="GoodRowModel.cs" />
+    <Compile Include="CollectDetailsModel.cs" />
     <Compile Include="ReqModel.cs" />
     <Compile Include="ReqQueryModel.cs" />
     <Compile Include="ReqQueryRowModel.cs" />
