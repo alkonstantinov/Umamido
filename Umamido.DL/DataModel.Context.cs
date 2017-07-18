@@ -48,139 +48,6 @@ namespace Umamido.DL
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
     
-        public virtual ObjectResult<SearchReq_Result> SearchReq(Nullable<System.DateTime> from, Nullable<System.DateTime> to, Nullable<int> restaurantId)
-        {
-            var fromParameter = from.HasValue ?
-                new ObjectParameter("from", from) :
-                new ObjectParameter("from", typeof(System.DateTime));
-    
-            var toParameter = to.HasValue ?
-                new ObjectParameter("to", to) :
-                new ObjectParameter("to", typeof(System.DateTime));
-    
-            var restaurantIdParameter = restaurantId.HasValue ?
-                new ObjectParameter("restaurantId", restaurantId) :
-                new ObjectParameter("restaurantId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchReq_Result>("SearchReq", fromParameter, toParameter, restaurantIdParameter);
-        }
-    
-        [DbFunction("UmamidoEntities", "f_ak_split_string")]
-        public virtual IQueryable<f_ak_split_string_Result> f_ak_split_string(string str, string delim)
-        {
-            var strParameter = str != null ?
-                new ObjectParameter("str", str) :
-                new ObjectParameter("str", typeof(string));
-    
-            var delimParameter = delim != null ?
-                new ObjectParameter("delim", delim) :
-                new ObjectParameter("delim", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<f_ak_split_string_Result>("[UmamidoEntities].[f_ak_split_string](@str, @delim)", strParameter, delimParameter);
-        }
-    
-        public virtual ObjectResult<ForDispatch_Result> ForDispatch()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ForDispatch_Result>("ForDispatch");
-        }
-    
-        public virtual int p_ak_close_file(Nullable<int> fileHandle)
-        {
-            var fileHandleParameter = fileHandle.HasValue ?
-                new ObjectParameter("FileHandle", fileHandle) :
-                new ObjectParameter("FileHandle", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_close_file", fileHandleParameter);
-        }
-    
-        public virtual int p_ak_close_file_system(Nullable<int> fileSystem)
-        {
-            var fileSystemParameter = fileSystem.HasValue ?
-                new ObjectParameter("FileSystem", fileSystem) :
-                new ObjectParameter("FileSystem", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_close_file_system", fileSystemParameter);
-        }
-    
-        public virtual int p_ak_create_file(Nullable<int> fileSystem, string filename)
-        {
-            var fileSystemParameter = fileSystem.HasValue ?
-                new ObjectParameter("FileSystem", fileSystem) :
-                new ObjectParameter("FileSystem", typeof(int));
-    
-            var filenameParameter = filename != null ?
-                new ObjectParameter("Filename", filename) :
-                new ObjectParameter("Filename", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_create_file", fileSystemParameter, filenameParameter);
-        }
-    
-        public virtual int p_ak_create_file_system()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_create_file_system");
-        }
-    
-        public virtual int p_ak_create_fk_indeces(string tableName)
-        {
-            var tableNameParameter = tableName != null ?
-                new ObjectParameter("tableName", tableName) :
-                new ObjectParameter("tableName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_create_fk_indeces", tableNameParameter);
-        }
-    
-        public virtual int p_ak_delete_file(Nullable<int> fileSystem, string filename)
-        {
-            var fileSystemParameter = fileSystem.HasValue ?
-                new ObjectParameter("FileSystem", fileSystem) :
-                new ObjectParameter("FileSystem", typeof(int));
-    
-            var filenameParameter = filename != null ?
-                new ObjectParameter("Filename", filename) :
-                new ObjectParameter("Filename", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_delete_file", fileSystemParameter, filenameParameter);
-        }
-    
-        public virtual int p_ak_drop_all_foreign_keys(string tableName)
-        {
-            var tableNameParameter = tableName != null ?
-                new ObjectParameter("tableName", tableName) :
-                new ObjectParameter("tableName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_drop_all_foreign_keys", tableNameParameter);
-        }
-    
-        public virtual int p_ak_rename_file(Nullable<int> fileSystem, string filename, string newFileName)
-        {
-            var fileSystemParameter = fileSystem.HasValue ?
-                new ObjectParameter("FileSystem", fileSystem) :
-                new ObjectParameter("FileSystem", typeof(int));
-    
-            var filenameParameter = filename != null ?
-                new ObjectParameter("Filename", filename) :
-                new ObjectParameter("Filename", typeof(string));
-    
-            var newFileNameParameter = newFileName != null ?
-                new ObjectParameter("NewFileName", newFileName) :
-                new ObjectParameter("NewFileName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_rename_file", fileSystemParameter, filenameParameter, newFileNameParameter);
-        }
-    
-        public virtual int p_ak_write_to_file(Nullable<int> fileHandle, string text)
-        {
-            var fileHandleParameter = fileHandle.HasValue ?
-                new ObjectParameter("FileHandle", fileHandle) :
-                new ObjectParameter("FileHandle", typeof(int));
-    
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("p_ak_write_to_file", fileHandleParameter, textParameter);
-        }
-    
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {
             var reqIdParameter = reqId.HasValue ?
@@ -206,6 +73,28 @@ namespace Umamido.DL
                 new ObjectParameter("userId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ForDeliver_Result>("ForDeliver", userIdParameter);
+        }
+    
+        public virtual ObjectResult<ForDispatch_Result> ForDispatch()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ForDispatch_Result>("ForDispatch");
+        }
+    
+        public virtual ObjectResult<SearchReq_Result> SearchReq(Nullable<System.DateTime> from, Nullable<System.DateTime> to, Nullable<int> restaurantId)
+        {
+            var fromParameter = from.HasValue ?
+                new ObjectParameter("from", from) :
+                new ObjectParameter("from", typeof(System.DateTime));
+    
+            var toParameter = to.HasValue ?
+                new ObjectParameter("to", to) :
+                new ObjectParameter("to", typeof(System.DateTime));
+    
+            var restaurantIdParameter = restaurantId.HasValue ?
+                new ObjectParameter("restaurantId", restaurantId) :
+                new ObjectParameter("restaurantId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchReq_Result>("SearchReq", fromParameter, toParameter, restaurantIdParameter);
         }
     }
 }

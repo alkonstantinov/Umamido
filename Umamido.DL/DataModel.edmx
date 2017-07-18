@@ -67,6 +67,7 @@
           <Property Name="PaymentTypeId" Type="int" Nullable="false" />
           <Property Name="Receiver" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LatLong" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Paid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Req2Good">
@@ -437,21 +438,6 @@
         <Function Name="CollectDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="reqId" Type="int" Mode="In" />
         </Function>
-        <Function Name="f_ak_split_string" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="delim" Type="nvarchar(max)" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="id" Type="int" Nullable="false" />
-                <Property Name="line" Type="nvarchar(max)" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="f_ak_trim" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar(max)">
-          <Parameter Name="str" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <Function Name="ForCollect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
@@ -459,36 +445,6 @@
           <Parameter Name="userId" Type="int" Mode="In" />
         </Function>
         <Function Name="ForDispatch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="p_ak_close_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileHandle" Type="int" Mode="In" />
-        </Function>
-        <Function Name="p_ak_close_file_system" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileSystem" Type="int" Mode="In" />
-        </Function>
-        <Function Name="p_ak_create_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileSystem" Type="int" Mode="In" />
-          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="p_ak_create_file_system" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="p_ak_create_fk_indeces" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="p_ak_delete_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileSystem" Type="int" Mode="In" />
-          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="p_ak_drop_all_foreign_keys" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="tableName" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="p_ak_rename_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileSystem" Type="int" Mode="In" />
-          <Parameter Name="Filename" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="NewFileName" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="p_ak_write_to_file" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="FileHandle" Type="int" Mode="In" />
-          <Parameter Name="text" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <Function Name="SearchReq" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="from" Type="datetime2" Mode="In" />
           <Parameter Name="to" Type="datetime2" Mode="In" />
@@ -718,55 +674,21 @@
             <End Role="Req" EntitySet="Req" />
             <End Role="Req2Good" EntitySet="Req2Good" />
           </AssociationSet>
+          <EntitySet Name="UserLevel" EntityType="UmamidoModel.UserLevel" />
+          <FunctionImport Name="CollectDetails" ReturnType="Collection(UmamidoModel.CollectDetails_Result)">
+            <Parameter Name="reqId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForCollect" ReturnType="Collection(UmamidoModel.ForCollect_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForDeliver" ReturnType="Collection(UmamidoModel.ForDeliver_Result)">
+            <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
           <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
             <Parameter Name="from" Mode="In" Type="DateTime" />
             <Parameter Name="to" Mode="In" Type="DateTime" />
             <Parameter Name="restaurantId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="UserLevel" EntityType="UmamidoModel.UserLevel" />
-          <FunctionImport Name="f_ak_split_string" IsComposable="true" ReturnType="Collection(UmamidoModel.f_ak_split_string_Result)">
-            <Parameter Name="str" Mode="In" Type="String" />
-            <Parameter Name="delim" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
-          <FunctionImport Name="p_ak_close_file">
-          <Parameter Name="FileHandle" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_close_file_system">
-          <Parameter Name="FileSystem" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_create_file">
-            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
-            <Parameter Name="Filename" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_create_file_system" />
-          <FunctionImport Name="p_ak_create_fk_indeces">
-          <Parameter Name="tableName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_delete_file">
-            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
-            <Parameter Name="Filename" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_drop_all_foreign_keys">
-          <Parameter Name="tableName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_rename_file">
-            <Parameter Name="FileSystem" Mode="In" Type="Int32" />
-            <Parameter Name="Filename" Mode="In" Type="String" />
-            <Parameter Name="NewFileName" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="p_ak_write_to_file">
-            <Parameter Name="FileHandle" Mode="In" Type="Int32" />
-            <Parameter Name="text" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="CollectDetails" ReturnType="Collection(UmamidoModel.CollectDetails_Result)">
-          <Parameter Name="reqId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ForCollect" ReturnType="Collection(UmamidoModel.ForCollect_Result)">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ForDeliver" ReturnType="Collection(UmamidoModel.ForDeliver_Result)">
-            <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="Lang">
@@ -1156,6 +1078,7 @@
           <Property Name="Paid" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
+          <Property Name="LatLong" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -1223,17 +1146,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="SearchReq_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="Boolean" Name="Paid" Nullable="false" />
-          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="OnDate" Nullable="false" />
-          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Note" Nullable="true" />
-          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
-        </ComplexType>
         <EntityType Name="UserLevel">
           <Key>
             <PropertyRef Name="UserLevelId" />
@@ -1241,15 +1153,6 @@
           <Property Name="UserLevelId" Type="Int32" Nullable="false" />
           <Property Name="UserLevelName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
-        <ComplexType Name="f_ak_split_string_Result">
-          <Property Type="Int32" Name="id" Nullable="false" />
-          <Property Type="String" Name="line" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ForDispatch_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="CollectDetails_Result">
           <Property Type="Int32" Name="reqId" Nullable="false" />
           <Property Type="String" Name="Good" Nullable="true" />
@@ -1261,11 +1164,30 @@
           <Property Type="Int32" Name="ReqId" Nullable="false" />
           <Property Type="String" Name="Receiver" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="ForDeliver_Result">
           <Property Type="Int32" Name="ReqId" Nullable="false" />
           <Property Type="String" Name="Receiver" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="ForDispatch_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SearchReq_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="Boolean" Name="Paid" Nullable="false" />
+          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="OnDate" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1423,6 +1345,7 @@
           <EntitySetMapping Name="Req">
             <EntityTypeMapping TypeName="UmamidoModel.Req">
               <MappingFragment StoreEntitySet="Req">
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
                 <ScalarProperty Name="Paid" ColumnName="Paid" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
@@ -1462,21 +1385,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
-                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
-                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="UserLevel">
             <EntityTypeMapping TypeName="UmamidoModel.UserLevel">
               <MappingFragment StoreEntitySet="UserLevel">
@@ -1485,32 +1393,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="f_ak_split_string" FunctionName="UmamidoModel.Store.f_ak_split_string">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.f_ak_split_string_Result">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="line" ColumnName="line" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ForDispatch" FunctionName="UmamidoModel.Store.ForDispatch">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.ForDispatch_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="p_ak_close_file" FunctionName="UmamidoModel.Store.p_ak_close_file" />
-          <FunctionImportMapping FunctionImportName="p_ak_close_file_system" FunctionName="UmamidoModel.Store.p_ak_close_file_system" />
-          <FunctionImportMapping FunctionImportName="p_ak_create_file" FunctionName="UmamidoModel.Store.p_ak_create_file" />
-          <FunctionImportMapping FunctionImportName="p_ak_create_file_system" FunctionName="UmamidoModel.Store.p_ak_create_file_system" />
-          <FunctionImportMapping FunctionImportName="p_ak_create_fk_indeces" FunctionName="UmamidoModel.Store.p_ak_create_fk_indeces" />
-          <FunctionImportMapping FunctionImportName="p_ak_delete_file" FunctionName="UmamidoModel.Store.p_ak_delete_file" />
-          <FunctionImportMapping FunctionImportName="p_ak_drop_all_foreign_keys" FunctionName="UmamidoModel.Store.p_ak_drop_all_foreign_keys" />
-          <FunctionImportMapping FunctionImportName="p_ak_rename_file" FunctionName="UmamidoModel.Store.p_ak_rename_file" />
-          <FunctionImportMapping FunctionImportName="p_ak_write_to_file" FunctionName="UmamidoModel.Store.p_ak_write_to_file" />
           <FunctionImportMapping FunctionImportName="CollectDetails" FunctionName="UmamidoModel.Store.CollectDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="UmamidoModel.CollectDetails_Result">
@@ -1528,6 +1410,7 @@
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1537,6 +1420,32 @@
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForDispatch" FunctionName="UmamidoModel.Store.ForDispatch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForDispatch_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

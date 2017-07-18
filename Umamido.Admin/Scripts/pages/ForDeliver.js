@@ -32,7 +32,8 @@ var ForDeliver = (function (_super) {
             var row = "<tr recordId='" + e.ReqId + "'>" +
                 "<td>" + e.Receiver + "</td>" +
                 "<td>" + e.Address + "</td>" +
-                "<td><span class=\"glyphicon glyphicon-gift\" aria-hidden=\"true\" onclick=\"forDeliver.ShowDetailsDialog(this)\"></span></td></tr>";
+                "<td><span class=\"glyphicon glyphicon-gift\" aria-hidden=\"true\" onclick=\"forDeliver.ShowDetailsDialog(this)\"></span>" +
+                "<a href='geo:" + e.LatLong + "'><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span></a></td></tr>";
             tbl.append(row);
         });
     };

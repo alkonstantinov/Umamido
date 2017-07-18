@@ -14,6 +14,7 @@ namespace Umamido.Common
 
         public String Address { get; set; }
 
+        public String LatLong { get; set; }
 
     }
 }

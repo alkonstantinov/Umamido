@@ -390,6 +390,7 @@ create table Req
   , PaymentTypeId int not null 
   , Receiver nvarchar(max) not null
   , Address nvarchar(max) not null
+  , LatLong nvarchar(100) not null
   , Paid bit not null default 0 
   , constraint pk_ReqId primary key(ReqId)   
   , constraint fk_Req_PaymentTypeId foreign key (PaymentTypeId) references PaymentType(PaymentTypeId)  

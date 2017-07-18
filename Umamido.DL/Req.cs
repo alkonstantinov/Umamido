@@ -25,6 +25,7 @@ namespace Umamido.DL
         public string Receiver { get; set; }
         public string Address { get; set; }
         public bool Paid { get; set; }
+        public string LatLong { get; set; }
     
         public virtual PaymentType PaymentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

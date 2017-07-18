@@ -16,5 +16,6 @@ namespace Umamido.DL
         public int ReqId { get; set; }
         public string Receiver { get; set; }
         public string Address { get; set; }
+        public string LatLong { get; set; }
     }
 }

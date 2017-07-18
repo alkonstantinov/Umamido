@@ -81,9 +81,6 @@
     <Compile Include="ForDispatch_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="f_ak_split_string_Result.cs">
-      <DependentUpon>DataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Good.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
