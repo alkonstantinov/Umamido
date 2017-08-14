@@ -1,0 +1,137 @@
+.entry-footer .share li a {
+    color: #bebebf;
+}
+
+.entry-footer .share li a:hover {
+    color: #363639;
+}
+
+.entry-footer .share .sd-title {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    margin-right: 30px;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.entry-footer .share li a {
+    font-size: 16px;
+}
+
+.entry-footer .share {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+.entry-footer .share .sd-content {
+    display: inline-block;
+}
+
+.entry-footer .share ul {
+    list-style-type: none;
+    margin: 0;
+}
+
+.entry-footer .share li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.entry-footer .share li:first-child {
+    margin-left: 10px;
+}
+
+/* Food menu */
+.single-nova_menu_item .entry-footer .share {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+/* Icons */
+.entry-footer .share li a:before {
+    font-family: FontAwesome;
+}
+
+.entry-footer .share li[class*="facebook"] a:before {
+    content: "\f09a";
+}
+
+.entry-footer .share li[class*="twitter"] a:before {
+    content: "\f099";
+}
+
+.entry-footer .share li[class*="google"] a:before {
+    content: "\f0d5";
+}
+
+.entry-footer .share li[class*="linkedin"] a:before {
+    content: "\f0e1";
+}
+
+.entry-footer .share li[class*="pinterest"] a:before {
+    content: "\f0d2";
+}
+
+.entry-footer .share li[class*="tumblr"] a:before {
+    content: "\f173";
+}
+
+.entry-footer .share li[class*="reddit"] a:before {
+    content: "\f281";
+}
+
+.entry-footer .share li[class*="skype"] a:before {
+    content: "\f17e";
+}
+
+.entry-footer .share li[class*="whatsapp"] a:before {
+    content: "\f232";
+}
+
+.entry-footer .share li[class*="pocket"] a:before {
+    content: "\f265";
+}
+
+.entry-footer .share li[class*="telegram"] a:before {
+    content: "\f1d8";
+}
+
+.entry-footer .share li[class*="email"] a:before {
+    content: "\f0e0";
+}
+
+.entry-footer .share li[class*="print"] a:before {
+    content: "\f02f";
+}
+
+@media screen and (min-width: 992px) {
+    .entry-footer .share .sd-title,
+    .entry-footer .share li a {
+        font-size: 16px;
+    }
+
+    .entry-footer .share {
+        display: table-cell;
+        float: left;
+        margin-top: 0;
+        text-align: right;
+        width: 50%;
+    }
+
+    .entry-footer .share li {
+        font-style: normal;
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    .entry-footer .share li:first-child {
+        margin-right: 0;
+        margin-left: 10px;
+    }
+}

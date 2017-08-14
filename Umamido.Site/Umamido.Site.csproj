@@ -1,0 +1,283 @@
+﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46257874-03FF-4309-8134-FF6CE30341C8}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Umamido.Site</RootNamespace>
+    <AssemblyName>Umamido.Site</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\colorbox.css" />
+    <Content Include="css\css.css" />
+    <Content Include="css\fly-to-cart.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\front%281%29.css" />
+    <Content Include="css\front.css" />
+    <Content Include="css\hovercard.css" />
+    <Content Include="css\icons.css" />
+    <Content Include="css\jquery.kwicks.css" />
+    <Content Include="css\prettyPhoto.css" />
+    <Content Include="css\sb-instagram.min.css" />
+    <Content Include="css\services.css" />
+    <Content Include="css\sharing-icons.css" />
+    <Content Include="css\style.css" />
+    <Content Include="css\woocommerce%281%29.css" />
+    <Content Include="css\woocommerce-layout.css" />
+    <Content Include="css\woocommerce-smallscreen.css" />
+    <Content Include="fonts\icomoon.svg" />
+    <Content Include="images\17932101_1855709604699878_5249543074824060928_a.jpg" />
+    <Content Include="images\19122257_105093930109041_6222100451492364288_n.jpg" />
+    <Content Include="images\19228588_1575393242519054_7738267273265152000_n.jpg" />
+    <Content Include="images\19367057_102604747026290_7704093236398129152_n.jpg" />
+    <Content Include="images\19379978_111151472834826_1536446682386923520_n.jpg" />
+    <Content Include="images\about_hero.jpg" />
+    <Content Include="images\about_photo.jpg" />
+    <Content Include="images\blog_hero.jpg" />
+    <Content Include="images\border_.png" />
+    <Content Include="images\brunch_1.jpg" />
+    <Content Include="images\burger-1-370x270.jpg" />
+    <Content Include="images\card_payments.jpg" />
+    <Content Include="images\card_payments_bw.jpg" />
+    <Content Include="images\ceramic-kettle-header-1920x615.jpg" />
+    <Content Include="images\contacts_hero.jpg" />
+    <Content Include="images\controls_.png" />
+    <Content Include="images\dessert_1.jpg" />
+    <Content Include="images\dinner_1.jpg" />
+    <Content Include="images\donuts-370x270.jpg" />
+    <Content Include="images\drinks_1.jpg" />
+    <Content Include="images\french-macarons-370x270.jpg" />
+    <Content Include="images\fresh-fruits-370x270.jpg" />
+    <Content Include="images\fresh-fruits-550x550.jpg" />
+    <Content Include="images\front-page-hero-image.jpg" />
+    <Content Include="images\g.gif" />
+    <Content Include="images\home_about_img.jpg" />
+    <Content Include="images\home_about_img_1.jpg" />
+    <Content Include="images\home_email_signup.jpg" />
+    <Content Include="images\home_hero.jpg" />
+    <Content Include="images\home_hero_1.jpg" />
+    <Content Include="images\home_hero_2.jpg" />
+    <Content Include="images\home_hero_3.jpg" />
+    <Content Include="images\inst_1.jpg" />
+    <Content Include="images\inst_2.jpg" />
+    <Content Include="images\inst_3.jpg" />
+    <Content Include="images\inst_4.jpg" />
+    <Content Include="images\lemonade-370x270.jpg" />
+    <Content Include="images\loading.gif" />
+    <Content Include="images\loading_background.png" />
+    <Content Include="images\logo_1.png" />
+    <Content Include="images\logo_2.png" />
+    <Content Include="images\logo_2_2.png" />
+    <Content Include="images\logo_3.png" />
+    <Content Include="images\logo_3_1.png" />
+    <Content Include="images\logo_4.png" />
+    <Content Include="images\map.jpg" />
+    <Content Include="images\overlay.png" />
+    <Content Include="images\payment_delivery_hero.jpg" />
+    <Content Include="images\post_img.jpg" />
+    <Content Include="images\ramen-of-the-chef.jpg" />
+    <Content Include="images\raspberry-tart-370x270.jpg" />
+    <Content Include="images\rel_1.jpg" />
+    <Content Include="images\rel_2.jpg" />
+    <Content Include="images\rel_3.jpg" />
+    <Content Include="images\restaurants_hero.jpg" />
+    <Content Include="images\rest_burger.jpg" />
+    <Content Include="images\rest_pasta.jpg" />
+    <Content Include="images\rest_pizza.jpg" />
+    <Content Include="images\rest_umamido_hero.jpg" />
+    <Content Include="images\rest_umamido_img.jpg" />
+    <Content Include="images\rest_umamido_img_1.jpg" />
+    <Content Include="images\rest_umamido_img_2.jpg" />
+    <Content Include="images\rest_umamido_img_3.jpg" />
+    <Content Include="images\rest_umamido_img_4.jpg" />
+    <Content Include="images\rest_umamido_img_5.jpg" />
+    <Content Include="images\rest_umamido_logo.png" />
+    <Content Include="images\rice-370x270.jpg" />
+    <Content Include="images\shop_hero.jpg" />
+    <Content Include="images\shop_hero_1.jpg" />
+    <Content Include="images\strawberry-juice-370x270.jpg" />
+    <Content Include="images\subscribe_bgr.jpg" />
+    <Content Include="images\terms_hero.jpg" />
+    <Content Include="images\traditional-bread-370x270.jpg" />
+    <Content Include="images\tuna-salad-370x270.jpg" />
+    <Content Include="images\waffles-370x270.jpg" />
+    <Content Include="images\wooden-spoon-1-e1488974095356-370x270.jpg" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\core.min.js" />
+    <Content Include="js\fly-to-cart.js" />
+    <Content Include="js\functions.js" />
+    <Content Include="js\gprofiles.js" />
+    <Content Include="js\infinite-scroll.pkgd.min.js" />
+    <Content Include="js\jquery-1.8.1.min.js" />
+    <Content Include="js\jquery-migrate.min.js" />
+    <Content Include="js\jquery.blockUI.min.js" />
+    <Content Include="js\jquery.colorbox-min.js" />
+    <Content Include="js\jquery.cookie.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\jquery.kwicks.js" />
+    <Content Include="js\js.js" />
+    <Content Include="js\scripts-general.js" />
+    <Content Include="js\skip-link-focus-fix.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\icomoon.eot" />
+    <Content Include="fonts\icomoon.ttf" />
+    <Content Include="fonts\icomoon.woff" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Umamido.Resources\Umamido.Resources.csproj">
+      <Project>{eebb85b8-d799-4df0-a174-1de089883c2b}</Project>
+      <Name>Umamido.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53492</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:53492/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.3.2\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
