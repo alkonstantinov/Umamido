@@ -56,7 +56,7 @@ go
 create table Lang
 ( 
   LangId int not null identity(1,1)
-  , LangName nvarchar (2) not null 
+  , LangName nvarchar (5) not null 
   , IsActive bit not null default 1
   , constraint pk_LangId primary key(LangId)   
 )
@@ -64,8 +64,9 @@ go
 exec p_ak_create_fk_indeces 'Lang'
 go
 
-insert into Lang (LangName, IsActive) values ('EN', 1)
-insert into Lang (LangName, IsActive) values ('BG', 2)
+
+insert into Lang (LangName, IsActive) values ('bg-BG', 1)
+insert into Lang (LangName, IsActive) values ('en-EN', 2)
 go
 
 if object_id('Image') is not null

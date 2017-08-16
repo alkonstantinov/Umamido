@@ -1,0 +1,72 @@
+﻿@model Umamido.Common.TextModel
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.OrderPaymentTitle;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Resources.Resources.OrderAndDelivery</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/payment_delivery_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <section class="rest-descr" style="padding-top:10px; padding-bottom:10px; background:#fff;">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="operation-hours-inner">
+                            <div class="operation-hours-title">
+                                <strong>@Umamido.Resources.Resources.HowToOrder</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="operation-hours-inner">
+                            <div class="operation-hours-content">
+                                <ul>
+                                    <li class="steps step1">
+                                        <div class="step">1</div>
+                                        <p class="how-to-icon"><i class="icon icon-map-2"></i></p>
+                                        <p><strong>@Umamido.Resources.Resources.CheckAddress</strong></p>
+                                    </li>
+                                    <li class="steps step1">
+                                        <div class="step">2</div>
+                                        <p class="how-to-icon"><i class="icon icon-cart"></i></p>
+                                        <p><strong>@Umamido.Resources.Resources.ChooseFromMenu</strong></p>
+                                    </li>
+                                    <li class="steps step1">
+                                        <div class="step">3</div>
+                                        <p class="how-to-icon"><i class="icon icon-cash"></i></p>
+                                        <p><strong>@Umamido.Resources.Resources.PayWithCardOrCache</strong></p>
+                                    </li>
+                                    <li class="steps step1">
+                                        <div class="step">4</div>
+                                        <p class="how-to-icon"><i class="icon icon-rocket"></i></p>
+                                        <p><strong>@Html.Raw(Umamido.Resources.Resources.WaitMinutes)</strong></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 rest-text">
+                            @Html.Raw(Model.Text)
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->

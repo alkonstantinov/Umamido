@@ -15,6 +15,7 @@ namespace Umamido.Site
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            DL.DLFuncs.MapperInitialize();
         }
 
         void Application_AcquireRequestState(object sender, EventArgs e)

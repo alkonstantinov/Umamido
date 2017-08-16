@@ -1,0 +1,47 @@
+﻿@model Umamido.Common.RestaurantRowModel[]
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.RestaurantsTitle;
+}
+
+
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Resources.Resources.Restaurants</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/restaurants_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <!--<section class="front-page-content rest-descr">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 belise-page-content rest-text">
+                            <p><strong>25 min</strong> е иновативна концепция за онлайн доставка на храна, без аналог. Mauris magna felis, dignissim at posuere id, commodo in nunc. Cras lacinia egestas libero at malesuada. Donec condimentum, purus et cursus gravida, ipsum metus scelerisque risus, sit amet interdum nunc elit eget diam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam et dui porta, euismod lacus ut, tincidunt dolor. Curabitur fermentum non risus eu accumsan. Nam orci justo, pulvinar ac justo a, pharetra blandit libero.</p>
+                            <p>Etiam eleifend quis tellus auctor suscipit. Maecenas lacinia ante ut fermentum eleifend. Sed eu mi non magna ultricies accumsan et ac justo. Cras hendrerit, enim eget ultrices sodales, nibh ipsum congue felis, sit amet faucibus nisi tortor ut dui. Donec non interdum sem. Vestibulum nibh lectus, maximus sed convallis eget, dignissim id nibh. Nunc eget magna viverra, congue felis vel, consequat lorem. Proin in dapibus tortor. Vivamus eu sapien ac nibh placerat efficitur sed nec orci. Mauris imperdiet elit elit, vel condimentum justo ullamcorper vel. Vivamus a semper orci, eu dictum massa. Curabitur sed urna ultricies, tincidunt felis non, rhoncus augue.</p>
+                            <p>Sed vitae elementum eros, ac sagittis mi. Duis vel est pellentesque, auctor dolor vitae, finibus turpis. Suspendisse vel lacinia est, malesuada pulvinar ante. Sed pharetra, ex at tempus pellentesque, odio justo egestas mauris, eu volutpat ante urna quis velit. Fusce neque mauris, malesuada dignissim dui quis, luctus faucibus lacus. Fusce accumsan, orci vitae pharetra feugiat, eros eros vulputate libero, vel aliquam orci erat eget ipsum. Fusce a dui in urna dapibus maximus nec vitae enim. Vestibulum ac nisi fermentum, malesuada felis non, vehicula lacus.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>-->
+
+            <section class="front-page-after-content">
+                <div class="container">
+                    @{
+                        Html.RenderPartial("RestaurantsList", Model);
+                    }
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->

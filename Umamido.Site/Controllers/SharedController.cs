@@ -8,12 +8,12 @@ using System.Web.Mvc;
 
 namespace Umamido.Site.Controllers
 {
-    public class SharedController : Controller
+    public class SharedController : BaseController
     {
         // GET: Shared
         public ActionResult SetLanguage(string language)
         {
-            HttpContext.Session["culture"] = language;
+            Lang =  language;
             return Redirect(Request.UrlReferrer.AbsoluteUri);
 
         }

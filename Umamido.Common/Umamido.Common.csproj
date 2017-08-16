@@ -54,6 +54,7 @@
     <Compile Include="ReqModel.cs" />
     <Compile Include="ReqQueryModel.cs" />
     <Compile Include="ReqQueryRowModel.cs" />
+    <Compile Include="TextModel.cs" />
     <Compile Include="TextRowModel.cs" />
     <Compile Include="SliderRowModel.cs" />
     <Compile Include="RestaurantRowModel.cs" />

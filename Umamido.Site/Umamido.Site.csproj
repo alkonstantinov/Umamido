@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Global.asax.cs">
@@ -224,6 +225,10 @@
     <Content Include="fonts\icomoon.woff" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\OrderPayment.cshtml" />
+    <Content Include="Views\Shared\Menu.cshtml" />
+    <Content Include="Views\Home\Restaurants.cshtml" />
+    <Content Include="Views\Home\RestaurantsList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -236,6 +241,14 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Umamido.Common\Umamido.Common.csproj">
+      <Project>{d318689f-d6de-4d84-9d0c-8b4bcf326292}</Project>
+      <Name>Umamido.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Umamido.DL\Umamido.DL.csproj">
+      <Project>{704efa9b-197a-47fd-af56-cfb4b3a46bb4}</Project>
+      <Name>Umamido.DL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Umamido.Resources\Umamido.Resources.csproj">
       <Project>{eebb85b8-d799-4df0-a174-1de089883c2b}</Project>
       <Name>Umamido.Resources</Name>

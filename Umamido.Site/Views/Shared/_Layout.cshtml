@@ -3,11 +3,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" async src="js/js.js"></script>
-
+    <base href="/" target="_top">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="http://gmpg.org/xfn/11">
 
-    <title>Контакти | 25 min.</title>
+    <title>@ViewBag.Title</title>
 
 
     <link rel="stylesheet" id="siteorigin-panels-front-css" href="css/front.css" type="text/css" media="all">
@@ -189,7 +189,7 @@
                         <div class="top-bar-contact-wrapper">
                             <ul id="" class="languages-items">
                                 <li class="lang-item bg-item">
-                                    @Html.ActionLink("БГ", "SetLanguage", "Shared", new { language = "bg-BG" }, null)                                    
+                                    @Html.ActionLink("БГ", "SetLanguage", "Shared", new { language = "bg-BG" }, null)
                                 </li>
                                 <li class="lang-item en-item">
                                     @Html.ActionLink("EN", "SetLanguage", "Shared", new { language = "en-US" }, null)
@@ -216,23 +216,7 @@
 
                 <nav id="site-navigation" class="main-navigation site-navigation">
                     <div class="menu-primary-menu-container">
-                        <ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
-                            <li id="menu-item-101" class="menu-item">
-                                <a href="shop.html">@Umamido.Resources.Resources.Order</a>
-                            </li>
-                            <li id="menu-item-462" class="menu-item">
-                                <a href="about.html">За нас</a>
-                            </li>
-                            <li id="menu-item-101" class="menu-item">
-                                <a href="restaurants.html">Ресторанти</a>
-                            </li>
-                            <li id="menu-item-382" class="menu-item">
-                                <a href="blog.html">Блог</a>
-                            </li>
-                            <li id="menu-item-21" class="menu-item current-main">
-                                <a href="contacts.html">Контакти</a>
-                            </li>
-                        </ul>
+                        @{Html.RenderPartial("menu"); }
                     </div>
                 </nav><!-- #site-navigation -->
             </div>
@@ -256,10 +240,10 @@
                             <div class="textwidget">
                                 <div style="text-align:center; font-family:&#39;Work Sans&#39;, sans-serif" class="footer-menu">
                                     <span style="letter-spacing: 0.1em; line-height: 30px;">
-                                        <a href="#">МОЯТ ПРОФИЛ</a><br>
-                                        <a href="payment_delivery.html">ПОРЪЧКА И ДОСТАВКА</a><br>
-                                        <a href="terms.html">ОБЩИ УСЛОВИЯ</a><br>
-                                        <a href="contacts.html">КОНТАКТИ</a>
+                                        <a href="#">@Umamido.Resources.Resources.MyProfile</a><br>
+                                        @Html.ActionLink(@Umamido.Resources.Resources.OrderAndDelivery, "OrderPayment", "Home")     <br>
+                                        <a href="terms.html">@Umamido.Resources.Resources.Terms</a><br>
+                                        <a href="contacts.html">@Umamido.Resources.Resources.Contacts</a>
                                     </span>
                                 </div>
                             </div>

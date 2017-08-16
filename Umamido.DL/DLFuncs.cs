@@ -356,6 +356,22 @@ namespace Umamido.DL
             r.IsActive = !r.IsActive;
             entities.SaveChanges();
         }
+
+        public RestaurantRowModel[] GetRestaurantsByLang(string lang)
+        {
+            List<RestaurantRowModel> res = new List<RestaurantRowModel>();
+            foreach (var r in entities.Restaurant.Where(rest => rest.IsActive))
+            {
+                RestaurantRowModel item = new RestaurantRowModel();
+                item.RestaurantId = r.RestaurantId;
+                item.ImageId = r.ImageId;
+                var title = entities.RestaurantTitle.FirstOrDefault(rt => rt.Lang.LangName == lang && rt.RestaurantId == r.RestaurantId);
+                item.FirstTitle = title == null ? "" : title.Text;
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
         #endregion
 
 
@@ -698,6 +714,20 @@ namespace Umamido.DL
         }
 
 
+        public TextModel GetTextByLang(string name, string lang)
+        {
+
+            var txt = entities.TextDesc.FirstOrDefault(t => t.Text1.TextName == name && t.Lang.LangName == lang);
+            if (txt != null)
+                return new TextModel() { Text = txt.Text };
+            txt = entities.TextDesc.FirstOrDefault(t => t.Text1.TextName == name);
+            if (txt != null)
+                return new TextModel() { Text = txt.Text };
+            else
+                return new TextModel() { Text = "NULL" };
+
+        }
+
 
         #endregion
 
@@ -813,5 +843,10 @@ namespace Umamido.DL
         }
 
         #endregion
+
+
+
+
+
     }
 }

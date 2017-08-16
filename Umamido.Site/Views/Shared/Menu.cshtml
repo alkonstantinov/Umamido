@@ -1,0 +1,69 @@
+﻿
+@{
+    string menuClass = "";
+
+
+}
+<ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    {
+        menuClass = "menu-item current-main";
+    }
+    else
+    {
+        menuClass = "menu-item";
+    }
+    <li id="menu-item-101" class='@menuClass'>
+        <a href="shop.html">@Umamido.Resources.Resources.Order</a>
+    </li>
+
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    {
+        menuClass = "menu-item current-main";
+    }
+    else
+    {
+        menuClass = "menu-item";
+    }
+    <li id="menu-item-462" class='menu-item (@ViewContext.RouteData.GetRequiredString("action").ToLower()=="contacts"?"current-main":"")'>
+        <a href="about.html">@Umamido.Resources.Resources.AboutUs</a>
+    </li>
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "restaurants")
+    {
+        menuClass = "menu-item current-main";
+    }
+    else
+    {
+        menuClass = "menu-item";
+    }
+
+    <li id="menu-item-101" class='@menuClass'>
+        @Html.ActionLink(@Umamido.Resources.Resources.Restaurants, "Restaurants", "Home")     <br>
+
+    </li>
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    {
+        menuClass = "menu-item current-main";
+    }
+    else
+    {
+        menuClass = "menu-item";
+    }
+
+
+    <li id="menu-item-382" class='@menuClass'>
+        <a href="blog.html">@Umamido.Resources.Resources.Blog</a>
+    </li>
+
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    {
+        menuClass = "menu-item current-main";
+    }
+    else
+    {
+        menuClass = "menu-item";
+    }
+    <li id="menu-item-21" class='@menuClass'>
+        <a href="contacts.html">@Umamido.Resources.Resources.Contacts</a>
+    </li>
+</ul>

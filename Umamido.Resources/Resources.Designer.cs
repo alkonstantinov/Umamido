@@ -61,11 +61,155 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to За нас.
+        /// </summary>
+        public static string AboutUs {
+            get {
+                return ResourceManager.GetString("AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Блог.
+        /// </summary>
+        public static string Blog {
+            get {
+                return ResourceManager.GetString("Blog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Провери адрес.
+        /// </summary>
+        public static string CheckAddress {
+            get {
+                return ResourceManager.GetString("CheckAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Избери от менюто.
+        /// </summary>
+        public static string ChooseFromMenu {
+            get {
+                return ResourceManager.GetString("ChooseFromMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to КОНТАКТИ.
+        /// </summary>
+        public static string Contacts {
+            get {
+                return ResourceManager.GetString("Contacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Как да поръчаш.
+        /// </summary>
+        public static string HowToOrder {
+            get {
+                return ResourceManager.GetString("HowToOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 25 min. | Fastest food delivery..
+        /// </summary>
+        public static string IndexTitle {
+            get {
+                return ResourceManager.GetString("IndexTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виж менюто.
+        /// </summary>
+        public static string LookMenu {
+            get {
+                return ResourceManager.GetString("LookMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to МОЯТ ПРОФИЛ.
+        /// </summary>
+        public static string MyProfile {
+            get {
+                return ResourceManager.GetString("MyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Поръчай.
         /// </summary>
         public static string Order {
             get {
                 return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ПОРЪЧКА И ДОСТАВКА.
+        /// </summary>
+        public static string OrderAndDelivery {
+            get {
+                return ResourceManager.GetString("OrderAndDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Поръчка и доставка | 25 min..
+        /// </summary>
+        public static string OrderPaymentTitle {
+            get {
+                return ResourceManager.GetString("OrderPaymentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Плати с карта или кеш.
+        /// </summary>
+        public static string PayWithCardOrCache {
+            get {
+                return ResourceManager.GetString("PayWithCardOrCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ресторанти.
+        /// </summary>
+        public static string Restaurants {
+            get {
+                return ResourceManager.GetString("Restaurants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ресторанти | 25 min..
+        /// </summary>
+        public static string RestaurantsTitle {
+            get {
+                return ResourceManager.GetString("RestaurantsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ОБЩИ УСЛОВИЯ.
+        /// </summary>
+        public static string Terms {
+            get {
+                return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Очаквай до &lt;span&gt;25&lt;/span&gt; минути.
+        /// </summary>
+        public static string WaitMinutes {
+            get {
+                return ResourceManager.GetString("WaitMinutes", resourceCulture);
             }
         }
     }
