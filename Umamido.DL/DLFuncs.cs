@@ -28,6 +28,8 @@ namespace Umamido.DL
                 cfg.CreateMap<ForCollect_Result, ReqModel>();
                 cfg.CreateMap<CollectDetails_Result, CollectDetailsModel>();
                 cfg.CreateMap<ForDeliver_Result, ReqModel>();
+                cfg.CreateMap<MessageModel, Message>();
+                cfg.CreateMap<Message, MessageModel>();
 
             });
         }
@@ -237,6 +239,8 @@ namespace Umamido.DL
                 RestaurantRowModel item = new RestaurantRowModel();
                 item.RestaurantId = r.RestaurantId;
                 item.ImageId = r.ImageId;
+                item.BigImageId = r.BigImageId;
+                item.LogoImageId = r.LogoImageId;
                 item.IsActive = r.IsActive;
                 List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
                 List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
@@ -281,11 +285,36 @@ namespace Umamido.DL
             RestaurantRowModel result = new RestaurantRowModel();
             result.RestaurantId = r.RestaurantId;
             result.ImageId = r.ImageId;
+            result.BigImageId = r.BigImageId;
+            result.LogoImageId = r.LogoImageId;
+
             result.IsActive = r.IsActive;
             var rt = r.RestaurantTitle.FirstOrDefault();
             if (rt != null)
                 result.FirstTitle = rt.Text;
             return result;
+        }
+
+        public RestaurantRowModel GetRestaurantByLang(string lang, int restaurantId)
+        {
+            var r = entities.Restaurant.First(item => item.RestaurantId == restaurantId);
+            RestaurantRowModel result = new RestaurantRowModel();
+            result.RestaurantId = r.RestaurantId;
+            result.ImageId = r.ImageId;
+            result.BigImageId = r.BigImageId;
+            result.LogoImageId = r.LogoImageId;
+
+            result.IsActive = r.IsActive;
+            var rt = r.RestaurantTitle.FirstOrDefault(t=>t.Lang.LangName == lang);
+            if (rt != null)
+                result.FirstTitle = rt.Text;
+            var rd = r.RestaurantDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+            if (rd != null)
+                result.FirstDescription = rd.Text;
+
+            return result;
+
+            
         }
 
 
@@ -306,6 +335,9 @@ namespace Umamido.DL
             {
                 Restaurant r = entities.Restaurant.First(item => item.RestaurantId == model.RestaurantId);
                 r.ImageId = model.ImageId;
+                r.BigImageId = model.BigImageId;
+                r.LogoImageId = model.LogoImageId;
+
                 r.IsActive = model.IsActive;
                 entities.SaveChanges();
             }
@@ -365,6 +397,8 @@ namespace Umamido.DL
                 RestaurantRowModel item = new RestaurantRowModel();
                 item.RestaurantId = r.RestaurantId;
                 item.ImageId = r.ImageId;
+                item.BigImageId = r.BigImageId;
+                item.LogoImageId = r.LogoImageId;
                 var title = entities.RestaurantTitle.FirstOrDefault(rt => rt.Lang.LangName == lang && rt.RestaurantId == r.RestaurantId);
                 item.FirstTitle = title == null ? "" : title.Text;
                 res.Add(item);
@@ -840,6 +874,35 @@ namespace Umamido.DL
             };
             entities.Req2Status.Add(r2s);
             entities.SaveChanges();
+        }
+
+        #endregion
+
+        #region messages
+        public void AddMessage(MessageModel model)
+        {
+            entities.Message.Add(Mapper.Map<Message>(model));
+            entities.SaveChanges();
+        }
+
+        public string[] GetMessageDates()
+        {
+            HashSet<string> lDates = new HashSet<string>();
+            foreach (Message m in entities.Message.OrderByDescending(msg=>msg.OnDate))
+                if (!lDates.Contains(m.OnDate.ToShortDateString()))
+                    lDates.Add(m.OnDate.ToShortDateString());
+            return lDates.ToArray();
+        }
+
+        public MessageModel[] GetMessagesByDate(string date)
+        {
+            if (date == null)
+                return null;
+            DateTime d = DateTime.Parse(date);
+            List<MessageModel> result = new List<MessageModel>();
+            foreach (Message m in entities.Message.Where(msg=>msg.OnDate==d))                
+                    result.Add(Mapper.Map<MessageModel>(m));
+            return result.ToArray();
         }
 
         #endregion

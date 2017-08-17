@@ -1,0 +1,36 @@
+﻿@model Umamido.Common.TextModel
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.Terms;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Resources.Resources.Terms</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/terms_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div>
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <section class="rest-descr" style="padding-top:10px; padding-bottom:10px; background:#fff;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 rest-text">
+
+                            @Html.Raw(Model.Text)
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+</div>

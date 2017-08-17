@@ -27,26 +27,27 @@ namespace Umamido.DL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<Lang> Lang { get; set; }
-        public virtual DbSet<Image> Image { get; set; }
-        public virtual DbSet<Restaurant> Restaurant { get; set; }
-        public virtual DbSet<RestaurantDesc> RestaurantDesc { get; set; }
-        public virtual DbSet<RestaurantTitle> RestaurantTitle { get; set; }
         public virtual DbSet<Good> Good { get; set; }
         public virtual DbSet<GoodDesc> GoodDesc { get; set; }
         public virtual DbSet<GoodTitle> GoodTitle { get; set; }
-        public virtual DbSet<Slider> Slider { get; set; }
-        public virtual DbSet<SliderDesc> SliderDesc { get; set; }
-        public virtual DbSet<SliderTitle> SliderTitle { get; set; }
-        public virtual DbSet<Text> Text { get; set; }
-        public virtual DbSet<TextDesc> TextDesc { get; set; }
+        public virtual DbSet<Image> Image { get; set; }
+        public virtual DbSet<Lang> Lang { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<Req> Req { get; set; }
         public virtual DbSet<Req2Good> Req2Good { get; set; }
         public virtual DbSet<Req2Status> Req2Status { get; set; }
+        public virtual DbSet<Restaurant> Restaurant { get; set; }
+        public virtual DbSet<RestaurantDesc> RestaurantDesc { get; set; }
+        public virtual DbSet<RestaurantTitle> RestaurantTitle { get; set; }
+        public virtual DbSet<Slider> Slider { get; set; }
+        public virtual DbSet<SliderDesc> SliderDesc { get; set; }
+        public virtual DbSet<SliderTitle> SliderTitle { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Text> Text { get; set; }
+        public virtual DbSet<TextDesc> TextDesc { get; set; }
+        public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
+        public virtual DbSet<Message> Message { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

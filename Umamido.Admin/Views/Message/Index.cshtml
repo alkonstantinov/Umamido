@@ -1,0 +1,32 @@
+﻿@model Umamido.Common.MessageBrowseModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Messages</h2>
+
+@using (Html.BeginForm("Index","Message",FormMethod.Post,new { @id = "fMessages" }))
+{
+    <p>From:</p>
+    @Html.DropDownListFor(m => m.Date, Model.Dates, new {onchange = "$(\'#fMessages\').submit();" })
+
+}
+<br/>
+@if (Model.Messages != null)
+{
+<table class="table table-bordered table-striped">
+    @foreach (var m in Model.Messages)
+    {
+        <tr>
+            <td>
+                @m.FromName @m.EMail<br>
+                @m.Subject<br>
+                @m.MessageText
+            </td>
+        </tr>
+    }
+</table>
+}
+

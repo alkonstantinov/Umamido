@@ -14,7 +14,9 @@ class Restaurants extends BasePage {
     public LoadLogos() {
         let result = Comm.Get("/nomen/AllImages");
         for (let e of result) {
+            $("#ddlImage").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
             $("#ddlLogo").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
+            $("#ddlBigImage").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
         }
 
     }
@@ -53,8 +55,16 @@ class Restaurants extends BasePage {
 
     }
 
+    public RedisplayBigImage() {
+        $("#iBigImagePreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlBigImage").val() + "&GUID=" + BasePage.GUID());
+    }
+
+    public RedisplayImage() {
+        $("#iImagePreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlImage").val() + "&GUID=" + BasePage.GUID());
+    }
+
     public RedisplayLogo() {
-        $("#iPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
+        $("#iLogoPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
     }
 
     public SetRestaurant() {
@@ -64,13 +74,23 @@ class Restaurants extends BasePage {
             $("#lErrddlLogo").show();
             err = true;
         }
+        if ($("#ddlImage").val() == null) {
+            $("#lErrddlImage").show();
+            err = true;
+        }
+        if ($("#ddlBigImage").val() == null) {
+            $("#lErrddlBigImage").show();
+            err = true;
+        }
 
 
         if (err)
             return;
         let data = {
             RestaurantId: this.currentId,
-            ImageId: $("#ddlLogo").val(),
+            ImageId: $("#ddlImage").val(),
+            BigImageId: $("#ddlBigImage").val(),
+            LogoImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             Titles: [],
             Descriptions: []
@@ -145,7 +165,9 @@ class Restaurants extends BasePage {
             let obj = JSON.parse($(element).parent().parent().attr("data"));
 
             $("#cbIsActive").prop("checked", obj.IsActive);
-            $("#ddlLogo").val(obj.ImageId);
+            $("#ddlImage").val(obj.ImageId);
+            $("#ddlLogo").val(obj.LogoImageId);
+            $("#ddlBigImage").val(obj.BigImageId);
             this.currentId = obj.RestaurantId;
 
 
@@ -169,6 +191,8 @@ class Restaurants extends BasePage {
         //tinymce.init({ selector: 'textarea' });
         BasePage.TinyMCE();
         this.RedisplayLogo();
+        this.RedisplayBigImage();
+        this.RedisplayImage();
     }
 
 }

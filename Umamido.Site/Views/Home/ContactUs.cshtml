@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = Umamido.Resources.Resources.Contacts;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Resources.Resources.Contacts</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <section class="front-page-content rest-descr" style="padding-top:10px; padding-bottom:10px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 belise-page-content rest-text">
+                            @Html.Raw(Umamido.Resources.Resources.ContactsBigText)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="content" class="site-content">
+                <div id="primary" class="content-area" style="padding-top:10px; padding-bottom:10px;">
+                    <main id="main" class="site-main">
+                        <article id="" class="page-template-template-full-width">
+                            <div class="entry-content" style="margin:40px 20px;">
+                                <div class="container">
+                                    <style>
+                                        .operation-hours-content .li {
+                                            width: 100%;
+                                        }
+                                    </style>
+                                    <div class="row">
+                                        <div class="operation-hours-inner">
+                                            <div class="operation-hours-title">@Html.Raw(Umamido.Resources.Resources.WorkTimeTitle)</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="operation-hours-inner">
+                                            <div class="operation-hours-content">
+                                                <ul style="margin-bottom: 0;">
+                                                    <li>@Html.Raw(Umamido.Resources.Resources.WorkTime)</li>
+                                                </ul>
+                                                <table class="values-table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="border-top: 0; border-bottom:0; border-left:0;">
+                                                                <i class="fa fa-phone"></i><br>
+                                                                <strong>@Html.Raw(Umamido.Resources.Resources.Phone)</strong>
+                                                                <p style="text-align: center;">+359 888 888 888</p>
+                                                            </td>
+                                                            <td style="border: 0;">
+                                                                <i class="fa fa-envelope"></i><br>
+                                                                <strong>Email</strong>
+                                                                <p style="text-align: center;"><a href="mailto:delivery@25min.bg">delivery@25min.bg</a></p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-container" style="background: #f2ebe0; padding:45px 0;">
+                                    <div class="container">
+                                        <span class="form-title">@Html.Raw(Umamido.Resources.Resources.ConnectWithUs)</span>
+                                        <div class="pirate_forms_wrap">
+                                            <form method="post" enctype="application/x-www-form-urlencoded" id="pirate_forms_108" class="pirate_forms" action="home/addmessage">
+                                                <div class="pirate_forms_three_inputs_wrap">
+                                                    <div class="col-sm-4 col-lg-4 form_field_wrap contact_name_wrap pirate_forms_three_inputs">
+                                                        <label for="pirate-forms-contact-name"></label>
+                                                        <input id="pirate-forms-contact-name" name="FromName" required class="form-control" type="text" value="" placeholder="@Umamido.Resources.Resources.YourName">
+                                                    </div>
+                                                    <div class="col-sm-4 col-lg-4 form_field_wrap contact_email_wrap pirate_forms_three_inputs">
+                                                        <label for="pirate-forms-contact-email"></label>
+                                                        <input id="pirate-forms-contact-email" name="EMail" required class="form-control" type="text" value="" placeholder="@Umamido.Resources.Resources.Email">
+                                                    </div>
+                                                    <div class="col-sm-4 col-lg-4 form_field_wrap contact_subject_wrap pirate_forms_three_inputs">
+                                                        <label for="pirate-forms-contact-subject"></label>
+                                                        <input id="pirate-forms-contact-subject" name="Subject" required class="form-control" type="text" value="" placeholder="@Umamido.Resources.Resources.Subject">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 col-lg-12 form_field_wrap contact_message_wrap">
+                                                    <textarea id="pirate-forms-contact-message" name="MessageText" required class="form-control" placeholder="@Umamido.Resources.Resources.Message"></textarea>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6 col-lg-6 form_field_wrap contact_submit_wrap">
+                                                    <button id="pirate-forms-contact-submit" name="pirate-forms-contact-submit" class="pirate-forms-submit-button" type="submit">@Umamido.Resources.Resources.Send</button>
+                                                </div>
+                                            </form>
+                                            <div class="pirate_forms_clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .container -->
+                        </article>
+                    </main>
+                </div><!-- .entry-content -->
+            </div>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->
+
+

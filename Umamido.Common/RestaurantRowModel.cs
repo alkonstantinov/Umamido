@@ -11,8 +11,11 @@ namespace Umamido.Common
         public int RestaurantId { get; set; }
 
         public int ImageId { get; set; }
+        public int LogoImageId { get; set; }
+        public int BigImageId { get; set; }
 
         public String FirstTitle { get; set; }
+        public String FirstDescription { get; set; }
 
         public String FirstTitleNoHtml { get { return Tools.Tools.StripHtmlTags(FirstTitle); } }
 

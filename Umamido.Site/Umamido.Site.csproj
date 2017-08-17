@@ -229,6 +229,9 @@
     <Content Include="Views\Shared\Menu.cshtml" />
     <Content Include="Views\Home\Restaurants.cshtml" />
     <Content Include="Views\Home\RestaurantsList.cshtml" />
+    <Content Include="Views\Home\Restaurant.cshtml" />
+    <Content Include="Views\Home\Terms.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

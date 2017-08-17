@@ -12,7 +12,8 @@
                     <div>
                         <h3 class="food-menu-title">@r.FirstTitleNoHtml</h3>
                     </div>
-                    <a href="restaurant-umamido.html" title="See menu">@Umamido.Resources.Resources.LookMenu</a>
+                    @Html.ActionLink(@Umamido.Resources.Resources.LookMenu, "Restaurant", "Home", new { restaurantId = r.RestaurantId }, null)
+                    
                 </div>
                 <div class="food-menu-image" style="background: url(home/getimage?imageid=@r.ImageId); background-size:cover"></div>
             </div>

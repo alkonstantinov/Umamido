@@ -26,8 +26,8 @@ namespace Umamido.DL
         public int RestaurantId { get; set; }
         public int ImageId { get; set; }
         public decimal Price { get; set; }
-        public bool IsActive { get; set; }
         public int CookMinutes { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual Image Image { get; set; }
         public virtual Restaurant Restaurant { get; set; }

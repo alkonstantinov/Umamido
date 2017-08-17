@@ -12,12 +12,13 @@ namespace Umamido.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Message
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public int UserLevelId { get; set; }
-        public bool IsActive { get; set; }
+        public int MessageId { get; set; }
+        public System.DateTime OnDate { get; set; }
+        public string FromName { get; set; }
+        public string EMail { get; set; }
+        public string Subject { get; set; }
+        public string MessageText { get; set; }
     }
 }

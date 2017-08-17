@@ -15,9 +15,20 @@ namespace Umamido.Site.Controllers
             return View();
         }
 
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
         public ActionResult OrderPayment()
         {
             var model = DL.GetTextByLang("ORDERPAYMENT", Lang);
+            return View(model);
+        }
+
+        public ActionResult Terms()
+        {
+            var model = DL.GetTextByLang("TERMS", Lang);
             return View(model);
         }
 
@@ -45,5 +56,19 @@ namespace Umamido.Site.Controllers
             return File(filedata, contentType);
         }
 
+
+        [HttpGet]
+        public ActionResult Restaurant(int restaurantId)
+        {
+            var r = DL.GetRestaurantByLang(Lang, restaurantId);
+            return View(r);
+        }
+
+        [HttpPost]
+        public ActionResult AddMessage(MessageModel model)
+        {
+            DL.AddMessage(model);
+            return View("Contactus");
+        }
     }
 }

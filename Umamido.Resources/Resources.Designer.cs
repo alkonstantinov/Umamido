@@ -97,11 +97,38 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to СВЪРЖЕТЕ СЕ С НАС.
+        /// </summary>
+        public static string ConnectWithUs {
+            get {
+                return ResourceManager.GetString("ConnectWithUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to КОНТАКТИ.
         /// </summary>
         public static string Contacts {
             get {
                 return ResourceManager.GetString("Contacts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;p&gt;Свържете се с нас, ако имате въпроси относно поръчки, доставки или друго, свързано с 25min.bg. Изберете най-удобния за Вас начин за връзка - по телефон или като попълните формата за конакт.&lt;/p&gt;&lt;p style=&quot;margin-bottom:0;&quot;&gt;Екипът ни е на Ваше разположение!&lt;/p&gt;.
+        /// </summary>
+        public static string ContactsBigText {
+            get {
+                return ResourceManager.GetString("ContactsBigText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
@@ -129,6 +156,15 @@ namespace Umamido.Resources {
         public static string LookMenu {
             get {
                 return ResourceManager.GetString("LookMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Съобщение.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
             }
         }
         
@@ -178,6 +214,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Телефон.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ресторанти.
         /// </summary>
         public static string Restaurants {
@@ -196,6 +241,24 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Изпрати.
+        /// </summary>
+        public static string Send {
+            get {
+                return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Тема.
+        /// </summary>
+        public static string Subject {
+            get {
+                return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ОБЩИ УСЛОВИЯ.
         /// </summary>
         public static string Terms {
@@ -210,6 +273,33 @@ namespace Umamido.Resources {
         public static string WaitMinutes {
             get {
                 return ResourceManager.GetString("WaitMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Всеки ден в часовете между &lt;strong&gt;10.00 ч. - 22.00 ч.&lt;/strong&gt;.
+        /// </summary>
+        public static string WorkTime {
+            get {
+                return ResourceManager.GetString("WorkTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Работно време, в което се изпълняват поръчки и доставки.
+        /// </summary>
+        public static string WorkTimeTitle {
+            get {
+                return ResourceManager.GetString("WorkTimeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вашето име.
+        /// </summary>
+        public static string YourName {
+            get {
+                return ResourceManager.GetString("YourName", resourceCulture);
             }
         }
     }

@@ -96,6 +96,9 @@
     <Compile Include="Lang.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PaymentType.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

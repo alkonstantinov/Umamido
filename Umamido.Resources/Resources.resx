@@ -129,8 +129,17 @@
   <data name="ChooseFromMenu" xml:space="preserve">
     <value>Избери от менюто</value>
   </data>
+  <data name="ConnectWithUs" xml:space="preserve">
+    <value>СВЪРЖЕТЕ СЕ С НАС</value>
+  </data>
   <data name="Contacts" xml:space="preserve">
     <value>КОНТАКТИ</value>
+  </data>
+  <data name="ContactsBigText" xml:space="preserve">
+    <value>&lt;p&gt;Свържете се с нас, ако имате въпроси относно поръчки, доставки или друго, свързано с 25min.bg. Изберете най-удобния за Вас начин за връзка - по телефон или като попълните формата за конакт.&lt;/p&gt;&lt;p style="margin-bottom:0;"&gt;Екипът ни е на Ваше разположение!&lt;/p&gt;</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="HowToOrder" xml:space="preserve">
     <value>Как да поръчаш</value>
@@ -140,6 +149,9 @@
   </data>
   <data name="LookMenu" xml:space="preserve">
     <value>Виж менюто</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Съобщение</value>
   </data>
   <data name="MyProfile" xml:space="preserve">
     <value>МОЯТ ПРОФИЛ</value>
@@ -156,16 +168,34 @@
   <data name="PayWithCardOrCache" xml:space="preserve">
     <value>Плати с карта или кеш</value>
   </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
   <data name="Restaurants" xml:space="preserve">
     <value>Ресторанти</value>
   </data>
   <data name="RestaurantsTitle" xml:space="preserve">
     <value>Ресторанти | 25 min.</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Изпрати</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Тема</value>
+  </data>
   <data name="Terms" xml:space="preserve">
     <value>ОБЩИ УСЛОВИЯ</value>
   </data>
   <data name="WaitMinutes" xml:space="preserve">
     <value>Очаквай до &lt;span&gt;25&lt;/span&gt; минути</value>
+  </data>
+  <data name="WorkTime" xml:space="preserve">
+    <value>Всеки ден в часовете между &lt;strong&gt;10.00 ч. - 22.00 ч.&lt;/strong&gt;</value>
+  </data>
+  <data name="WorkTimeTitle" xml:space="preserve">
+    <value>Работно време, в което се изпълняват поръчки и доставки</value>
+  </data>
+  <data name="YourName" xml:space="preserve">
+    <value>Вашето име</value>
   </data>
 </root>

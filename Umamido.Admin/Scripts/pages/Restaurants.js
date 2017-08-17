@@ -17,7 +17,9 @@ var Restaurants = (function (_super) {
         var result = Comm.Get("/nomen/AllImages");
         for (var _i = 0, result_1 = result; _i < result_1.length; _i++) {
             var e = result_1[_i];
+            $("#ddlImage").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
             $("#ddlLogo").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
+            $("#ddlBigImage").append("<option value='" + e.ImageId + "'>" + e.ImageName + "</option>");
         }
     };
     Restaurants.prototype.ShowGoods = function (restaurantId) {
@@ -50,8 +52,14 @@ var Restaurants = (function (_super) {
             tbl.append(row);
         }
     };
+    Restaurants.prototype.RedisplayBigImage = function () {
+        $("#iBigImagePreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlBigImage").val() + "&GUID=" + BasePage.GUID());
+    };
+    Restaurants.prototype.RedisplayImage = function () {
+        $("#iImagePreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlImage").val() + "&GUID=" + BasePage.GUID());
+    };
     Restaurants.prototype.RedisplayLogo = function () {
-        $("#iPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
+        $("#iLogoPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
     };
     Restaurants.prototype.SetRestaurant = function () {
         BasePage.HideErrors();
@@ -60,11 +68,21 @@ var Restaurants = (function (_super) {
             $("#lErrddlLogo").show();
             err = true;
         }
+        if ($("#ddlImage").val() == null) {
+            $("#lErrddlImage").show();
+            err = true;
+        }
+        if ($("#ddlBigImage").val() == null) {
+            $("#lErrddlBigImage").show();
+            err = true;
+        }
         if (err)
             return;
         var data = {
             RestaurantId: this.currentId,
-            ImageId: $("#ddlLogo").val(),
+            ImageId: $("#ddlImage").val(),
+            BigImageId: $("#ddlBigImage").val(),
+            LogoImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             Titles: [],
             Descriptions: []
@@ -125,7 +143,9 @@ var Restaurants = (function (_super) {
         else {
             var obj = JSON.parse($(element).parent().parent().attr("data"));
             $("#cbIsActive").prop("checked", obj.IsActive);
-            $("#ddlLogo").val(obj.ImageId);
+            $("#ddlImage").val(obj.ImageId);
+            $("#ddlLogo").val(obj.LogoImageId);
+            $("#ddlBigImage").val(obj.BigImageId);
             this.currentId = obj.RestaurantId;
             for (var _b = 0, _c = obj.Titles; _b < _c.length; _b++) {
                 var lang = _c[_b];
@@ -146,6 +166,8 @@ var Restaurants = (function (_super) {
         //tinymce.init({ selector: 'textarea' });
         BasePage.TinyMCE();
         this.RedisplayLogo();
+        this.RedisplayBigImage();
+        this.RedisplayImage();
     };
     return Restaurants;
 }(BasePage));

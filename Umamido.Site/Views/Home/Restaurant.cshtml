@@ -1,0 +1,36 @@
+﻿@model Umamido.Common.RestaurantRowModel
+
+@{
+    ViewBag.Title = @Model.FirstTitleNoHtml;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Model.FirstTitleNoHtml</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(home/getimage?imageid=@Model.BigImageId); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <section class="front-page-content rest-descr">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="home/getimage?imageid=@Model.LogoImageId">
+                        </div>
+                        <div class="col-md-10 belise-page-content rest-text">
+                            @Html.Raw(Model.FirstDescription)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>

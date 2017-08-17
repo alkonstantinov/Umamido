@@ -28,7 +28,7 @@ namespace Umamido.Admin.Controllers
                     if (model.ReturnUrl != null)
                         return Redirect(model.ReturnUrl);
                     else
-                        return RedirectToAction("index", "home");
+                        return RedirectToAction("images", "nomen");
                 }
                 model.LoginFailure = true;
             }

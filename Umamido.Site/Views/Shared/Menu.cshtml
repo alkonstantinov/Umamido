@@ -5,7 +5,7 @@
 
 }
 <ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
-    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "order")
     {
         menuClass = "menu-item current-main";
     }
@@ -17,7 +17,7 @@
         <a href="shop.html">@Umamido.Resources.Resources.Order</a>
     </li>
 
-    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "aboutus")
     {
         menuClass = "menu-item current-main";
     }
@@ -25,10 +25,11 @@
     {
         menuClass = "menu-item";
     }
-    <li id="menu-item-462" class='menu-item (@ViewContext.RouteData.GetRequiredString("action").ToLower()=="contacts"?"current-main":"")'>
+    <li id="menu-item-462" class='@menuClass'>
         <a href="about.html">@Umamido.Resources.Resources.AboutUs</a>
     </li>
-    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "restaurants")
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "restaurants" ||
+                @ViewContext.RouteData.GetRequiredString("action").ToLower() == "restaurant")
     {
         menuClass = "menu-item current-main";
     }
@@ -41,7 +42,7 @@
         @Html.ActionLink(@Umamido.Resources.Resources.Restaurants, "Restaurants", "Home")     <br>
 
     </li>
-    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "blog")
     {
         menuClass = "menu-item current-main";
     }
@@ -55,7 +56,7 @@
         <a href="blog.html">@Umamido.Resources.Resources.Blog</a>
     </li>
 
-    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contacts")
+    @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contactus")
     {
         menuClass = "menu-item current-main";
     }
@@ -64,6 +65,7 @@
         menuClass = "menu-item";
     }
     <li id="menu-item-21" class='@menuClass'>
-        <a href="contacts.html">@Umamido.Resources.Resources.Contacts</a>
+        @Html.ActionLink(@Umamido.Resources.Resources.Contacts, "ContactUs", "Home")
+        
     </li>
 </ul>

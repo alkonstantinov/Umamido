@@ -47,6 +47,8 @@
     <Compile Include="ImageFileModel.cs" />
     <Compile Include="ImageRowModel.cs" />
     <Compile Include="LoginModel.cs" />
+    <Compile Include="MessageBrowseModel.cs" />
+    <Compile Include="MessageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LangRowModel.cs" />
     <Compile Include="GoodRowModel.cs" />

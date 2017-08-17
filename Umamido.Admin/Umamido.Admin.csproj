@@ -282,6 +282,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DispatchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\NomenControler.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SecurityController.cs" />
@@ -318,6 +319,7 @@
     <Content Include="Views\Dispatch\Index.cshtml" />
     <Content Include="Views\Dispatch\ForCollect.cshtml" />
     <Content Include="Views\Dispatch\ForDeliver.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

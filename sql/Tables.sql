@@ -100,9 +100,13 @@ create table Restaurant
 ( 
   RestaurantId int not null identity(1,1)
   , ImageId int not null
+  , LogoImageId int  not null
+  , BigImageId int not null
   , IsActive bit not null default 1
   , constraint pk_RestaurantId primary key(RestaurantId)   
   , constraint fk_Restaurant_ImageId foreign key (ImageId) references [Image](ImageId)
+  , constraint fk_Restaurant_BigImageId foreign key (BigImageId) references [Image](ImageId)
+  , constraint fk_Restaurant_LogoImageId foreign key (LogoImageId) references [Image](ImageId)
 )
 go
 exec p_ak_create_fk_indeces 'Restaurant'
@@ -441,4 +445,26 @@ create table Req2Status
 )
 go
 exec p_ak_create_fk_indeces 'Req2Status'
+go
+
+if object_id('Message') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Message'
+  drop table Message
+end
+go
+
+create table Message
+( 
+  MessageId int not null identity(1,1)
+  , OnDate date not null default getdate()
+  , FromName nvarchar(max) 
+  , EMail nvarchar(max) 
+  , Subject nvarchar(max) 
+  , MessageText nvarchar(max) 
+  , constraint pk_MessageId primary key(MessageId)   
+  
+)
+go
+exec p_ak_create_fk_indeces 'Message'
 go
