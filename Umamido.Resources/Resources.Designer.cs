@@ -70,6 +70,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Всички.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Блог.
         /// </summary>
         public static string Blog {
@@ -93,6 +102,15 @@ namespace Umamido.Resources {
         public static string ChooseFromMenu {
             get {
                 return ResourceManager.GetString("ChooseFromMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Изберете и поръчайте.
+        /// </summary>
+        public static string ChooseOrder {
+            get {
+                return ResourceManager.GetString("ChooseOrder", resourceCulture);
             }
         }
         
@@ -133,6 +151,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Здравословна и питателна храна&lt;br&gt;с доставка до 25 минути..
+        /// </summary>
+        public static string HealthyFood {
+            get {
+                return ResourceManager.GetString("HealthyFood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Как да поръчаш.
         /// </summary>
         public static string HowToOrder {
@@ -151,11 +178,29 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Научавайте първи за нашите нови предложения.
+        /// </summary>
+        public static string LearnProposals {
+            get {
+                return ResourceManager.GetString("LearnProposals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Виж менюто.
         /// </summary>
         public static string LookMenu {
             get {
                 return ResourceManager.GetString("LookMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to лв..
+        /// </summary>
+        public static string LV {
+            get {
+                return ResourceManager.GetString("LV", resourceCulture);
             }
         }
         
@@ -250,11 +295,47 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Сподели.
+        /// </summary>
+        public static string Share {
+            get {
+                return ResourceManager.GetString("Share", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Подобни продукти.
+        /// </summary>
+        public static string SimilarProducts {
+            get {
+                return ResourceManager.GetString("SimilarProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Тема.
         /// </summary>
         public static string Subject {
             get {
                 return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Запишете се за нашия бюлетин.
+        /// </summary>
+        public static string Subscribe {
+            get {
+                return ResourceManager.GetString("Subscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Записване.
+        /// </summary>
+        public static string Subscription {
+            get {
+                return ResourceManager.GetString("Subscription", resourceCulture);
             }
         }
         

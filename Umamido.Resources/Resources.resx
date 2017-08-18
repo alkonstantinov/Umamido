@@ -150,6 +150,9 @@
   <data name="LookMenu" xml:space="preserve">
     <value>Виж менюто</value>
   </data>
+  <data name="LV" xml:space="preserve">
+    <value>лв.</value>
+  </data>
   <data name="Message" xml:space="preserve">
     <value>Съобщение</value>
   </data>
@@ -197,5 +200,29 @@
   </data>
   <data name="YourName" xml:space="preserve">
     <value>Вашето име</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Сподели</value>
+  </data>
+  <data name="SimilarProducts" xml:space="preserve">
+    <value>Подобни продукти</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Всички</value>
+  </data>
+  <data name="ChooseOrder" xml:space="preserve">
+    <value>Изберете и поръчайте</value>
+  </data>
+  <data name="HealthyFood" xml:space="preserve">
+    <value>Здравословна и питателна храна&lt;br&gt;с доставка до 25 минути.</value>
+  </data>
+  <data name="LearnProposals" xml:space="preserve">
+    <value>Научавайте първи за нашите нови предложения</value>
+  </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Запишете се за нашия бюлетин</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>Записване</value>
   </data>
 </root>

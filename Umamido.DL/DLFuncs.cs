@@ -295,26 +295,29 @@ namespace Umamido.DL
             return result;
         }
 
-        public RestaurantRowModel GetRestaurantByLang(string lang, int restaurantId)
+        public RestaurantPresentationModel GetRestaurantByLang(string lang, int restaurantId)
         {
             var r = entities.Restaurant.First(item => item.RestaurantId == restaurantId);
-            RestaurantRowModel result = new RestaurantRowModel();
+            RestaurantPresentationModel result = new RestaurantPresentationModel();
             result.RestaurantId = r.RestaurantId;
             result.ImageId = r.ImageId;
             result.BigImageId = r.BigImageId;
             result.LogoImageId = r.LogoImageId;
 
             result.IsActive = r.IsActive;
-            var rt = r.RestaurantTitle.FirstOrDefault(t=>t.Lang.LangName == lang);
+            var rt = r.RestaurantTitle.FirstOrDefault(t => t.Lang.LangName == lang);
             if (rt != null)
                 result.FirstTitle = rt.Text;
             var rd = r.RestaurantDesc.FirstOrDefault(t => t.Lang.LangName == lang);
             if (rd != null)
                 result.FirstDescription = rd.Text;
 
+            result.AllRestaurants = this.GetRestaurantsByLang(lang);
+
+
             return result;
 
-            
+
         }
 
 
@@ -459,6 +462,59 @@ namespace Umamido.DL
             return res.ToArray();
         }
 
+        public GoodRowModel[] GetGoodsByLang(int restaurantId, string lang)
+        {
+            List<GoodRowModel> res = new List<GoodRowModel>();
+            foreach (var r in entities.Good.Where(item => restaurantId == -1 || item.RestaurantId == restaurantId))
+            {
+                GoodRowModel item = new GoodRowModel();
+                item.GoodId = r.GoodId;
+                item.Price = r.Price;
+                item.RestaurantId = r.RestaurantId;
+                item.ImageId = r.ImageId;
+                item.CookTime = r.CookMinutes;
+                item.IsActive = r.IsActive;
+                var gt = r.GoodTitle.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gt != null)
+                    item.FirstTitle = gt.Text;
+                var gd = r.GoodDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gd != null)
+                    item.FirstDescription = gd.Text;
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
+        public GoodPresentationModel GetGoodByLang(int goodId, string lang)
+        {
+            GoodPresentationModel item = new GoodPresentationModel();
+            var r = entities.Good.First(g => g.GoodId == goodId);
+            item.GoodId = r.GoodId;
+            item.Price = r.Price;
+            item.RestaurantId = r.RestaurantId;
+            item.ImageId = r.ImageId;
+            item.CookTime = r.CookMinutes;
+            item.IsActive = r.IsActive;
+            var gt = r.GoodTitle.FirstOrDefault(t => t.Lang.LangName == lang);
+            if (gt != null)
+                item.FirstTitle = gt.Text;
+            var gd = r.GoodDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+            if (gd != null)
+                item.FirstDescription = gd.Text;
+
+            item.AllRestaurants = this.GetRestaurantsByLang(lang);
+            List<GoodRowModel> similar = new List<GoodRowModel>();
+
+            foreach (var g in GetGoodsByLang(r.RestaurantId, lang).Where(good => good.GoodId != r.GoodId).OrderBy(good => Guid.NewGuid().ToString()).Take(3))
+                similar.Add(g);
+            item.SimilarGoods = similar.ToArray();
+
+
+
+            return item;
+        }
 
 
 
@@ -888,7 +944,7 @@ namespace Umamido.DL
         public string[] GetMessageDates()
         {
             HashSet<string> lDates = new HashSet<string>();
-            foreach (Message m in entities.Message.OrderByDescending(msg=>msg.OnDate))
+            foreach (Message m in entities.Message.OrderByDescending(msg => msg.OnDate))
                 if (!lDates.Contains(m.OnDate.ToShortDateString()))
                     lDates.Add(m.OnDate.ToShortDateString());
             return lDates.ToArray();
@@ -900,8 +956,8 @@ namespace Umamido.DL
                 return null;
             DateTime d = DateTime.Parse(date);
             List<MessageModel> result = new List<MessageModel>();
-            foreach (Message m in entities.Message.Where(msg=>msg.OnDate==d))                
-                    result.Add(Mapper.Map<MessageModel>(m));
+            foreach (Message m in entities.Message.Where(msg => msg.OnDate == d))
+                result.Add(Mapper.Map<MessageModel>(m));
             return result.ToArray();
         }
 

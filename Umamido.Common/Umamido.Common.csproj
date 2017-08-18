@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="DispatchModel.cs" />
     <Compile Include="ErrorJSModel.cs" />
+    <Compile Include="GoodPresentationModel.cs" />
     <Compile Include="ImageFileModel.cs" />
     <Compile Include="ImageRowModel.cs" />
     <Compile Include="LoginModel.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="ReqModel.cs" />
     <Compile Include="ReqQueryModel.cs" />
     <Compile Include="ReqQueryRowModel.cs" />
+    <Compile Include="RestaurantPresentationModel.cs" />
     <Compile Include="TextModel.cs" />
     <Compile Include="TextRowModel.cs" />
     <Compile Include="SliderRowModel.cs" />

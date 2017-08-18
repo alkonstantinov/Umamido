@@ -17,6 +17,10 @@ namespace Umamido.Common
         public int ImageId { get; set; }
 
         public String FirstTitle { get; set; }
+        public String FirstTitleNoHtml { get { return Tools.Tools.StripHtmlTags(FirstTitle); } }
+
+
+        public String FirstDescription { get; set; }
 
         public Boolean IsActive { get; set; }
 

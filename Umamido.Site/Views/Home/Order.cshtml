@@ -1,0 +1,291 @@
+﻿@model Umamido.Common.RestaurantRowModel[]
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.Order;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h5 class="">@Umamido.Resources.Resources.ChooseOrder</h5>
+            <h1 class="hero-title">@Html.Raw(Umamido.Resources.Resources.HealthyFood)</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/shop_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+<div class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories-menu-toggle">
+                <button class="menu-toggle" aria-controls="categories-menu" aria-expanded="false">@Umamido.Resources.Resources.Restaurants</button>
+            </div>
+            <nav id="categories-menu" class="categories-navigation site-navigation">
+                <div class="menu-shop-menu-container">
+                    <ul id="categories-menu" class="menu nav-menu" aria-expanded="false">
+                        <li restaurantid="-1">
+                            <a onclick="Restaurant.ShowGoods(-1);">@Umamido.Resources.Resources.All</a>
+                        </li>
+                        @foreach (var r in Model)
+                        {
+                            <li restaurantid="@r.RestaurantId">
+                                <a onclick="Restaurant.ShowGoods(@r.RestaurantId);">@r.FirstTitleNoHtml</a>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+            </nav><!-- .categories -->
+        </div>
+    </div>
+</div>
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+            <div id="primary" class="content-area">
+                <div class="container">
+                    <div class="row">
+                        <ul class="products" style="position: relative; height: 1223.3px;" id="ulProducts">
+                            <li class="product" style="position: absolute; left: 0px; top: 0px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Рамен 1">
+                                        <img width="370" height="270" src="images/rest_umamido_img.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Рамен 1">Рамен 1</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">16.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart" id="add-to-cart-1"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 413px; top: 0px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Пица 1">
+                                        <img width="370" height="270" src="images/rest_pizza.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Пица 1">Пица 1</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">7.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 826px; top: 0px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Бургер 1">
+                                        <img width="370" height="270" src="images/rest_burger.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Бургер 1">Бургер 1</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">11.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 0px; top: 407px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Паста 1">
+                                        <img width="370" height="270" src="images/rest_pasta.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Паста 1">Паста 1</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">9.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 413px; top: 407px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Рамен 2">
+                                        <img width="370" height="270" src="images/rest_umamido_img.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Рамен 2">Рамен 2</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">14.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 826px; top: 407px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Пица 2">
+                                        <img width="370" height="270" src="images/rest_pizza.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Пица 2">Пица 2</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">9.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 0px; top: 815px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Бургер 2">
+                                        <img width="370" height="270" src="images/rest_burger.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Бургер 2">Бургер 2</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">9.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 413px; top: 815px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Паста 2">
+                                        <img width="370" height="270" src="images/rest_pasta.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Паста 2">Паста 2</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">11.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="product" style="position: absolute; left: 826px; top: 815px;">
+                                <div class="product-image">
+                                    <a href="product.html" title="Рамен 3">
+                                        <img width="370" height="270" src="images/rest_umamido_img.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-header">
+                                    <h3 class="product-title">
+                                        <a class="shop-item-title-link" href="product.html" title="Рамен 3">Рамен 3</a>
+                                    </h3>
+                                    <div class="price">
+                                        <span class="woocommerce-Price-amount amount">14.00 <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                    </div>
+                                    <div style="text-align:right;">
+                                        <a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <!--<p class="pagination">
+                          <a class="pagination__next" href="page2.html">Next page</a>
+                        </p>-->
+                        <!--<nav class="navigation pagination" role="navigation">
+                            <h2 class="screen-reader-text">Posts navigation</h2>
+                            <div class="nav-links"><span class="page-numbers current">1</span>
+                            <a class="page-numbers" href="#">2</a>
+                            <a class="page-numbers" href="#">3</a>
+                            <a class="next page-numbers" href="#">Следваща</a></div>
+                        </nav>-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->
+
+<section class="ribbon-sidebar">
+    <div id="belise_ribbon-widget-3">
+        <div class="container">
+            <div class="row"></div>
+        </div>
+        <div class="ribbon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 text-center ribbon-content">
+                        <h5>@Umamido.Resources.Resources.Subscribe</h5>
+                        <h3>@Umamido.Resources.Resources.LearnProposals</h3>
+                        <a href="#" class="btn">@Umamido.Resources.Resources.Subscription</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ribbon-image" style="background: url(images/subscribe_bgr.jpg); background-size:cover;)"></div>
+        </div>
+        <div class="container">
+            <div class="row"></div>
+        </div>
+    </div>
+</section>
+<script>
+    var template = '<li class="product type-product status-publish has-post-thumbnail product_cat-gifts product_cat-kitchen  instock shipping-taxable purchasable product-type-simple" style="position: absolute; left: {left}px; top: {top}px;">' +
+        '<div class="product-image">' +
+        '<a href="{url}" title="{name}">' +
+        '   <img width="370" height="270" src="{img}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">' +
+        '</a>' +
+        '</div>' +
+        '<div class="product-header">' +
+        '   <h3 class="product-title">' +
+        '      <a class="shop-item-title-link" href="{url}" title="{name}">{name}</a>' +
+        ' </h3>' +
+        '<div class="price">' +
+        '   <span class="woocommerce-Price-amount amount">{price} <span class="woocommerce-Price-currencySymbol">@Umamido.Resources.Resources.LV</span></span>' +
+        '</div>' +
+        ' <div style="text-align:right;"><a href="#" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>' +
+        ' </div>' +
+        '</li>';
+</script>
+<script src="~/js/pages/restaurant.js"></script>
+<script>
+    function getQueryParam(param) {
+        location.search.substr(1)
+            .split("&")
+            .some(function (item) { // returns first occurence and stops
+                return item.split("=")[0] == param && (param = item.split("=")[1])
+            })
+        return param
+    }
+    var rid = getQueryParam('rid');
+    alert(rid);
+    if (rid == null)
+        rid = -1;
+    Restaurant.ShowGoods(rid);
+</script>

@@ -70,5 +70,25 @@ namespace Umamido.Site.Controllers
             DL.AddMessage(model);
             return View("Contactus");
         }
+
+        public ActionResult GetGoods(int restaurantId)
+        {
+            var result = DL.GetGoodsByLang(restaurantId, Lang);
+            return Json(result, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult Good(int goodId)
+        {
+            var model = DL.GetGoodByLang(goodId,Lang);
+            return View(model);
+        }
+
+        public ActionResult Order()
+        {
+            var model = DL.GetRestaurantsByLang(Lang);
+            return View(model);
+        }
+
     }
 }

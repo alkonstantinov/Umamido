@@ -1,0 +1,123 @@
+﻿@model Umamido.Common.GoodPresentationModel
+
+@{
+    ViewBag.Title = Model.FirstTitleNoHtml;
+}
+
+<div class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories-menu-toggle">
+                <button class="menu-toggle" aria-controls="categories-menu" aria-expanded="false">@Umamido.Resources.Resources.Restaurants</button>
+            </div>
+            <nav id="categories-menu" class="categories-navigation site-navigation">
+                <div class="menu-shop-menu-container">
+                    <ul id="categories-menu" class="menu nav-menu" aria-expanded="false">
+                        @foreach (var r in Model.AllRestaurants)
+                        {
+                            string cls = "menu-item rest-menu-item current-rest";
+                            if (r.RestaurantId != Model.RestaurantId)
+                            {
+                                cls = "menu-item rest-menu-item";
+                            }
+                            <li id="menu-item-500" class="@cls">
+                                <a href="/home/order?rid=@r.RestaurantId">@r.FirstTitleNoHtml</a>
+                            </li>
+
+                        }
+
+                    </ul>
+                </div>
+            </nav><!-- .categories -->
+        </div>
+    </div>
+</div>
+
+<div id="content" class="site-content">
+    <div id="container">
+        <div id="content" role="main">
+            <div id="primary" class="content-area">
+                <div class="container">
+                    <div class="row">
+                        <div itemscope="" itemtype="http://schema.org/Product" id="product-586" class="post-586 product type-product status-publish has-post-thumbnail product_cat-herbs product_cat-kitchen first instock shipping-taxable purchasable product-type-simple">
+                            <div class="images">
+                                <a href="images/ramen-of-the-chef.jpg" itemprop="image" class="woocommerce-main-image zoom" title=""><img src="images/ramen-of-the-chef.jpg" class="attachment-shop_single size-shop_single wp-post-image" alt="Ramen of the Chef" title="fresh-fruits"></a>
+                            </div>
+                            <div class="summary entry-summary">
+                                <h1 itemprop="name" class="product_title entry-title">@Model.FirstTitleNoHtml</h1>
+                                <div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                                    <p class="price">
+                                        <span class="woocommerce-Price-amount amount">@Model.Price.ToString("#.00") <span class="woocommerce-Price-currencySymbol">@Umamido.Resources.Resources.LV</span></span>
+                                    </p>
+                                </div>
+                                <div class="description" itemprop="description">
+                                    @Html.Raw(Model.FirstDescription)
+                                </div>
+                                <form class="cart" method="post" enctype="multipart/form-data">
+                                    <div class="quantity">
+                                        <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric">
+                                    </div>
+                                    <input type="hidden" name="add-to-cart" value="586">
+                                    <button type="submit" class="single_add_to_cart_button button alt">@Umamido.Resources.Resources.Order</button>
+                                </form>
+
+                                <div class="sharedaddy sd-sharing-enabled">
+                                    <div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing">
+                                        <h3 class="sd-title">@Umamido.Resources.Resources.Share</h3>
+                                        <div class="sd-content">
+                                            <ul>
+                                                <li class="share-facebook">
+                                                    <a rel="nofollow" data-shared="sharing-facebook-586" class="share-facebook sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Facebook"><span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)</span></a>
+                                                </li>
+                                                <li class="share-twitter">
+                                                    <a rel="nofollow" data-shared="sharing-twitter-586" class="share-twitter sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a>
+                                                </li>
+                                                <li class="share-email">
+                                                    <a rel="nofollow" data-shared="" class="share-email sd-button share-icon no-text" href="#" target="_blank" title="Click to email this to a friend"><span></span><span class="sharing-screen-reader-text">Click to email this to a friend (Opens in new window)</span></a>
+                                                </li>
+                                                <li class="share-end"></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- .summary -->
+                        </div><!-- #product-586 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="woocommerce-related-products">
+    <div class="container">
+        <div class="row">
+            <div class="related products">
+                <h2>@Umamido.Resources.Resources.SimilarProducts</h2>
+                <ul class="products">
+                    @foreach (var g in Model.SimilarGoods)
+                    {
+                        <li class="product type-product status-publish has-post-thumbnail product_cat-ceramic product_cat-kitchen first instock shipping-taxable purchasable product-type-simple">
+                            <div class="product-image">
+                                <a href="home/good?goodId=@g.GoodId" title="@g.FirstTitleNoHtml">
+                                    <img width="370" height="270" src="home/GetImage?imageid=@g.ImageId" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                </a>
+                            </div>
+                            <div class="product-header">
+                                <h3 class="product-title">
+                                    <a class="shop-item-title-link" href="product.html" title="@g.FirstTitleNoHtml">@g.FirstTitleNoHtml</a>
+                                </h3>
+                                <div class="price">
+                                    <span class="woocommerce-Price-amount amount">@g.Price.ToString("#.00") <span class="woocommerce-Price-currencySymbol">лв.</span></span>
+                                </div>
+                                <div style="text-align:right;"><a href="#" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+	</div><!-- #content -->

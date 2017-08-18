@@ -14,7 +14,7 @@
         menuClass = "menu-item";
     }
     <li id="menu-item-101" class='@menuClass'>
-        <a href="shop.html">@Umamido.Resources.Resources.Order</a>
+        @Html.ActionLink(@Umamido.Resources.Resources.Order, "Order", "Home")        
     </li>
 
     @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "aboutus")
@@ -39,7 +39,7 @@
     }
 
     <li id="menu-item-101" class='@menuClass'>
-        @Html.ActionLink(@Umamido.Resources.Resources.Restaurants, "Restaurants", "Home")     <br>
+        @Html.ActionLink(@Umamido.Resources.Resources.Restaurants, "Restaurants", "Home")
 
     </li>
     @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "blog")
