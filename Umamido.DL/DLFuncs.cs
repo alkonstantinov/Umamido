@@ -605,6 +605,7 @@ namespace Umamido.DL
                 item.SliderId = r.SliderId;
                 item.ImageId = r.ImageId;
                 item.IsActive = r.IsActive;
+                item.ButtonUrl = r.ButtonUrl;
                 List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
                 List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
                 foreach (var l in entities.Lang)
@@ -642,6 +643,30 @@ namespace Umamido.DL
         }
 
 
+        public SliderRowModel[] GetSlidersByLang(string lang)
+        {
+            List<SliderRowModel> res = new List<SliderRowModel>();
+            foreach (var r in entities.Slider)
+            {
+                SliderRowModel item = new SliderRowModel();
+                item.SliderId = r.SliderId;
+                item.ImageId = r.ImageId;
+                item.IsActive = r.IsActive;
+                item.ButtonUrl = r.ButtonUrl;
+                var gt = r.SliderTitle.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gt != null)
+                    item.FirstTitle = gt.Text;
+                var gd = r.SliderDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gd != null)
+                    item.FirstDescription = gd.Text;
+
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
         public SliderRowModel GetSlider(int restaurantId)
         {
             var r = entities.Slider.First(item => item.SliderId == restaurantId);
@@ -649,6 +674,7 @@ namespace Umamido.DL
             result.SliderId = r.SliderId;
             result.ImageId = r.ImageId;
             result.IsActive = r.IsActive;
+            result.ButtonUrl = r.ButtonUrl;
             var rt = r.SliderTitle.FirstOrDefault();
             if (rt != null)
                 result.FirstTitle = rt.Text;
@@ -663,6 +689,7 @@ namespace Umamido.DL
                 Slider r = new Slider()
                 {
                     ImageId = model.ImageId,
+                    ButtonUrl = model.ButtonUrl,
                     IsActive = model.IsActive
                 };
                 entities.Slider.Add(r);
@@ -673,6 +700,7 @@ namespace Umamido.DL
             {
                 Slider r = entities.Slider.First(item => item.SliderId == model.SliderId);
                 r.ImageId = model.ImageId;
+                r.ButtonUrl = model.ButtonUrl;
                 r.IsActive = model.IsActive;
                 entities.SaveChanges();
             }
@@ -965,6 +993,167 @@ namespace Umamido.DL
 
 
 
+        #region Blog
+
+        public BlogRowModel[] GetBlogs()
+        {
+            List<BlogRowModel> res = new List<BlogRowModel>();
+            foreach (var r in entities.Blog)
+            {
+                BlogRowModel item = new BlogRowModel();
+                item.BlogId = r.BlogId;
+                item.ImageId = r.ImageId;
+                item.OnDate = r.OnDate.Value;
+                item.IsActive = r.IsActive;
+                List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
+                List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
+                foreach (var l in entities.Lang)
+                {
+                    var t = entities.BlogTitle.FirstOrDefault(row => row.BlogId == r.BlogId && row.LangId == l.LangId);
+                    if (t != null && item.FirstTitle == null)
+                        item.FirstTitle = t.Text;
+                    TranslatableItemModel timTitle = new TranslatableItemModel()
+                    {
+                        ID = t != null ? t.BlogTitleId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = t != null ? t.Text : ""
+                    };
+                    titles.Add(timTitle);
+
+                    var d = entities.BlogDesc.FirstOrDefault(row => row.BlogId == r.BlogId && row.LangId == l.LangId);
+                    TranslatableItemModel timDesc = new TranslatableItemModel()
+                    {
+                        ID = d != null ? d.BlogDescId : -1,
+                        LangId = l.LangId,
+                        LangName = l.LangName,
+                        Text = d != null ? d.Text : ""
+                    };
+                    descs.Add(timDesc);
+                }
+
+
+                item.Descriptions = descs.ToArray();
+                item.Titles = titles.ToArray();
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+        public BlogRowModel[] GetBlogsByLang(string lang)
+        {
+            List<BlogRowModel> res = new List<BlogRowModel>();
+            foreach (var r in entities.Blog.OrderByDescending(b=>b.OnDate).Take(3))
+            {
+                BlogRowModel item = new BlogRowModel();
+                item.BlogId = r.BlogId;
+                item.ImageId = r.ImageId;
+                item.OnDate = r.OnDate.Value;
+                item.IsActive = r.IsActive;
+                var gt = r.BlogTitle.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gt != null)
+                    item.FirstTitle = gt.Text;
+                var gd = r.BlogDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+                if (gd != null)
+                    item.FirstDescription = gd.Text;
+                res.Add(item);
+            }
+
+            return res.ToArray();
+        }
+
+
+        public BlogRowModel GetBlogByLang(int blogId, string lang)
+        {
+            BlogRowModel item = new BlogRowModel();
+            var r = entities.Blog.First(g => g.BlogId == blogId);
+            item.BlogId = r.BlogId;
+            item.OnDate = r.OnDate.Value;
+            item.ImageId = r.ImageId;
+            item.IsActive = r.IsActive;
+            var gt = r.BlogTitle.FirstOrDefault(t => t.Lang.LangName == lang);
+            if (gt != null)
+                item.FirstTitle = gt.Text;
+            var gd = r.BlogDesc.FirstOrDefault(t => t.Lang.LangName == lang);
+            if (gd != null)
+                item.FirstDescription = gd.Text;
+            return item;
+        }
+
+
+
+        public void SaveBlog(BlogRowModel model)
+        {
+            if (model.BlogId == -1)
+            {
+                Blog r = new Blog()
+                {
+                    ImageId = model.ImageId,
+                    OnDate = model.OnDate,
+                    IsActive = model.IsActive
+                };
+                entities.Blog.Add(r);
+                entities.SaveChanges();
+                model.BlogId = r.BlogId;
+            }
+            else
+            {
+                Blog r = entities.Blog.First(item => item.BlogId == model.BlogId);
+                r.ImageId = model.ImageId;
+                r.IsActive = model.IsActive;
+                r.OnDate = model.OnDate;
+                entities.SaveChanges();
+            }
+            foreach (var tt in model.Titles)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.BlogTitle.Add(
+                        new BlogTitle()
+                        {
+                            LangId = tt.LangId,
+                            BlogId = model.BlogId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.BlogTitle.First(item => item.BlogTitleId == tt.ID).Text = tt.Text;
+                }
+            }
+
+            foreach (var tt in model.Descriptions)
+            {
+                if (tt.ID == -1)
+                {
+                    entities.BlogDesc.Add(
+                        new BlogDesc()
+                        {
+                            LangId = tt.LangId,
+                            BlogId = model.BlogId,
+                            Text = tt.Text
+                        }
+                        );
+                }
+                else
+                {
+                    entities.BlogDesc.First(item => item.BlogDescId == tt.ID).Text = tt.Text;
+                }
+            }
+            entities.SaveChanges();
+        }
+
+
+        public void BlogChangeActive(int BlogId)
+        {
+            var r = entities.Blog.First(item => item.BlogId == BlogId);
+            r.IsActive = !r.IsActive;
+            entities.SaveChanges();
+        }
+
+        #endregion
 
 
     }

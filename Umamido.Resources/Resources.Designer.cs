@@ -286,6 +286,24 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Виж карта.
+        /// </summary>
+        public static string SeeMap {
+            get {
+                return ResourceManager.GetString("SeeMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Виж повече.
+        /// </summary>
+        public static string SeeMore {
+            get {
+                return ResourceManager.GetString("SeeMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Изпрати.
         /// </summary>
         public static string Send {

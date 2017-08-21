@@ -320,6 +320,7 @@
     <Content Include="Views\Dispatch\ForCollect.cshtml" />
     <Content Include="Views\Dispatch\ForDeliver.cshtml" />
     <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Nomen\Blogs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -347,6 +348,7 @@
     <TypeScriptCompile Include="Scripts\pages\Comm.ts" />
     <TypeScriptCompile Include="Scripts\pages\ForDeliver.ts" />
     <TypeScriptCompile Include="Scripts\pages\ForCollect.ts" />
+    <TypeScriptCompile Include="Scripts\pages\Blogs.ts" />
     <TypeScriptCompile Include="Scripts\pages\Images.ts" />
     <TypeScriptCompile Include="Scripts\pages\Goods.ts" />
     <TypeScriptCompile Include="Scripts\pages\Dispatch.ts" />

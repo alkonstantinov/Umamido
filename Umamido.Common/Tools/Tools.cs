@@ -11,7 +11,7 @@ namespace Umamido.Common.Tools
     {
         public static String StripHtmlTags(string input)
         {
-            return Regex.Replace(input, "<[/a-zA-Z]+[^>]*>", "");
+            return input == null ? null : Regex.Replace(input, "<[/a-zA-Z]+[^>]*>", "");
         }
 
         public static void GetDay(DateTime date, ref DateTime d1, ref DateTime d2)
@@ -22,7 +22,7 @@ namespace Umamido.Common.Tools
             d2 = date;
             ts = new TimeSpan(23, 59, 59);
             d2 = d2.Date + ts;
-            
+
         }
         public static void GetWeek(DateTime date, ref DateTime d1, ref DateTime d2)
         {

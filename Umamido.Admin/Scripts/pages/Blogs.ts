@@ -1,13 +1,14 @@
 ﻿declare var $: any;
 declare var tinymce: any;
-declare var sliders: Sliders;
+declare var blogs: Blogs;
 
-class Sliders extends BasePage {
+class Blogs extends BasePage {
 
     currentId: number;
 
     constructor() {
         super();
+
     }
 
 
@@ -19,12 +20,9 @@ class Sliders extends BasePage {
 
     }
 
-    public ShowGoods(sliderId) {
-        window.location.href = "/nomen/goods?sliderId=" + sliderId;
-    }
 
-    public LoadSliders() {
-        let result = Comm.Get("/nomen/AllSliders");
+    public LoadBlogs() {
+        let result = Comm.Get("/nomen/AllBlogs?restaurantId=" + $("#RestaurantId").val());
         if (result == -1) {
             //BasePage.LoadLogin();
         }
@@ -33,8 +31,7 @@ class Sliders extends BasePage {
             $("#lNoItems").show();
 
         }
-        else
-        {
+        else {
             $("#tItems").show();
             $("#lNoItems").hide();
         }
@@ -43,10 +40,11 @@ class Sliders extends BasePage {
         for (let e of result) {
             let row: String = "<tr data='" + JSON.stringify(e) + "'>" +
                 "<td>" + e.FirstTitle + "</td>" +
+                "<td>" + BasePage.ToJavaScriptDate(e.OnDate)+ "</td>" +
                 "<td><img src='/nomen/GetImageContentFromDB?imageId=" + e.ImageId + "&GUID=" + BasePage.GUID() + "' alt='' width='100' height='100'/></td>" +
                 "<td>" + e.IsActive + "</td>" +
-                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"sliders.EditSlider(this)\"></span>" +
-                "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"sliders.SliderChangeActive(this)\"></span></td></tr>";
+                "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"blogs.EditBlog(this)\"></span>" +
+                "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"blogs.BlogChangeActive(this)\"></span></td></tr>";
 
             tbl.append(row);
         }
@@ -57,7 +55,7 @@ class Sliders extends BasePage {
         $("#iPreview").attr("src", "/nomen/GetImageContentFromDB?imageId=" + $("#ddlLogo").val() + "&GUID=" + BasePage.GUID());
     }
 
-    public SetSlider() {
+    public SetBlog() {
         BasePage.HideErrors();
         let err: boolean = false;
         if ($("#ddlLogo").val() == null) {
@@ -65,12 +63,17 @@ class Sliders extends BasePage {
             err = true;
         }
 
+        if (!BasePage.IsValidDate($("#tbOnDate").val())) {
+            $("#lErrtbOnDate").show();
+            err = true;
+        }
+
 
         if (err)
             return;
         let data = {
-            SliderId: this.currentId,
-            ButtonUrl: $("#tbButtonUrl").val(),
+            BlogId: this.currentId,
+            OnDate: $("#tbOnDate").val(),
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             Titles: [],
@@ -102,34 +105,34 @@ class Sliders extends BasePage {
             }
 
         }
-
-        
-        Comm.Post("/nomen/SetSlider", data);
-        $("#dSlider").modal('hide');
+        Comm.Post("/nomen/SetBlog", data);
+        $("#dBlog").modal('hide');
         //tinymce.EditorManager.editors = [];
-        this.LoadSliders();
+        this.LoadBlogs();
     }
 
-    public CancelSlider() {
+    public CancelBlog() {
         BasePage.HideErrors();
         //tinymce.EditorManager.editors = [];
-        $("#dSlider").modal('hide');
+        $("#dBlog").modal('hide');
     }
 
-    public SliderChangeActive(element: any) {
-        let sliderId = JSON.parse($(element).parent().parent().attr('data')).SliderId;
-        var result = Comm.Post("/nomen/SliderChangeActive", { sliderId: sliderId });
+    public BlogChangeActive(element: any) {
+        let blogId = JSON.parse($(element).parent().parent().attr('data')).BlogId;
+        
+        var result = Comm.Post("/nomen/BlogChangeActive", { blogId: blogId });
 
-        this.LoadSliders();
+        this.LoadBlogs();
     }
 
-    public EditSlider(element) {
+    public EditBlog(element) {
         $("#cbIsActive").prop("checked", true);
 
         $("#dTitles").empty();
         $("#dDescriptions").empty();
         if (element == null) {
             this.currentId = -1;
+            $("#tbOnDate").val("");
             for (let lang of Comm.Get("/nomen/AllLangs")) {
                 $("#dTitles").append("<div class='row form-group' languageid='" + lang.LangId + "' rowid='-1'>" +
                     "<div class='col-lg-1'><label class='control-label'>" + lang.LangName + "</label></div>" +
@@ -147,10 +150,11 @@ class Sliders extends BasePage {
         else {
             let obj = JSON.parse($(element).parent().parent().attr("data"));
 
+            $("#tbOnDate").val(BasePage.ToJavaScriptDate(obj.OnDate));
             $("#cbIsActive").prop("checked", obj.IsActive);
-            $("#tbButtonUrl").val(obj.ButtonUrl);
             $("#ddlLogo").val(obj.ImageId);
-            this.currentId = obj.SliderId;
+
+            this.currentId = obj.BlogId;
 
 
             for (let lang of obj.Titles) {
@@ -169,7 +173,7 @@ class Sliders extends BasePage {
             }
 
         }
-        $("#dSlider").modal('show');
+        $("#dBlog").modal('show');
         //tinymce.init({ selector: 'textarea' });
         BasePage.TinyMCE();
         this.RedisplayLogo();

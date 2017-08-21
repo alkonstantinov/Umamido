@@ -1,7 +1,270 @@
-﻿
+﻿@model Umamido.Common.IndexPageModel
+
 @{
     ViewBag.Title = Umamido.Resources.Resources.IndexTitle;
 }
 
-<h2>Index</h2>
+<!-- Modal -->
+
+<div style='display:none'>
+    <div id='map-popup' style='padding:10px; background:#fff;'>
+        <img src="images/map.jpg">
+        <div class="row" style="margin:15px 0 0 0; padding:0;">
+
+            <div class="col-md-9" style="padding:0;">
+                <input type="text" placeholder="Въведете адрес за проверка">
+            </div>
+            <div class="col-md-2 pull-right" style="padding:0;">
+                <input type="submit" value="Провери" style="padding:0;">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Район за доставки</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src="images/map.jpg">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+<!-- Modal -->
+
+
+<ul class='kwicks kwicks-horizontal'>
+    @foreach (var s in Model.Sliders)
+    {
+        <li>
+            <div>
+                <div class="hero-content front-page-hero">
+                    <div class="container">
+                        <div class="hero-title-container">
+                            <div class="front-page-title">
+                                <h2>@s.FirstTitleNoHtml</h2>
+                                <h3>@s.FirstDescriptionNoHtml</h3>
+                            </div>
+                        </div>
+                        <div class="hero-btn-container">
+                            <a href="@s.ButtonUrl">@Umamido.Resources.Resources.Order</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="front-page-hero-background">
+                    <div class="front-page-hero-image" style="background-image: url(home/getimage?imageId=@s.ImageId)"></div>
+                </div>
+            </div>
+
+        </li>
+    }
+</ul>
+
+
+<!--<div id="hero">
+    <div class="hero-content big-hero front-page-hero">
+        <div class="container">
+            <div class="hero-title-container">
+                <div class="front-page-title">
+                    <h2>Кулинарно удоволствие</h2>
+                    <h3>при теб само за 25 минути</h3>
+                </div>
+            </div>
+            <div class="hero-btn-container">
+                <a href="shop.html">Поръчай</a>
+            </div>
+        </div>
+    </div>
+    <div class="front-page-hero-background">
+        <div class="front-page-hero-image" style="background-image: url(images/home_hero.jpg)"></div>
+    </div>
+</div>-->
+<!-- #hero -->
+
+<div id="content" class="site-content" style="clear:both;">
+
+    <section class="front-page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 belise-page-content">
+                    <div id="pl-40">
+                        <div class="panel-grid" id="pg-40-0">
+                            <div class="panel-grid-cell" id="pgc-40-0-0">
+                                <div class="so-panel widget widget_sow-editor panel-first-child panel-last-child" id="panel-40-0-0-0" data-index="0">
+                                    <div class="so-widget-sow-editor so-widget-sow-editor-base">
+                                        <div class="siteorigin-widget-tinymce textwidget">
+                                            <h2 style="padding-top:10px; letter-spacing: .1em; margin-bottom: 20px;">@Html.Raw(Model.AboutUsMainHeading)</h2>
+                                            <p>@Html.Raw(@Model.AboutUsMainText)</p>
+                                            <p><a href="/Home/AboutUs" class="btn">@Umamido.Resources.Resources.SeeMore</a> <a class='map-popup btn' href="#map-popup">@Umamido.Resources.Resources.SeeMap</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-grid-cell" id="pgc-40-0-1">&nbsp;</div>
+                            <div class="panel-grid-cell" id="pgc-40-0-2">
+                                <div class="so-panel widget widget_image panel-first-child panel-last-child" id="panel-40-0-2-0" data-index="1">
+                                    <div class="jetpack-image-container">
+                                        <img src="images/home_about_img.jpg" alt="About us photo" title="About us" class="alignright">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="front-page-after-content">
+        <div class="container">
+            <div class="row">
+                <div class="operation-hours-inner">
+                    <div class="operation-hours-title">
+                        <strong>Как да поръчаш</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="operation-hours-inner">
+                    <div class="operation-hours-content">
+                        <ul>
+                            <li class="steps step1">
+                                <div class="step">1</div>
+                                <p class="how-to-icon"><i class="icon icon-map-2"></i></p>
+                                <p><strong>Провери адрес</strong></p>
+                            </li>
+                            <li class="steps step1">
+                                <div class="step">2</div>
+                                <p class="how-to-icon"><i class="icon icon-cart"></i></p>
+                                <p><strong>Избери от менюто</strong></p>
+                            </li>
+                            <li class="steps step1">
+                                <div class="step">3</div>
+                                <p class="how-to-icon"><i class="icon icon-cash"></i></p>
+                                <p><strong>Плати с карта или кеш</strong></p>
+                            </li>
+                            <li class="steps step1">
+                                <div class="step">4</div>
+                                <p class="how-to-icon"><i class="icon icon-rocket"></i></p>
+                                <p><strong>Очаквай до <span>25</span> минути</strong></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row belise-menu-content">
+                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
+                    <div class="food-menu-container">
+                        <div class="food-menu-content">
+                            <div>
+                                <h3 class="food-menu-title">UMAMIDO</h3>
+                            </div>
+                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
+                        </div>
+                        <div class="food-menu-image" style="background: url(images/rest_umamido_img.jpg); background-size:cover"></div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
+                    <div class="food-menu-container">
+                        <div class="food-menu-content">
+                            <div>
+                                <h3 class="food-menu-title">Пица</h3>
+                            </div>
+                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
+                        </div>
+                        <div class="food-menu-image" style="background: url(images/rest_pizza.jpg); background-size:cover"></div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
+                    <div class="food-menu-container">
+                        <div class="food-menu-content">
+                            <div>
+                                <h3 class="food-menu-title">Бургер</h3>
+                            </div>
+                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
+                        </div>
+                        <div class="food-menu-image" style="background: url(images/rest_burger.jpg); background-size:cover"></div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
+                    <div class="food-menu-container">
+                        <div class="food-menu-content">
+                            <div>
+                                <h3 class="food-menu-title">Паста</h3>
+                            </div>
+                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
+                        </div>
+                        <div class="food-menu-image" style="background: url(images/rest_pasta.jpg); background-size:cover"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="sidebar front-page-sidebar">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 widget">
+                    <h3 class="widget-title">Последно от блога</h3>
+                    <ul class="eo-events eo-events-widget">
+                        <li class="eo-event-venue-the-olive-tree eo-event-future">
+                            <span>Апр<strong>19</strong></span>
+                            <a href="#">Рамен - японска нудълс супа с китайски произход</a>
+                        </li>
+                        <li class="eo-event-venue-delaneys-irish-pub eo-event-future">
+                            <span>Май<strong>1</strong></span>
+                            <a href="#">Пастата - изкушение по сицилиански</a>
+                        </li>
+                        <li class="eo-event-venue-quatre-mains eo-event-future">
+                            <span>Юни<strong>4</strong></span>
+                            <a href="#">Нашият нов Бургер на месеца е тук</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 widget">
+                    <div class="textwidget">
+
+                        <div id="sb_instagram" class="sbi sbi_col_2 sbi_medium" style="width:100%; background-color: #ffffff; padding-bottom: 10px; " data-id="36577388" data-num="4" data-res="auto" data-cols="2" data-options="{&quot;sortby&quot;: &quot;none&quot;, &quot;headercolor&quot;: &quot;7e7e80&quot;, &quot;imagepadding&quot;: &quot;5&quot;}"><div class="sb_instagram_header" style="padding: 10px; padding-bottom: 0;"><a href="http://instagram.com/umamido_sofia" target="_blank" title="umamido_sofia" class="sbi_header_link"><div class="sbi_header_text"><h3 style="color: #7e7e80">@@umamido_sofia</h3><p class="sbi_bio" style="color: #7e7e80">Fastest food delivery in Europe.</p></div><div class="sbi_header_img"><div class="sbi_header_img_hover"><i></i></div><img src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/17932101_1855709604699878_5249543074824060928_a.jpg" alt="Andrei" width="50" height="50" scale="0"></div></a></div><div id="sbi_images" style="padding: 5px;"><div class="sbi_item sbi_type_image" id="sbi_1542243075837367803_36577388" data-date="1498069723000"><div class="sbi_photo_wrap"><a class="sbi_photo sbi_imgLiquid_bgSize sbi_imgLiquid_ready" href="https://www.instagram.com/p/BRLTfU4F4IE/?taken-by=umamido_sofia" target="_blank" style="background-image: url(images/inst_1.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat; height: 205px; opacity: 1;"><img src="https://scontent.cdninstagram.com/t51.2885-15/s320x320/e35/19379978_111151472834826_1536446682386923520_n.jpg" alt="" width="200" height="200" style="display: none;" scale="0"></a></div></div><div class="sbi_item sbi_type_image" id="sbi_1540536989308561201_36577388" data-date="1497866341000"><div class="sbi_photo_wrap"><a class="sbi_photo sbi_imgLiquid_bgSize sbi_imgLiquid_ready" href="https://www.instagram.com/p/BQU_gGhBo1p/?taken-by=umamido_sofia" target="_blank" style="background-image: url(images/inst_2.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat; height: 205px; opacity: 1;"><img src="https://scontent.cdninstagram.com/t51.2885-15/e35/p320x320/19228588_1575393242519054_7738267273265152000_n.jpg" alt="" width="200" height="200" style="display: none;" scale="0"></a></div></div><div class="sbi_item sbi_type_image" id="sbi_1540009325497876168_36577388" data-date="1497803439000"><div class="sbi_photo_wrap"><a class="sbi_photo sbi_imgLiquid_bgSize sbi_imgLiquid_ready" href="https://www.instagram.com/p/BRgc03qlLil/?taken-by=umamido_sofia" target="_blank" style="background-image: url(images/inst_3.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat; height: 205px;"><img src="https://scontent.cdninstagram.com/t51.2885-15/s320x320/e35/19367057_102604747026290_7704093236398129152_n.jpg" alt="" width="200" height="200" style="display: none;" scale="0"></a></div></div><div class="sbi_item sbi_type_image" id="sbi_1539972847266934242_36577388" data-date="1497799090000"><div class="sbi_photo_wrap"><a class="sbi_photo sbi_imgLiquid_bgSize sbi_imgLiquid_ready" href="https://www.instagram.com/p/BRYIWc7lCrG/?taken-by=umamido_sofia" target="_blank" style="background-image: url(images/inst_4.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat; height: 205px; opacity: 1;"><img src="https://scontent.cdninstagram.com/t51.2885-15/e35/p320x320/19122257_105093930109041_6222100451492364288_n.jpg" alt="" width="200" height="200" style="display: none;" scale="0"></a></div></div></div><div id="sbi_load"></div></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- #content -->
+
+<section class="ribbon-sidebar">
+    <div id="belise_ribbon-widget-3">
+        <div class="container">
+            <div class="row"></div>
+        </div>
+        <div class="ribbon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 text-center ribbon-content">
+                        <h5>Запишете се за нашия бюлетин</h5>
+                        <h3>Научавайте първи за нашите нови предложения</h3>
+                        <a href="#" class="btn">Записване</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ribbon-image" style="background: url(images/subscribe_bgr.jpg); background-size:cover;)"></div>
+        </div>
+        <div class="container">
+            <div class="row"></div>
+        </div>
+    </div>
+</section>
+
 

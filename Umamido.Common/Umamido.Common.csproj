@@ -42,11 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUsModel.cs" />
     <Compile Include="DispatchModel.cs" />
     <Compile Include="ErrorJSModel.cs" />
     <Compile Include="GoodPresentationModel.cs" />
+    <Compile Include="BlogRowModel.cs" />
     <Compile Include="ImageFileModel.cs" />
     <Compile Include="ImageRowModel.cs" />
+    <Compile Include="IndexPageModel.cs" />
     <Compile Include="LoginModel.cs" />
     <Compile Include="MessageBrowseModel.cs" />
     <Compile Include="MessageModel.cs" />

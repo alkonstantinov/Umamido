@@ -321,6 +321,41 @@ namespace Umamido.Admin.Controllers
 
         #endregion
 
+        #region Blogs
+        [HttpGet]
+        public ActionResult Blogs()
+        {
 
+            return View();
+        }
+        [HttpGet]
+        public ActionResult AllBlogs()
+        {
+            var result = this.DL.GetBlogs();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult BlogChangeActive(int blogId)
+        {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
+            this.DL.BlogChangeActive(blogId);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult SetBlog(BlogRowModel model)
+        {
+            if (!HasLevel(1))
+                return Json("-1", JsonRequestBehavior.AllowGet);
+
+            this.DL.SaveBlog(model);
+            return Json("ОК", JsonRequestBehavior.AllowGet);
+        }
+
+
+        #endregion
     }
 }

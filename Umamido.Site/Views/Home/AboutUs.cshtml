@@ -1,0 +1,45 @@
+﻿@model Umamido.Common.AboutUsModel
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.AboutUs;
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Common.Tools.Tools.StripHtmlTags(Model.Title)</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/about_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+
+            <section class="front-page-content rest-descr">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 belise-page-content rest-text">
+                            @Html.Raw(Model.Text)
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="front-page-after-content">
+                <div class="container">
+                    @{
+                        Html.RenderPartial("RestaurantsList", Model.Restaurants);
+                    }
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->
+
+

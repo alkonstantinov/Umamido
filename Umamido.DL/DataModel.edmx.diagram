@@ -49,6 +49,14 @@
         <AssociationConnector Association="UmamidoModel.fk_SliderTitle_SliderId" />
         <AssociationConnector Association="UmamidoModel.fk_TextDesc_RestaurantId" />
         <EntityTypeShape EntityType="UmamidoModel.Message" Width="1.5" PointX="8.375" PointY="6.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Blog" Width="1.5" PointX="3.75" PointY="20.125" />
+        <EntityTypeShape EntityType="UmamidoModel.BlogDesc" Width="1.5" PointX="9" PointY="15.5" />
+        <EntityTypeShape EntityType="UmamidoModel.BlogTitle" Width="1.5" PointX="6" PointY="17.5" />
+        <AssociationConnector Association="UmamidoModel.fk_Blog_ImageId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_BlogId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_BlogId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_LangId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

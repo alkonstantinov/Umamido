@@ -12,7 +12,11 @@ namespace Umamido.Site.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            IndexPageModel model = new IndexPageModel();
+            model.Sliders = DL.GetSlidersByLang(Lang);
+            model.AboutUsMainHeading = DL.GetTextByLang("ABOUTUSMAINHEADING", Lang).Text;
+            model.AboutUsMainText = DL.GetTextByLang("ABOUTUSMAINTEXT", Lang).Text;
+            return View(model);
         }
 
         public ActionResult ContactUs()
@@ -87,6 +91,17 @@ namespace Umamido.Site.Controllers
         public ActionResult Order()
         {
             var model = DL.GetRestaurantsByLang(Lang);
+            return View(model);
+        }
+
+        public ActionResult AboutUs()
+        {
+            var model = new AboutUsModel()
+            {
+                Restaurants = DL.GetRestaurantsByLang(Lang),
+                Text = DL.GetTextByLang("ABOUTUSTEXT", Lang).Text,
+                Title = DL.GetTextByLang("ABOUTUSHEADING", Lang).Text
+            };
             return View(model);
         }
 

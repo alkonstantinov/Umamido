@@ -12,24 +12,24 @@ namespace Umamido.DL
     using System;
     using System.Collections.Generic;
     
-    public partial class Slider
+    public partial class Blog
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Slider()
+        public Blog()
         {
-            this.SliderDesc = new HashSet<SliderDesc>();
-            this.SliderTitle = new HashSet<SliderTitle>();
+            this.BlogDesc = new HashSet<BlogDesc>();
+            this.BlogTitle = new HashSet<BlogTitle>();
         }
     
-        public int SliderId { get; set; }
+        public int BlogId { get; set; }
         public int ImageId { get; set; }
+        public Nullable<System.DateTime> OnDate { get; set; }
         public bool IsActive { get; set; }
-        public string ButtonUrl { get; set; }
     
         public virtual Image Image { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SliderDesc> SliderDesc { get; set; }
+        public virtual ICollection<BlogDesc> BlogDesc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SliderTitle> SliderTitle { get; set; }
+        public virtual ICollection<BlogTitle> BlogTitle { get; set; }
     }
 }

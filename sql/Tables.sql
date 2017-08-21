@@ -238,6 +238,7 @@ create table Slider
 ( 
   SliderId int not null identity(1,1)
   , ImageId int not null
+  , ButtonUrl nvarchar(max)
   , IsActive bit not null default 1
   , constraint pk_SliderId primary key(SliderId)   
   , constraint fk_Slider_ImageId foreign key (ImageId) references [Image](ImageId)
@@ -467,4 +468,71 @@ create table Message
 )
 go
 exec p_ak_create_fk_indeces 'Message'
+go
+
+
+
+if object_id('Blog') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Blog'
+  drop table Blog
+end
+go
+
+create table Blog
+( 
+  BlogId int not null identity(1,1)
+  , ImageId int not null
+  , OnDate date
+  , IsActive bit not null default 1
+  , constraint pk_BlogId primary key(BlogId)   
+  , constraint fk_Blog_ImageId foreign key (ImageId) references [Image](ImageId)
+
+)
+go
+exec p_ak_create_fk_indeces 'Blog'
+go
+
+
+
+if object_id('BlogTitle') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'BlogTitle'
+  drop table BlogTitle
+end
+go
+
+create table BlogTitle
+( 
+  BlogTitleId int not null identity(1,1)
+  , BlogId int not null 
+  , LangId int not null
+  , Text nvarchar(max)
+  , constraint pk_BlogTitleId primary key(BlogTitleId)   
+  , constraint fk_BlogTitle_BlogId foreign key (BlogId) references Blog(BlogId)
+  , constraint fk_BlogTitle_LangId foreign key (LangId) references Lang(LangId)
+)
+go
+exec p_ak_create_fk_indeces 'BlogTitle'
+go
+
+if object_id('BlogDesc') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'BlogDesc'
+  drop table BlogDesc
+end
+go
+
+create table BlogDesc
+( 
+  BlogDescId int not null identity(1,1)
+  , BlogId int not null 
+  , LangId int not null
+  , Text nvarchar(max)
+  , constraint pk_BlogDescId primary key(BlogDescId)   
+  , constraint fk_BlogDesc_BlogId foreign key (BlogId) references Blog(BlogId)
+  , constraint fk_BlogDesc_LangId foreign key (LangId) references Lang(LangId)
+)
+go
+exec p_ak_create_fk_indeces 'BlogDesc'
 go

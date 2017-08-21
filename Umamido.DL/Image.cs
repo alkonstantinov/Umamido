@@ -22,6 +22,7 @@ namespace Umamido.DL
             this.Restaurant1 = new HashSet<Restaurant>();
             this.Restaurant2 = new HashSet<Restaurant>();
             this.Slider = new HashSet<Slider>();
+            this.Blog = new HashSet<Blog>();
         }
     
         public int ImageId { get; set; }
@@ -40,5 +41,7 @@ namespace Umamido.DL
         public virtual ICollection<Restaurant> Restaurant2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Slider> Slider { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Blog> Blog { get; set; }
     }
 }

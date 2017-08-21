@@ -225,4 +225,10 @@
   <data name="Subscription" xml:space="preserve">
     <value>Записване</value>
   </data>
+  <data name="SeeMap" xml:space="preserve">
+    <value>Виж карта</value>
+  </data>
+  <data name="SeeMore" xml:space="preserve">
+    <value>Виж повече</value>
+  </data>
 </root>

@@ -48,6 +48,9 @@ namespace Umamido.DL
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
         public virtual DbSet<Message> Message { get; set; }
+        public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<BlogDesc> BlogDesc { get; set; }
+        public virtual DbSet<BlogTitle> BlogTitle { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

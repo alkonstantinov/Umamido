@@ -5,6 +5,33 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UmamidoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="date" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BlogDesc">
+          <Key>
+            <PropertyRef Name="BlogDescId" />
+          </Key>
+          <Property Name="BlogDescId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="BlogTitle">
+          <Key>
+            <PropertyRef Name="BlogTitleId" />
+          </Key>
+          <Property Name="BlogTitleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BlogId" Type="int" Nullable="false" />
+          <Property Name="LangId" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Good">
           <Key>
             <PropertyRef Name="GoodId" />
@@ -136,6 +163,7 @@
           </Key>
           <Property Name="SliderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImageId" Type="int" Nullable="false" />
+          <Property Name="ButtonUrl" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SliderDesc">
@@ -196,6 +224,66 @@
           <Property Name="UserLevelId" Type="int" Nullable="false" />
           <Property Name="UserLevelName" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <Association Name="fk_Blog_ImageId">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Blog" Type="Self.Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_BlogId">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="BlogDesc" Type="Self.BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="BlogDesc" Type="Self.BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_BlogId">
+          <End Role="Blog" Type="Self.Blog" Multiplicity="1" />
+          <End Role="BlogTitle" Type="Self.BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_LangId">
+          <End Role="Lang" Type="Self.Lang" Multiplicity="1" />
+          <End Role="BlogTitle" Type="Self.BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Good_ImageId">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
           <End Role="Good" Type="Self.Good" Multiplicity="*" />
@@ -488,6 +576,9 @@
           <Parameter Name="restaurantId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UmamidoModelStoreContainer">
+          <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogDesc" EntityType="Self.BlogDesc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlogTitle" EntityType="Self.BlogTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodTitle" EntityType="Self.GoodTitle" Schema="dbo" store:Type="Tables" />
@@ -509,6 +600,26 @@
           <EntitySet Name="TextDesc" EntityType="Self.TextDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevel" EntityType="Self.UserLevel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Blog_ImageId" Association="Self.fk_Blog_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_BlogId" Association="Self.fk_BlogDesc_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_LangId" Association="Self.fk_BlogDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_BlogId" Association="Self.fk_BlogTitle_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_LangId" Association="Self.fk_BlogTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
           <AssociationSet Name="fk_Good_ImageId" Association="Self.fk_Good_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Good" EntitySet="Good" />
@@ -735,6 +846,29 @@
             <Parameter Name="restaurantId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Message" EntityType="UmamidoModel.Message" />
+          <EntitySet Name="Blog" EntityType="UmamidoModel.Blog" />
+          <EntitySet Name="BlogDesc" EntityType="UmamidoModel.BlogDesc" />
+          <EntitySet Name="BlogTitle" EntityType="UmamidoModel.BlogTitle" />
+          <AssociationSet Name="fk_Blog_ImageId" Association="UmamidoModel.fk_Blog_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_BlogId" Association="UmamidoModel.fk_BlogDesc_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_BlogId" Association="UmamidoModel.fk_BlogTitle_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_LangId" Association="UmamidoModel.fk_BlogDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_LangId" Association="UmamidoModel.fk_BlogTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Good">
           <Key>
@@ -788,6 +922,7 @@
           <NavigationProperty Name="Restaurant1" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Image" ToRole="Restaurant" />
           <NavigationProperty Name="Restaurant2" Relationship="UmamidoModel.fk_Restaurant_LogoImageId" FromRole="Image" ToRole="Restaurant" />
           <NavigationProperty Name="Slider" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Image" ToRole="Slider" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Image" ToRole="Blog" />
         </EntityType>
         <EntityType Name="Lang">
           <Key>
@@ -803,6 +938,8 @@
           <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_LangId" FromRole="Lang" ToRole="SliderDesc" />
           <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_LangId" FromRole="Lang" ToRole="SliderTitle" />
           <NavigationProperty Name="TextDesc" Relationship="UmamidoModel.fk_TextDesc_LangId" FromRole="Lang" ToRole="TextDesc" />
+          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="Lang" ToRole="BlogDesc" />
+          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="Lang" ToRole="BlogTitle" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -896,6 +1033,7 @@
           <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Slider" ToRole="Image" />
           <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_SliderId" FromRole="Slider" ToRole="SliderDesc" />
           <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_SliderId" FromRole="Slider" ToRole="SliderTitle" />
+          <Property Name="ButtonUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SliderDesc">
           <Key>
@@ -1285,6 +1423,100 @@
           <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Blog" ToRole="Image" />
+          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="Blog" ToRole="BlogDesc" />
+          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="Blog" ToRole="BlogTitle" />
+        </EntityType>
+        <EntityType Name="BlogDesc">
+          <Key>
+            <PropertyRef Name="BlogDescId" />
+          </Key>
+          <Property Name="BlogDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="BlogDesc" ToRole="Blog" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="BlogDesc" ToRole="Lang" />
+        </EntityType>
+        <EntityType Name="BlogTitle">
+          <Key>
+            <PropertyRef Name="BlogTitleId" />
+          </Key>
+          <Property Name="BlogTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="BlogTitle" ToRole="Blog" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="BlogTitle" ToRole="Lang" />
+        </EntityType>
+        <Association Name="fk_Blog_ImageId">
+          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_BlogId">
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_BlogId">
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1420,6 +1652,7 @@
           <EntitySetMapping Name="Slider">
             <EntityTypeMapping TypeName="UmamidoModel.Slider">
               <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="ButtonUrl" ColumnName="ButtonUrl" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="SliderId" ColumnName="SliderId" />
@@ -1556,6 +1789,36 @@
                 <ScalarProperty Name="FromName" ColumnName="FromName" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
                 <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="UmamidoModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.BlogDesc">
+              <MappingFragment StoreEntitySet="BlogDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogDescId" ColumnName="BlogDescId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogTitle">
+            <EntityTypeMapping TypeName="UmamidoModel.BlogTitle">
+              <MappingFragment StoreEntitySet="BlogTitle">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogTitleId" ColumnName="BlogTitleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

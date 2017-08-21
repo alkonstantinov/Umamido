@@ -63,6 +63,7 @@ var Sliders = (function (_super) {
             return;
         var data = {
             SliderId: this.currentId,
+            ButtonUrl: $("#tbButtonUrl").val(),
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             Titles: [],
@@ -124,6 +125,7 @@ var Sliders = (function (_super) {
         else {
             var obj = JSON.parse($(element).parent().parent().attr("data"));
             $("#cbIsActive").prop("checked", obj.IsActive);
+            $("#tbButtonUrl").val(obj.ButtonUrl);
             $("#ddlLogo").val(obj.ImageId);
             this.currentId = obj.SliderId;
             for (var _b = 0, _c = obj.Titles; _b < _c.length; _b++) {
