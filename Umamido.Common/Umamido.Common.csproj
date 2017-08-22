@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutUsModel.cs" />
+    <Compile Include="AddressCheckModel.cs" />
     <Compile Include="DispatchModel.cs" />
     <Compile Include="ErrorJSModel.cs" />
     <Compile Include="GoodPresentationModel.cs" />

@@ -148,8 +148,8 @@ class BasePage {
             return false;
         // Parse the date parts to integers
         var parts = dateString.split(".");
-        var day = parseInt(parts[1], 10);
-        var month = parseInt(parts[0], 10);
+        var day = parseInt(parts[0], 10);
+        var month = parseInt(parts[1], 10);
         var year = parseInt(parts[2], 10);
         alert(parts);
         // Check the ranges of month and year

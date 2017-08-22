@@ -13,5 +13,9 @@ namespace Umamido.Common
         public String AboutUsMainHeading { get; set; }
 
         public String AboutUsMainText { get; set; }
+
+        public RestaurantRowModel[] Restaurants { get; set; }
+
+        public BlogRowModel[] Blogs { get; set; }
     }
 }

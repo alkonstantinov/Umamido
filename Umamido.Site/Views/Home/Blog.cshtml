@@ -1,0 +1,144 @@
+﻿@model Umamido.Common.BlogRowModel
+
+@{
+    ViewBag.Title = Umamido.Resources.Resources.Blog;
+}
+
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Umamido.Resources.Resources.Blog</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/blog_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+    <div id="primary" class="content-area">
+        <main id="main" class="site-main">
+            <div class="container single-container">
+                <article id="post-433" class="post type-post status-publish format-standard has-post-thumbnail hentry category-food category-recipes">
+                    <header class="entry-header">
+                        <h1 class="entry-title">@Model.FirstTitleNoHtml</h1>
+                        <div class="entry-meta">
+                            <span class="posted-on">@Model.OnDate.ToShortDateString()</span>
+                        </div><!-- .entry-meta -->
+                    </header><!-- .entry-header -->
+                    <div class="post-thumbnail">
+                        <img width="1080" height="732" src="home/getimage?imageid=@Model.ImageId" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="">
+                    </div>
+                    <footer class="entry-footer">
+
+                        <div class="share">
+                            <div class="sharedaddy sd-sharing-enabled">
+                                <div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing">
+                                    <h3 class="sd-title">Share</h3>
+                                    <div class="sd-content">
+                                        <ul>
+                                            <li class="share-facebook">
+                                                <a rel="nofollow" data-shared="sharing-facebook-433" class="share-facebook sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Facebook">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-twitter">
+                                                <a rel="nofollow" data-shared="sharing-twitter-433" class="share-twitter sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Twitter">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-email">
+                                                <a rel="nofollow" data-shared="" class="share-email sd-button share-icon no-text" href="#" target="_blank" title="Click to email this to a friend">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-end"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <div style="padding:10px 50px;">
+                        @Html.Raw(Model.FirstDescription)
+                    </div>
+                    <footer class="entry-footer">
+                        <div class="share">
+                            <div class="sharedaddy sd-sharing-enabled">
+                                <div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing">
+                                    <h3 class="sd-title">Share</h3>
+                                    <div class="sd-content">
+                                        <ul>
+                                            <li class="share-facebook">
+                                                <a rel="nofollow" data-shared="sharing-facebook-433" class="share-facebook sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Facebook">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-twitter">
+                                                <a rel="nofollow" data-shared="sharing-twitter-433" class="share-twitter sd-button share-icon no-text" href="#" target="_blank" title="Click to share on Twitter">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-email">
+                                                <a rel="nofollow" data-shared="" class="share-email sd-button share-icon no-text" href="#" target="_blank" title="Click to email this to a friend">
+                                                    <span></span>
+                                                </a>
+                                            </li>
+                                            <li class="share-end"></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer><!-- .entry-footer -->
+                </article><!-- #post-## -->
+            </div><!-- .container -->
+            <div class="single-navigation">
+                <div class="container">
+                    <nav class="navigation post-navigation" role="navigation">
+                        <h2 class="screen-reader-text">@Umamido.Resources.Resources.BlogNavigation</h2>
+                        <div class="nav-links">
+                            @if (Model.PrevId > 0)
+                            {
+                                <div class="nav-previous">
+                                    <a href="home/blog?blogid=@Model.PrevId" rel="prev">@Umamido.Resources.Resources.BlogPrev</a>
+                                </div>
+                            }
+                            @if (Model.NextId > 0)
+                            {
+                                <div class="nav-next">
+                                    <a href="home/blog?blogid=@Model.NextId" rel="next">@Umamido.Resources.Resources.BlogNext</a>
+                                </div>
+                            }
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </main><!-- #main -->
+    </div><!-- #primary -->
+</div>
+
+
+<section class="ribbon-sidebar">
+    <div id="belise_ribbon-widget-3">
+        <div class="container">
+            <div class="row"></div>
+        </div>
+        <div class="ribbon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1 text-center ribbon-content">
+                        <h5>Запишете се за нашия бюлетин</h5>
+                        <h3>Научавайте първи за нашите нови предложения</h3>
+                        <a href="#" class="btn">Записване</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ribbon-image" style="background: url(images/subscribe_bgr.jpg); background-size:cover;)"></div>
+        </div>
+        <div class="container">
+            <div class="row"></div>
+        </div>
+    </div>
+</section>
+
+<div class="clear"></div>	

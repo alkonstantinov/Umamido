@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="UmamidoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AddressCheck">
+          <Key>
+            <PropertyRef Name="AddressCheckId" />
+          </Key>
+          <Property Name="AddressCheckId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Km" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Blog">
           <Key>
             <PropertyRef Name="BlogId" />
@@ -576,6 +584,7 @@
           <Parameter Name="restaurantId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UmamidoModelStoreContainer">
+          <EntitySet Name="AddressCheck" EntityType="Self.AddressCheck" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogDesc" EntityType="Self.BlogDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogTitle" EntityType="Self.BlogTitle" Schema="dbo" store:Type="Tables" />
@@ -869,6 +878,7 @@
             <End Role="Lang" EntitySet="Lang" />
             <End Role="BlogTitle" EntitySet="BlogTitle" />
           </AssociationSet>
+          <EntitySet Name="AddressCheck" EntityType="UmamidoModel.AddressCheck" />
         </EntityContainer>
         <EntityType Name="Good">
           <Key>
@@ -1517,6 +1527,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AddressCheck">
+          <Key>
+            <PropertyRef Name="AddressCheckId" />
+          </Key>
+          <Property Name="AddressCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Km" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1819,6 +1837,15 @@
                 <ScalarProperty Name="LangId" ColumnName="LangId" />
                 <ScalarProperty Name="BlogId" ColumnName="BlogId" />
                 <ScalarProperty Name="BlogTitleId" ColumnName="BlogTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AddressCheck">
+            <EntityTypeMapping TypeName="UmamidoModel.AddressCheck">
+              <MappingFragment StoreEntitySet="AddressCheck">
+                <ScalarProperty Name="Km" ColumnName="Km" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressCheckId" ColumnName="AddressCheckId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

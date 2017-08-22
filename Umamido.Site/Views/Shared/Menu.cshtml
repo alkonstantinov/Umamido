@@ -53,7 +53,7 @@
 
 
     <li id="menu-item-382" class='@menuClass'>
-        <a href="blog.html">@Umamido.Resources.Resources.Blog</a>
+        @Html.ActionLink(@Umamido.Resources.Resources.Blog, "Blogs", "Home")
     </li>
 
     @if (@ViewContext.RouteData.GetRequiredString("action").ToLower() == "contactus")

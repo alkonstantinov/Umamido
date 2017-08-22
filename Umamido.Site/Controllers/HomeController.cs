@@ -16,6 +16,8 @@ namespace Umamido.Site.Controllers
             model.Sliders = DL.GetSlidersByLang(Lang);
             model.AboutUsMainHeading = DL.GetTextByLang("ABOUTUSMAINHEADING", Lang).Text;
             model.AboutUsMainText = DL.GetTextByLang("ABOUTUSMAINTEXT", Lang).Text;
+            model.Restaurants = DL.GetRestaurantsByLang(Lang);
+            model.Blogs = DL.GetBlogsByLang(Lang);
             return View(model);
         }
 
@@ -104,6 +106,16 @@ namespace Umamido.Site.Controllers
             };
             return View(model);
         }
+        public ActionResult Blog(int blogId)
+        {
+            var model = DL.GetBlogByLang(blogId, Lang);
+            return View(model);
+        }
 
+        public ActionResult Blogs()
+        {
+            var model = DL.GetBlogsByLang(Lang);
+            return View(model);
+        }
     }
 }

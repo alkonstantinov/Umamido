@@ -30,6 +30,8 @@ namespace Umamido.DL
                 cfg.CreateMap<ForDeliver_Result, ReqModel>();
                 cfg.CreateMap<MessageModel, Message>();
                 cfg.CreateMap<Message, MessageModel>();
+                cfg.CreateMap<AddressCheck, AddressCheckModel>();
+                cfg.CreateMap<AddressCheckModel, AddressCheck>();
 
             });
         }
@@ -1044,7 +1046,7 @@ namespace Umamido.DL
         public BlogRowModel[] GetBlogsByLang(string lang)
         {
             List<BlogRowModel> res = new List<BlogRowModel>();
-            foreach (var r in entities.Blog.OrderByDescending(b=>b.OnDate).Take(3))
+            foreach (var r in entities.Blog.Where(b => b.IsActive).OrderByDescending(b => b.OnDate).Take(3))
             {
                 BlogRowModel item = new BlogRowModel();
                 item.BlogId = r.BlogId;
@@ -1078,6 +1080,14 @@ namespace Umamido.DL
             var gd = r.BlogDesc.FirstOrDefault(t => t.Lang.LangName == lang);
             if (gd != null)
                 item.FirstDescription = gd.Text;
+
+            var prev = entities.Blog.Where(b => b.BlogId != blogId && b.OnDate <= item.OnDate).OrderByDescending(b => b.OnDate).ThenByDescending(b => b.BlogId).FirstOrDefault();
+            if (prev != null)
+                item.PrevId = prev.BlogId;
+            var next = entities.Blog.Where(b => b.BlogId != blogId && b.OnDate >= item.OnDate).OrderBy(b => b.OnDate).ThenBy(b => b.BlogId).FirstOrDefault();
+            if (next != null)
+                item.NextId = next.BlogId;
+
             return item;
         }
 
@@ -1155,6 +1165,25 @@ namespace Umamido.DL
 
         #endregion
 
+        #region AddressCheck
+        public void AddAddressCheck(AddressCheckModel model)
+        {
+            if (!entities.AddressCheck.Any(a => a.Address == model.Address))
+            {
+                entities.AddressCheck.Add(Mapper.Map<AddressCheck>(model));
+                entities.SaveChanges();
+            }
+        }
+        public AddressCheckModel CheckAddress(String address)
+        {
+            var found = entities.AddressCheck.FirstOrDefault(a => a.Address == address);
+            if (found != null)
+                return Mapper.Map<AddressCheckModel>(found);
+            else
+                return null;
+        }
 
+
+        #endregion
     }
 }

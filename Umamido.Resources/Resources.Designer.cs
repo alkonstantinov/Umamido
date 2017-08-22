@@ -88,6 +88,42 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Навигация на публикациите.
+        /// </summary>
+        public static string BlogNavigation {
+            get {
+                return ResourceManager.GetString("BlogNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Следваща публикация.
+        /// </summary>
+        public static string BlogNext {
+            get {
+                return ResourceManager.GetString("BlogNext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Предишна публицация.
+        /// </summary>
+        public static string BlogPrev {
+            get {
+                return ResourceManager.GetString("BlogPrev", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Блог.
+        /// </summary>
+        public static string Blogs {
+            get {
+                return ResourceManager.GetString("Blogs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Провери адрес.
         /// </summary>
         public static string CheckAddress {
@@ -174,6 +210,15 @@ namespace Umamido.Resources {
         public static string IndexTitle {
             get {
                 return ResourceManager.GetString("IndexTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Последно от блога.
+        /// </summary>
+        public static string LastBlogPosts {
+            get {
+                return ResourceManager.GetString("LastBlogPosts", resourceCulture);
             }
         }
         

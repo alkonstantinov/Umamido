@@ -231,4 +231,19 @@
   <data name="SeeMore" xml:space="preserve">
     <value>Виж повече</value>
   </data>
+  <data name="LastBlogPosts" xml:space="preserve">
+    <value>Последно от блога</value>
+  </data>
+  <data name="BlogNavigation" xml:space="preserve">
+    <value>Навигация на публикациите</value>
+  </data>
+  <data name="BlogNext" xml:space="preserve">
+    <value>Следваща публикация</value>
+  </data>
+  <data name="BlogPrev" xml:space="preserve">
+    <value>Предишна публицация</value>
+  </data>
+  <data name="Blogs" xml:space="preserve">
+    <value>Блог</value>
+  </data>
 </root>

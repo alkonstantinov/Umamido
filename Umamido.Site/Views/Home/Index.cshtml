@@ -13,6 +13,9 @@
 
             <div class="col-md-9" style="padding:0;">
                 <input type="text" placeholder="Въведете адрес за проверка">
+                <table id="tVariants" class="table table-striped">
+
+                </table>
             </div>
             <div class="col-md-2 pull-right" style="padding:0;">
                 <input type="submit" value="Провери" style="padding:0;">
@@ -132,7 +135,7 @@
             <div class="row">
                 <div class="operation-hours-inner">
                     <div class="operation-hours-title">
-                        <strong>Как да поръчаш</strong>
+                        <strong>@Umamido.Resources.Resources.HowToOrder</strong>
                     </div>
                 </div>
             </div>
@@ -143,93 +146,44 @@
                             <li class="steps step1">
                                 <div class="step">1</div>
                                 <p class="how-to-icon"><i class="icon icon-map-2"></i></p>
-                                <p><strong>Провери адрес</strong></p>
+                                <p><strong>@Umamido.Resources.Resources.CheckAddress</strong></p>
                             </li>
                             <li class="steps step1">
                                 <div class="step">2</div>
                                 <p class="how-to-icon"><i class="icon icon-cart"></i></p>
-                                <p><strong>Избери от менюто</strong></p>
+                                <p><strong>@Umamido.Resources.Resources.ChooseFromMenu</strong></p>
                             </li>
                             <li class="steps step1">
                                 <div class="step">3</div>
                                 <p class="how-to-icon"><i class="icon icon-cash"></i></p>
-                                <p><strong>Плати с карта или кеш</strong></p>
+                                <p><strong>@Umamido.Resources.Resources.PayWithCardOrCache</strong></p>
                             </li>
                             <li class="steps step1">
                                 <div class="step">4</div>
                                 <p class="how-to-icon"><i class="icon icon-rocket"></i></p>
-                                <p><strong>Очаквай до <span>25</span> минути</strong></p>
+                                <p><strong>@Html.Raw(Umamido.Resources.Resources.WaitMinutes)</strong></p>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="row belise-menu-content">
-                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
-                    <div class="food-menu-container">
-                        <div class="food-menu-content">
-                            <div>
-                                <h3 class="food-menu-title">UMAMIDO</h3>
-                            </div>
-                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
-                        </div>
-                        <div class="food-menu-image" style="background: url(images/rest_umamido_img.jpg); background-size:cover"></div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
-                    <div class="food-menu-container">
-                        <div class="food-menu-content">
-                            <div>
-                                <h3 class="food-menu-title">Пица</h3>
-                            </div>
-                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
-                        </div>
-                        <div class="food-menu-image" style="background: url(images/rest_pizza.jpg); background-size:cover"></div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
-                    <div class="food-menu-container">
-                        <div class="food-menu-content">
-                            <div>
-                                <h3 class="food-menu-title">Бургер</h3>
-                            </div>
-                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
-                        </div>
-                        <div class="food-menu-image" style="background: url(images/rest_burger.jpg); background-size:cover"></div>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6 food-menu">
-                    <div class="food-menu-container">
-                        <div class="food-menu-content">
-                            <div>
-                                <h3 class="food-menu-title">Паста</h3>
-                            </div>
-                            <a href="restaurant-umamido.html" title="See menu">Виж менюто</a>
-                        </div>
-                        <div class="food-menu-image" style="background: url(images/rest_pasta.jpg); background-size:cover"></div>
-                    </div>
-                </div>
-            </div>
+            @{ Html.RenderPartial("RestaurantsList", Model.Restaurants);}
         </div>
     </section>
     <section class="sidebar front-page-sidebar">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-6 widget">
-                    <h3 class="widget-title">Последно от блога</h3>
+                    <h3 class="widget-title">@Umamido.Resources.Resources.LastBlogPosts</h3>
                     <ul class="eo-events eo-events-widget">
-                        <li class="eo-event-venue-the-olive-tree eo-event-future">
-                            <span>Апр<strong>19</strong></span>
-                            <a href="#">Рамен - японска нудълс супа с китайски произход</a>
-                        </li>
-                        <li class="eo-event-venue-delaneys-irish-pub eo-event-future">
-                            <span>Май<strong>1</strong></span>
-                            <a href="#">Пастата - изкушение по сицилиански</a>
-                        </li>
-                        <li class="eo-event-venue-quatre-mains eo-event-future">
-                            <span>Юни<strong>4</strong></span>
-                            <a href="#">Нашият нов Бургер на месеца е тук</a>
-                        </li>
+                        @foreach (var b in Model.Blogs)
+                        {
+                            <li class="eo-event-venue-the-olive-tree eo-event-future">
+                                <span>@b.OnDate.ToShortDateString()</span>
+                                <a href="home/blog?blogid=@b.BlogId">@b.FirstTitleNoHtml</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 widget">

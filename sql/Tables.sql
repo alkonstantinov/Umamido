@@ -536,3 +536,24 @@ create table BlogDesc
 go
 exec p_ak_create_fk_indeces 'BlogDesc'
 go
+
+
+
+
+if object_id('AddressCheck') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'AddressCheck'
+  drop table AddressCheck
+end
+go
+
+create table AddressCheck
+( 
+  AddressCheckId int not null identity(1,1)
+  , Address nvarchar(200) not null 
+  , Km int not null
+  , constraint pk_AddressCheckId primary key(AddressCheckId)   
+)
+go
+exec p_ak_create_fk_indeces 'AddressCheck'
+go

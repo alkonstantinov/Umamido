@@ -32,6 +32,19 @@ namespace Umamido.Site.Controllers
             }
         }
 
+        public string Address
+        {
+            get
+            {
+                return (Session["Address"] == null ? null : Address);
+            }
+            set
+            {
+                Session["Address"] = value;
+            }
+        }
+
+
         public BaseController()
         {
             this.DL = new Umamido.DL.DLFuncs();
