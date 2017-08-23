@@ -7,18 +7,26 @@
 <!-- Modal -->
 
 <div style='display:none'>
-    <div id='map-popup' style='padding:10px; background:#fff;'>
+    <div id='map-popup' style='padding:10px; background:#fff;display: inline-block;'>
         <img src="images/map.jpg">
         <div class="row" style="margin:15px 0 0 0; padding:0;">
 
             <div class="col-md-9" style="padding:0;">
-                <input type="text" placeholder="Въведете адрес за проверка">
-                <table id="tVariants" class="table table-striped">
-
+                
+                <div class="alert alert-success" style="display:none" id="dOK">OK</div>
+                <div class="alert alert-warning" style="display:none" id="dNotOK">NOTOK</div>
+                <div class="alert alert-danger" style="display:none" id="dNotFound">NOTFOUND</div>
+                <table id="tVariants" class="table table-striped" style="display:none">
+                    <tr>
+                        <td>
+                            Адрез 1
+                        </td>
+                    </tr>
                 </table>
+                <input id="tbAddress" type="text" placeholder="Въведете адрес за проверка">
             </div>
             <div class="col-md-2 pull-right" style="padding:0;">
-                <input type="submit" value="Провери" style="padding:0;">
+                <input type="button" value="Провери" style="padding:0;" onclick="map.PerformCheck()">
             </div>
 
         </div>
@@ -183,7 +191,7 @@
                                 <a href="home/blog?blogid=@b.BlogId">@b.FirstTitleNoHtml</a>
                             </li>
                         }
-                        
+
                     </ul>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 widget">

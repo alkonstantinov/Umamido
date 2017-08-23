@@ -20,6 +20,8 @@ namespace Umamido.Site.Controllers
                 result.Add(new AddressCheckModel() { Address = "Адрес 1", Km = 3, IsIn = true });
                 result.Add(new AddressCheckModel() { Address = "Адрес 2", Km = 2, IsIn = true });
                 result.Add(new AddressCheckModel() { Address = "Адрес 3", Km = 8, IsIn = false });
+                foreach (var item in result)
+                    DL.AddAddressCheck(item);
                 return Json(result.ToArray(), JsonRequestBehavior.AllowGet);
             }
 
