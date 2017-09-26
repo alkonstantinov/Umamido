@@ -3762,6 +3762,16 @@ object {
 	background-color: #e1e1e1;
 }
 
+.btn-subscribe {
+	height: 48px;
+	max-width: 150px !important;
+	padding: 15px !important;
+}
+
+.subscribe-field {
+	width:300px !important;
+}
+
 .social-icons-toggle {
 	border-right: none;
 	color: #bebebf;
@@ -3897,6 +3907,7 @@ object {
 
 .footer-widgets {
 	padding: 75px 0;
+	margin-top:30px !important;
 }
 
 .footer-bar {
@@ -6150,6 +6161,14 @@ input[type="submit"],
 
 .products {
 	list-style:none;
+}
+
+#payment li {
+	list-style:none;
+}
+
+#masthead img {
+	padding:10px 15px 0 0 !important;
 }
 
 

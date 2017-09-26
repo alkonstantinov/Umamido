@@ -1627,3 +1627,30 @@
 		width: 1200px;
 	}
 }
+
+a.checkout-button {
+    display: inline-block;
+    width: auto;
+	float:right;
+	text-decoration:none;
+}
+
+.woocommerce a.remove {
+    display: block;
+    font-size: 1.5em;
+    height: 1em;
+    width: 1em;
+    text-align: center;
+    line-height: 1;
+    border-radius: 100%;
+    text-decoration: none;
+    font-weight: 700;
+    border: 0;
+}
+
+.woocommerce a.remove:hover {
+    color: #fff!important;
+}
+
+
+

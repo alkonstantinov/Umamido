@@ -42,6 +42,7 @@ $('.add-to-cart').on('click', function () {
             });
         }
 		
-		$(this).html('<div style="padding:7px 0;">Виж количка</div>');
+		$(this).parent().append('<div style="float:left;"><a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>');
+		$(this).html('<div style="padding:7px 0;"><a href="cart.html">Виж количка</a></div>');
 		
     });
