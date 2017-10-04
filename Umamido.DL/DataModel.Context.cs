@@ -52,6 +52,8 @@ namespace Umamido.DL
         public virtual DbSet<BlogDesc> BlogDesc { get; set; }
         public virtual DbSet<BlogTitle> BlogTitle { get; set; }
         public virtual DbSet<AddressCheck> AddressCheck { get; set; }
+        public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<DistantAddress> DistantAddress { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

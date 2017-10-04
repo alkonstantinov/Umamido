@@ -557,3 +557,41 @@ create table AddressCheck
 go
 exec p_ak_create_fk_indeces 'AddressCheck'
 go
+
+
+if object_id('Client') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Client'
+  drop table Client
+end
+go
+
+create table Client
+( 
+  ClientId int not null identity(1,1)
+  , Name nvarchar(200) not null 
+  , Password nvarchar(64) not null
+  , constraint pk_ClientId primary key(ClientId)   
+)
+go
+exec p_ak_create_fk_indeces 'Client'
+go
+
+--insert into Client (Name, Password) values ('a','202cb962ac59075b964b07152d234b70')
+if object_id('DistantAddress') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'DistantAddress'
+  drop table DistantAddress
+end
+go
+
+create table DistantAddress
+( 
+  DistantAddressId int not null identity(1,1)
+  , eMail nvarchar(200) 
+  , Address nvarchar(300)
+  , constraint pk_DistantAddressId primary key(DistantAddressId)   
+)
+go
+exec p_ak_create_fk_indeces 'DistantAddress'
+go

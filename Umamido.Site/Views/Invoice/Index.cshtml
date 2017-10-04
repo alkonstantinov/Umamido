@@ -1,0 +1,317 @@
+﻿@model Umamido.Common.InvModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="~/css/invoice.css" rel="stylesheet" />
+    <meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
+    <meta http-equiv="PRAGMA" content="NO-CACHE" />
+</head>
+<body>
+    <div class="aspNetHidden">
+        <input type="hidden" name="ToolkitScriptManager1_HiddenField" id="ToolkitScriptManager1_HiddenField" value="" />
+        <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+        <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTkyMDgyMjIxOA9kFgICAw9kFgICAw9kFgRmD2QWBAIBDxYCHgRUZXh0BcFkPHRhYmxlIHdpZHRoPSIxMDAwIiBjZWxwYWRkaW5nPSIwIiBjZWxzcGFzaW5nPSIwIj4NCiAgPHRyPg0KICAgIDx0ZCB3aWR0aD0iMzUwIiB2YWxpZ249InRvcCIgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+DQogICAgICA8dGFibGUgd2lkdGg9IjEwMCUiIGNlbHBhZGRpbmc9IjAiIGNlbHNwYWNpbmc9IjAiPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJNYWluRGF0YSIgdmFsaWduPSJtaWRkbGUiIGNvbHNwYW49IjIiPg0KICAgICAgICAgICAgICAgINCf0J7Qm9Cj0KfQkNCi0JXQmw0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSIzMCUiPg0KICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiPtCf0KDQniDQotCg0JDQndCh0J/QntCg0KIg0J7QntCUPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0JDQtNGA0LXRgToNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjcwJSI+0LPRgC4g0KHQvtGE0LjRjyDCoDExMTEsIDE1OTIg0YPQuy4g0JjQodCa0KrQoNCh0JrQniDQqNCe0KHQlSDihJYgMTMgPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0JjQtC4g0J3QvtC80LXRgDoNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjcwJSI+MTc1MzU4NzMxPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0JTQlNChINCd0L7QvNC10YA6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI3MCUiPkJHMTc1MzU4NzMxPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0JzQntCbOg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNzAlIj7QkNCi0JDQndCQ0KEg0KHQotCV0KTQkNCd0J7QkiDQk9CV0J3QntCSLNCe0JPQndCv0J0g0JjQktCQ0J3QntCSINCU0JDQndCe0JI8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgPC90YWJsZT4NCiAgICA8L3RkPg0KICAgIDx0ZCB3aWR0aD0iMzAwIiB2YWxpZ249InRvcCIgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+DQogICAgICA8dGFibGUgd2lkdGg9IjEwMCUiPg0KICAgICAgICA8dHIgYWxpZ249ImNlbnRlciI+DQogICAgICAgICAgPHRkIGNvbHNwYW49IjIiIGNsYXNzPSJUeXBlSW52b2ljZSI+0J7QoNCY0JPQmNCd0JDQmzwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0ciBhbGlnbj0iY2VudGVyIj4NCiAgICAgICAgICA8dGQgY29sc3Bhbj0iMiIgY2xhc3M9Ik1haW5EYXRhIiBzdHlsZT0iYm9yZGVyLWJvdHRvbTogc29saWQgMXB4ICM5OTk5OTkiPtCk0LDQutGC0YPRgNCwPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNTAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAgTm8g0L3QsCDQtNC+0LrRg9C80LXQvdGCOg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNTAlIj4yMDAxMDAwMDg1PC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0JTQsNGC0LA6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkPjA3LjA4LjIwMTc8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICDQlNCw0YLQsCDQvdCwINC00LDQvS4g0YHRitCx0LjRgtC40LU6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkPjA3LjA4LjIwMTc8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICDQnNGP0YHRgtC+INC90LAg0YHQtNC10LvQutCw0YLQsDoNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQ+0LPRgC4g0KHQvtGE0LjRjyA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgPC90YWJsZT4NCiAgICA8L3RkPg0KICAgIDx0ZCB3aWR0aD0iMzUwIiB2YWxpZ249InRvcCIgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+DQogICAgICA8dGFibGUgd2lkdGg9IjEwMCUiPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJNYWluRGF0YSIgdmFsaWduPSJtaWRkbGUiIGNvbHNwYW49IjIiPg0KICAgICAgICAgICAgICAgINCU0J7QodCi0JDQktCn0JjQmg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSIzMCUiPjxpbWcgc3JjPSJJbWcvYXBpczIucG5nIiBhbHQ9IkFwaXMgbG9nbyI+PC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjcwJSI+ItCQ0L/QuNGBINCV0LLRgNC+0L/QsCIg0JDQlDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjMwJSIgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgINCQ0LTRgNC10YE6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI3MCUiPjExMTEsINCh0L7RhNC40Y8sINGD0LsuINCf0L7RgdGC0L7Rj9C90YHRgtCy0L4gNjfQkSwg0LLRhS7QkTwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjMwJSIgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgINCY0LQuINCd0L7QvNC10YA6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2NzAlIj4xNzUxNDI5OTM8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSIzMCUiIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICDQlNCU0KEg0J3QvtC80LXRgDoNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjcwJSI+QkcxNzUxNDI5OTM8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSIzMCUiIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICDQnNCe0Js6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI3MCUiPtCS0LDRgdC40Lsg0KXRgNC40YHRgtC+0LLQuNGHPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgIDwvdGFibGU+DQogICAgPC90ZD4NCiAgPC90cj4NCiAgPHRyPg0KICAgIDx0ZCBjb2xzcGFuPSIzIiBjbGFzcz0iQm9yZGVyZWRUYWJsZVRkIj4NCiAgICAgIDx0YWJsZSB3aWR0aD0iMTAwJSIgY2VscGFkZGluZz0iMCIgY2Vsc3Bhc2luZz0iMCIgc3R5bGU9ImJvcmRlci1jb2xsYXBzZTpjb2xsYXBzZSI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiPg0KICAgICAgICAgICAgICAgIE5vDQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJDaGllZkZpbGVkQ29sdW1ucyI+DQogICAgICAgICAgICAgICAg0J3QsNC40LzQtdC90L7QstCw0L3QuNC1INC90LAg0YHRgtC+0LrQsNGC0LAg0LjQu9C4INGD0YHQu9GD0LPQsNGC0LANCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0JzRj9GA0LrQsA0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMTAlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0JrQvtC70LjRh9C10YHRgtCy0L4NCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjEwJSIgY2xhc3M9IkNoaWVmRmlsZWRDb2x1bW5zIiBzdHlsZT0idGV4dC1hbGlnbjogcmlnaHQiPg0KICAgICAgICAgICAgICAgINCV0LTQuNC9LiDRhtC10L3QsA0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMTAlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0KHRgtC+0LnQvdC+0YHRgg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDQn9GA0LDQstC+INC90LAg0L/QvtC70LfQstCw0L3QtSDQvdCwOg0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPjE8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNjAlIiBjbGFzcz0iUm93c0ludm9pY2UiPtCQ0J/QmNChIDcg0JLQoNCV0JzQlSDQkNC60YLRg9Cw0LvQuNC30LDRhtC40Y8g0YHRitGBIENEIC0g0LzQtdGB0LXRh9C90LAg0LfQsCAxMiDQvNC10YHQtdGG0LA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0iY2VudGVyIiB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgICAgICAgICAgICAg0LHRgC4NCiAgICAgICAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPjE8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+MTczLjAwPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPjE3My4wMDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICA8L3RhYmxlPg0KICAgIDwvdGQ+DQogIDwvdHI+DQogIDx0cj4NCiAgICA8dGQgY29sc3Bhbj0iMiIgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+PHNwYW4gY2xhc3M9IkNoaWVmRmlsZWQiPiDQodC70L7QstC+0Lw6IDwvc3Bhbj7QtNCy0LXRgdGC0LAg0Lgg0YHQtdC00LXQvCDQu9CyLiDQuCDRiNC10YHRgtC00LXRgdC10YIg0YHRgi48L3RkPg0KICAgIDx0ZCBjbGFzcz0iQm9yZGVyZWRUYWJsZVRkIiByb3dzcGFuPSIzIj4NCiAgICAgIDx0YWJsZSB3aWR0aD0iMTAwJSI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgINCU0LDQvdGK0YfQvdCwINC+0YHQvdC+0LLQsDoNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiBjbGFzcz0iVERCb3JkZXJCb3R0b20iPjE3My4wMDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgINCg0LDQt9C80LXRgCDQvdCwINCU0JTQoSANCiAgICAgICAgICAgICAgICAgIDIwJQ0KICAgICAgICAgICAgICAgIDoNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiBjbGFzcz0iVERCb3JkZXJCb3R0b20iPjM0LjYwPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0KHRg9C80LAg0LfQsCDQv9C70LDRidCw0L3QtToNCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiBjbGFzcz0iVERCb3JkZXJCb3R0b20iPjIwNy42MDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICA8L3RhYmxlPg0KICAgIDwvdGQ+DQogIDwvdHI+DQogIDx0cj4NCiAgICA8dGQgY29sc3Bhbj0iMiIgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+DQogICAgICAgICAgwqANCiAgICAgICAgPC90ZD4NCiAgPC90cj4NCiAgPHRyPg0KICAgIDx0ZCBjb2xzcGFuPSIyIiBjbGFzcz0iQm9yZGVyZWRUYWJsZVRkIj4NCiAgICAgICAgICDCoA0KICAgICAgICA8L3RkPg0KICA8L3RyPg0KICA8dHI+DQogICAgPHRkIGNsYXNzPSJCb3JkZXJlZFRhYmxlVGQiPg0KICAgICAgPHRhYmxlIHdpZHRoPSIxMDAlIj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0J/QvtC70YPRh9Cw0YLQtdC7Og0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNzAlIiBhbGlnbj0ibGVmdCI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0J/QvtC00L/QuNGBOg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiPjwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICA8L3RhYmxlPg0KICAgIDwvdGQ+DQogICAgPHRkIGNsYXNzPSJCb3JkZXJlZFRhYmxlVGQiPg0KICAgICAgPHRhYmxlIHdpZHRoPSIxMDAlIj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMzAlIiBjbGFzcz0iQ2hpZWZGaWxlZCI+DQogICAgICAgICAgICAgICAg0J/Qu9Cw0YnQsNC90LU6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI3MCUiIGFsaWduPSJsZWZ0Ij7QoSDQv9C70LDRgtC10LbQvdC+INC90LDRgNC10LbQtNCw0L3QtTwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiIGNvbHNwYW49IjIiPtCR0JDQndCa0JAg0JTQodCaINCV0JDQlCDQutC70L7QvSDQodCa0KY8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICAgIElCQU46DQogICAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImxlZnQiPkJHOTFTVFNBOTMwMDAwMTI4OTAzMzQ8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICAgIEJJQzoNCiAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0ibGVmdCI+U1RTQUJHU0bCoA0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiIGNvbHNwYW49IjIiPtCg0JDQmdCk0JDQmdCX0JXQndCR0JDQndCaINCV0JDQlCDQutC70L7QvSDQodGK0LHQvtGA0L3QsDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgICAgSUJBTjoNCiAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0ibGVmdCI+Qkc0MFJaQkI5MTU1MTA5MzA1ODExMTwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY2xhc3M9IkNoaWVmRmlsZWQiPg0KICAgICAgICAgICAgICAgICAgQklDOg0KICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJsZWZ0Ij5SWkJCQkdTRsKgDQogICAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgIDwvdGFibGU+DQogICAgPC90ZD4NCiAgICA8dGQgY2xhc3M9IkJvcmRlcmVkVGFibGVUZCI+DQogICAgICA8dGFibGUgd2lkdGg9IjEwMCUiPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIiB3aWR0aD0iMzAlIj4NCiAgICAgICAgICAgICAgICDQodGK0YHRgtCw0LLQuNC7Og0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNzAlIj7QoNC+0LzQuNC7INCa0L7Qu9C10LI8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJDaGllZkZpbGVkIj4NCiAgICAgICAgICAgICAgICDQn9C+0LTQv9C40YE6DQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkPjwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgY29sc3Bhbj0iMiI+DQogICAgICAgICAgICA8cCBjbGFzcz0ic21hbGxOb3RlIj48YnI+PGJyPg0KICAgICAgICAgICAgICAgICAg0JjQvNC10YLQviDQuCDQv9C+0LTQv9C40YHRitGCINC90LAg0YHRitGB0YLQsNCy0LjRgtC10LvRjyDQvdCwINGE0LDQutGC0YPRgNCw0YLQsCDQuCDQv9C10YfQsNGCINC90LAg0LTQvtGB0YLQsNCy0YfQuNC60LAg0L3QtSDRgdC1INC40LfQuNGB0LrQstCw0YIgKNGH0LsuIDcsINCw0LsuIDEg0L7RgiDQl9Ch0YcuLCDRh9C7LiAxMTQsINCw0LsuIDEg0L7RgiDQl9CU0JTQoSDQuCDRh9C7LiA3OCDQvtGCINCf0J/Ql9CU0JTQoSkuDQogICAgICAgICAgICAgICAgPC9wPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICA8L3RhYmxlPg0KICAgIDwvdGQ+DQogIDwvdHI+DQo8L3RhYmxlPmQCAw9kFgoCCQ8PFgIeB1Zpc2libGVoZGQCCw8PFgIfAWhkZAINDw8WAh8BaGRkAhMPDxYCHgtOYXZpZ2F0ZVVybAUMRGVmYXVsdC5hc3B4ZGQCFw9kFgICAQ8WAh8ABcwsPHRhYmxlIHdpZHRoPSIxMDAwIiBjZWxwYWRkaW5nPSIwIiBjZWxzcGFzaW5nPSIwIj4NCiAgPHRyPg0KICAgIDx0ZCBjb2xzcGFuPSIzIiBjbGFzcz0iQm9yZGVyZWRUYWJsZVRkIj4NCiAgICAgIDx0YWJsZSB3aWR0aD0iMTAwJSIgY2VscGFkZGluZz0iMCIgY2Vsc3Bhc2luZz0iMCIgc3R5bGU9ImJvcmRlci1jb2xsYXBzZTpjb2xsYXBzZSI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiPg0KICAgICAgICAgICAgICAgIE5vDQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJDaGllZkZpbGVkQ29sdW1ucyI+DQogICAgICAgICAgICAgICAg0J3QsNC40LzQtdC90L7QstCw0L3QuNC1INC90LAg0YHRgtC+0LrQsNGC0LAg0LjQu9C4INGD0YHQu9GD0LPQsNGC0LANCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0JzRj9GA0LrQsA0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMTAlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0JrQvtC70LjRh9C10YHRgtCy0L4NCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjEwJSIgY2xhc3M9IkNoaWVmRmlsZWRDb2x1bW5zIiBzdHlsZT0idGV4dC1hbGlnbjogcmlnaHQiPg0KICAgICAgICAgICAgICAgINCV0LTQuNC9LiDRhtC10L3QsA0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iMTAlIiBjbGFzcz0iQ2hpZWZGaWxlZENvbHVtbnMiIHN0eWxlPSJ0ZXh0LWFsaWduOiByaWdodCI+DQogICAgICAgICAgICAgICAg0KHRgtC+0LnQvdC+0YHRgg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgwqANCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgY2xhc3M9IlREQm9yZGVyQm90dG9tIj4NCiAgICAgICAgICAgICAgICDQn9GA0LDQstC+INC90LAg0L/QvtC70LfQstCw0L3QtSDQvdCwOg0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBjbGFzcz0iVERCb3JkZXJCb3R0b20iPg0KICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGNsYXNzPSJUREJvcmRlckJvdHRvbSI+DQogICAgICAgICAgICAgICAgwqANCiAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgY2xhc3M9IlREQm9yZGVyQm90dG9tIj4NCiAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBjbGFzcz0iVERCb3JkZXJCb3R0b20iPg0KICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPjE8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNjAlIiBjbGFzcz0iUm93c0ludm9pY2UiPtCQ0J/QmNChIDcg0JLQoNCV0JzQlSDQkNC60YLRg9Cw0LvQuNC30LDRhtC40Y8g0YHRitGBIENEIC0g0LzQtdGB0LXRh9C90LAg0LfQsCAxMiDQvNC10YHQtdGG0LA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0iY2VudGVyIiB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgICAgICAgICAgINCx0YAuDQogICAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+MTwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4xNzMuMDA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+MTczLjAwPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjYwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0iY2VudGVyIiB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSI1JSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNjAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJjZW50ZXIiIHdpZHRoPSI1JSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICAgICAgICAgICAgwqANCiAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjYwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0iY2VudGVyIiB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgICA8dHI+DQogICAgICAgICAgPHRkIHdpZHRoPSI1JSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNjAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJjZW50ZXIiIHdpZHRoPSI1JSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICAgICAgICAgICAgwqANCiAgICAgICAgICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgIDwvdHI+DQogICAgICAgIDx0cj4NCiAgICAgICAgICA8dGQgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIHdpZHRoPSI2MCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249ImNlbnRlciIgd2lkdGg9IjUlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgICAgICAgICAgICDCoA0KICAgICAgICAgICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgPC90cj4NCiAgICAgICAgPHRyPg0KICAgICAgICAgIDx0ZCB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgd2lkdGg9IjYwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0iY2VudGVyIiB3aWR0aD0iNSUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgICAgICAgICAgIMKgDQogICAgICAgICAgICAgICAgICA8L3RkPg0KICAgICAgICAgIDx0ZCBhbGlnbj0icmlnaHQiIHdpZHRoPSIxMCUiIGNsYXNzPSJSb3dzSW52b2ljZSI+DQogICAgICAgICAgPC90ZD4NCiAgICAgICAgICA8dGQgYWxpZ249InJpZ2h0IiB3aWR0aD0iMTAlIiBjbGFzcz0iUm93c0ludm9pY2UiPg0KICAgICAgICAgIDwvdGQ+DQogICAgICAgICAgPHRkIGFsaWduPSJyaWdodCIgd2lkdGg9IjEwJSIgY2xhc3M9IlJvd3NJbnZvaWNlIj4NCiAgICAgICAgICA8L3RkPg0KICAgICAgICA8L3RyPg0KICAgICAgPC90YWJsZT4NCiAgICA8L3RkPg0KICA8L3RyPg0KPC90YWJsZT5kAgEPZBYCAgUPZBYCAgQPD2QWAh4Ib25jaGFuZ2UFEkNoZWNrQ29ycmVjdEZpbGUoKWQYAQUIbXZTY3JlZW4PD2RmZJ72jsWM5qJu4LLz/Y8tg6Xdgfs5hub4jJvCT4T4CbtS" />
+    </div>
+
+
+
+    <br />
+    <br />
+    <table width="1000" celpadding="0" celspasing="0">
+        <tr>
+            <td width="350" valign="top" class="BorderedTableTd">
+                <table width="100%" celpadding="0" celspacing="0">
+                    <tr>
+                        <td class="MainData" valign="middle" colspan="2">
+                            ПОЛУЧАТЕЛ
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%"></td>
+                        <td width="60%">@Model.Receiver</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Адрес:
+                        </td>
+                        <td width="70%">@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Ид. Номер:
+                        </td>
+                        <td width="70%">@Model.EIK</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            ДДС Номер:
+                        </td>
+                        <td width="70%">@Model.VATNo</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            МОЛ:
+                        </td>
+                        <td width="70%">@Model.MOL</td>
+                    </tr>
+                </table>
+            </td>
+            <td width="300" valign="top" class="BorderedTableTd">
+                <table width="100%">
+                    <tr align="center">
+                        <td colspan="2" class="TypeInvoice">
+
+                            @Html.Raw(Model.IsOriginal ? "ОРИГИНАЛ" : "КОПИЕ")
+                            
+                        </td>
+
+
+                    </tr>
+
+
+                    <tr align="center">
+
+
+                        <td colspan="2" class="MainData" style="border-bottom: solid 1px #999999">Фактура</td>
+                    </tr>
+                    <tr>
+                        <td width="50%" class="ChiefFiled">
+                            No на документ:
+                        </td>
+                        <td width="50%">@Model.InvNo</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Дата:
+                        </td>
+                        <td>@Model.InvDate.ToString("dd.MM.yyyy г.")</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Дата на дан. събитие:
+                        </td>
+                        <td>@Model.InvDate.ToString("dd.MM.yyyy г.")</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Място на сделката:
+                        </td>
+                        <td>гр. София </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="350" valign="top" class="BorderedTableTd">
+                <table width="100%">
+                    <tr>
+                        <td class="MainData" valign="middle" colspan="2">
+                            ДОСТАВЧИК
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%"></td>
+                        <td width="70%">"Апис Европа" АД</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Адрес:
+                        </td>
+                        <td width="70%">1111, София, ул. Постоянство 67Б, вх.Б</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Ид. Номер:
+                        </td>
+                        <td width="670%">175142993</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            ДДС Номер:
+                        </td>
+                        <td width="70%">BG175142993</td>
+                    </tr>
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            МОЛ:
+                        </td>
+                        <td width="70%">Васил Христович</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" class="BorderedTableTd">
+                <table width="100%" celpadding="0" celspasing="0" style="border-collapse:collapse">
+                    <tr>
+                        <td width="5%" class="ChiefFiledColumns">
+                            No
+                        </td>
+                        <td width="60%" class="ChiefFiledColumns">
+                            Наименование на стоката или услугата
+                        </td>
+                        <td width="5%" class="ChiefFiledColumns" style="text-align: right">
+                            Мярка
+                        </td>
+                        <td width="10%" class="ChiefFiledColumns" style="text-align: right">
+                            Количество
+                        </td>
+                        <td width="10%" class="ChiefFiledColumns" style="text-align: right">
+                            Един. цена
+                        </td>
+                        <td width="10%" class="ChiefFiledColumns" style="text-align: right">
+                            Стойност
+                        </td>
+                    </tr>
+                    @for (int i = 0; i < Model.Rows.Count; i++)
+                    {
+                        <tr>
+                            <td width="5%" class="RowsInvoice">@Html.Raw(i + 1)</td>
+                            <td width="60%" class="RowsInvoice">@Model.Rows[i].Article</td>
+                            <td align="center" width="5%" class="RowsInvoice">
+                                бр.
+                            </td>
+                            <td align="right" width="10%" class="RowsInvoice">@Model.Rows[i].Count</td>
+                            <td align="right" width="10%" class="RowsInvoice">@Model.Rows[i].Price.ToString("#.00")</td>
+                            <td align="right" width="10%" class="RowsInvoice">@Model.Rows[i].Total.ToString("#.00")</td>
+                        </tr>
+                    }
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="BorderedTableTd"><span class="ChiefFiled"> Словом: </span>@Model.Slovom</td>
+            <td class="BorderedTableTd" rowspan="3">
+                <table width="100%">
+                    <tr>
+                        <td class="ChiefFiled">
+                            Данъчна основа:
+                        </td>
+                        <td align="right" class="TDBorderBottom">@Model.TotalNoVat.ToString("#.00")</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Размер на ДДС
+                            20%
+                            :
+                        </td>
+                        <td align="right" class="TDBorderBottom">@Model.Vat.ToString("#.00")</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Сума за плащане:
+                        </td>
+                        <td align="right" class="TDBorderBottom">@Model.Total.ToString("#.00")</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="BorderedTableTd"></td>
+        </tr>
+        <tr>
+            <td colspan="2" class="BorderedTableTd"></td>
+        </tr>
+        <tr>
+            <td class="BorderedTableTd">
+                <table width="100%">
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Получател:
+                        </td>
+                        <td width="70%" align="left"></td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Подпис:
+                        </td>
+                        <td align="right"></td>
+                    </tr>
+                </table>
+            </td>
+            <td class="BorderedTableTd">
+                <table width="100%">
+                    <tr>
+                        <td width="30%" class="ChiefFiled">
+                            Плащане:
+                        </td>
+                        <td width="70%" align="left">В брой</td>
+                    </tr>
+                    @*<tr>
+                            <td class="ChiefFiled" colspan="2">БАНКА ДСК ЕАД клон СКЦ</td>
+                        </tr>
+                        <tr>
+                            <td class="ChiefFiled">
+                                IBAN:
+                            </td>
+                            <td align="left">BG91STSA93000012890334</td>
+                        </tr>
+                        <tr>
+                            <td class="ChiefFiled">
+                                BIC:
+                            </td>
+                            <td align="left">
+                                STSABGSF
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="ChiefFiled" colspan="2">РАЙФАЙЗЕНБАНК ЕАД клон Съборна</td>
+                        </tr>
+                        <tr>
+                            <td class="ChiefFiled">
+                                IBAN:
+                            </td>
+                            <td align="left">BG40RZBB91551093058111</td>
+                        </tr>
+                        <tr>
+                            <td class="ChiefFiled">
+                                BIC:
+                            </td>
+                            <td align="left">
+                                RZBBBGSF
+                            </td>
+                        </tr>*@
+                </table>
+            </td>
+            <td class="BorderedTableTd">
+                <table width="100%">
+                    <tr>
+                        <td class="ChiefFiled" width="30%">
+                            Съставил:
+                        </td>
+                        <td width="70%">Георги Денчев</td>
+                    </tr>
+                    <tr>
+                        <td class="ChiefFiled">
+                            Подпис:
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <p class="smallNote">
+                                <br><br>
+                                Името и подписът на съставителя на фактурата и печат на доставчика не се изискват (чл. 7, ал. 1 от ЗСч., чл. 114, ал. 1 от ЗДДС и чл. 78 от ППЗДДС).
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+
+</body>
+</html>

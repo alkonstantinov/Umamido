@@ -40,6 +40,22 @@
           <Property Name="LangId" Type="int" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DistantAddress">
+          <Key>
+            <PropertyRef Name="DistantAddressId" />
+          </Key>
+          <Property Name="DistantAddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="eMail" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="Good">
           <Key>
             <PropertyRef Name="GoodId" />
@@ -588,6 +604,8 @@
           <EntitySet Name="Blog" EntityType="Self.Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogDesc" EntityType="Self.BlogDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogTitle" EntityType="Self.BlogTitle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistantAddress" EntityType="Self.DistantAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodTitle" EntityType="Self.GoodTitle" Schema="dbo" store:Type="Tables" />
@@ -879,6 +897,8 @@
             <End Role="BlogTitle" EntitySet="BlogTitle" />
           </AssociationSet>
           <EntitySet Name="AddressCheck" EntityType="UmamidoModel.AddressCheck" />
+          <EntitySet Name="Client" EntityType="UmamidoModel.Client" />
+          <EntitySet Name="DistantAddress" EntityType="UmamidoModel.DistantAddress" />
         </EntityContainer>
         <EntityType Name="Good">
           <Key>
@@ -1535,6 +1555,22 @@
           <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Km" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="DistantAddress">
+          <Key>
+            <PropertyRef Name="DistantAddressId" />
+          </Key>
+          <Property Name="DistantAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1846,6 +1882,24 @@
                 <ScalarProperty Name="Km" ColumnName="Km" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="AddressCheckId" ColumnName="AddressCheckId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="UmamidoModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistantAddress">
+            <EntityTypeMapping TypeName="UmamidoModel.DistantAddress">
+              <MappingFragment StoreEntitySet="DistantAddress">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="DistantAddressId" ColumnName="DistantAddressId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

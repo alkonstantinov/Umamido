@@ -11,9 +11,15 @@ namespace Umamido.Site.Controllers
     {
         public DL.DLFuncs DL { get; set; }
 
-        public UserRowModel UserData
+        public ClientData ClientData
         {
-            get { return (Session["UserId"] == null ? null : (UserRowModel)Session["UserId"]); }
+            get
+            {
+                if (Session["ClientData"] == null)
+                    Session["ClientData"] = new ClientData();
+
+                return (ClientData)Session["ClientData"];
+            }
             set { Session["UserId"] = value; }
         }
 
@@ -50,9 +56,6 @@ namespace Umamido.Site.Controllers
             this.DL = new Umamido.DL.DLFuncs();
         }
 
-        public bool HasLevel(int level)
-        {
-            return this.UserData != null && this.UserData.UserLevelId == level;
-        }
+        
     }
 }

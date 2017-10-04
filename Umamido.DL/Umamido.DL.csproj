@@ -65,6 +65,9 @@
     <Compile Include="BlogTitle.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Client.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CollectDetails_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -82,6 +85,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DistantAddress.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DLFuncs.cs" />
     <Compile Include="ForCollect_Result.cs">

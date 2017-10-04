@@ -44,13 +44,19 @@
   <ItemGroup>
     <Compile Include="AboutUsModel.cs" />
     <Compile Include="AddressCheckModel.cs" />
+    <Compile Include="ClientData.cs" />
     <Compile Include="DispatchModel.cs" />
+    <Compile Include="DistantAddressModel.cs" />
     <Compile Include="ErrorJSModel.cs" />
+    <Compile Include="GeoAddress.cs" />
     <Compile Include="GoodPresentationModel.cs" />
     <Compile Include="BlogRowModel.cs" />
+    <Compile Include="GoodsDisplayInfoModel.cs" />
     <Compile Include="ImageFileModel.cs" />
     <Compile Include="ImageRowModel.cs" />
     <Compile Include="IndexPageModel.cs" />
+    <Compile Include="InvModel.cs" />
+    <Compile Include="InvRowModel.cs" />
     <Compile Include="LoginModel.cs" />
     <Compile Include="MessageBrowseModel.cs" />
     <Compile Include="MessageModel.cs" />

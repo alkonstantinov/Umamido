@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Google.Maps;
+using Google.Maps.Geocoding;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Umamido.Common;
+using Umamido.Common.Tools;
 
 namespace Umamido.Site.Controllers
 {
@@ -38,7 +42,8 @@ namespace Umamido.Site.Controllers
             return View(model);
         }
 
-        public ActionResult Restaurants() {
+        public ActionResult Restaurants()
+        {
             var r = DL.GetRestaurantsByLang(Lang);
             return View(r.ToArray());
         }
@@ -86,7 +91,7 @@ namespace Umamido.Site.Controllers
 
         public ActionResult Good(int goodId)
         {
-            var model = DL.GetGoodByLang(goodId,Lang);
+            var model = DL.GetGoodByLang(goodId, Lang);
             return View(model);
         }
 
@@ -117,5 +122,65 @@ namespace Umamido.Site.Controllers
             var model = DL.GetBlogsByLang(Lang);
             return View(model);
         }
+
+
+        public ActionResult GoodsPartial(GoodsDisplayInfoModel model)
+        {
+            model.Restaurants = DL.GetRestaurantsByLang(Lang);
+            model.IsLogged = this.ClientData.UserId.HasValue;
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        public ActionResult ClientLogin(LoginModel model)
+        {
+            var result = DL.ClientLogin(model);
+            if (result.HasValue)
+                this.ClientData.UserId = result;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CheckAddress(string address)
+        {
+            GoogleSigned.AssignAllServices(new GoogleSigned(ConfigurationManager.AppSettings["GoogleMapsHash"]));
+
+            var request = new GeocodingRequest { Address = "София," + address, Sensor = false };
+            var response = new GeocodingService().GetResponse(request);
+            List<GeoAddress> result = new List<GeoAddress>();
+            foreach (var item in response.Results)
+            {
+                result.Add(
+                    new GeoAddress()
+                    {
+                        FormatedAddress = item.FormattedAddress,
+                        IsOk = Tools.getDistanceFromLatLonInKm(double.Parse(ConfigurationManager.AppSettings["BaseLat"]), double.Parse(ConfigurationManager.AppSettings["BaseLong"]), response.Results[0].Geometry.Location.Latitude, response.Results[0].Geometry.Location.Longitude) < int.Parse(ConfigurationManager.AppSettings["DistanceOK"])
+                    }
+                    );
+
+            }
+
+            
+            return Json(result.ToArray(),JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult SaveDistantAddress(DistantAddressModel model)
+        {
+            DL.SaveDistantAddress(model);
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult GoodAddress(string address1, string address2 )
+        {
+            this.ClientData.GoodAddress1 = address1;
+            this.ClientData.GoodAddress2 = address2;
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

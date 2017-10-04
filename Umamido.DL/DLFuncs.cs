@@ -1185,5 +1185,21 @@ namespace Umamido.DL
 
 
         #endregion
+        #region Client
+        public int? ClientLogin(LoginModel model)
+        {
+            var result = entities.Client.FirstOrDefault(u => u.Name == model.Username && u.Password == model.PasswordMd5);
+            if (result == null)
+                return null;
+            else
+                return result.ClientId;
+        }
+
+        public void SaveDistantAddress(DistantAddressModel model)
+        {
+            entities.DistantAddress.Add(new DistantAddress() { Address = model.Address, eMail = model.Email });
+            entities.SaveChanges();
+        }
+        #endregion
     }
 }

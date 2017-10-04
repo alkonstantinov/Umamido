@@ -1,0 +1,71 @@
+﻿body
+{
+    font-family: Tahoma, Arial, non-serif;
+    font-size: 15px;
+}
+
+@media print
+{
+
+    a
+    {
+        visibility: hidden;
+    }
+}
+
+
+.BorderedTableTd
+{
+    border: 1px solid #999999;
+}
+
+.MainData
+{
+    background-color: #EAEAEA;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.ChiefFiled
+{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.ChiefFiledColumns
+{
+    font-weight: bold;
+    font-size: 14px;
+    border-bottom: 1px solid #000000;
+}
+
+.TypeInvoice
+{
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.RowsInvoice
+{
+    border-bottom: solid 1px #999999;
+    border-right: solid 1px #999999;
+}
+
+.TDBorderBottom
+{
+    border-bottom: solid 1px #999999;
+}
+
+.modalBackground
+{
+    background-color: Gray;
+    filter: alpha(opacity=70);
+    opacity: 0.7;
+}
+
+.smallNote
+{
+    font-family: Tahoma, Arial, non-serif;
+    font-size: 10px;
+}

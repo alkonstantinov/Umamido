@@ -1,0 +1,149 @@
+﻿@model Umamido.Common.GoodsDisplayInfoModel
+<input type="hidden" id="hGoodId" />
+@Html.HiddenFor(m => m.IsLogged)
+<div class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories-menu-toggle">
+                <button class="menu-toggle" aria-controls="categories-menu" aria-expanded="false">@Umamido.Resources.Resources.Restaurants</button>
+            </div>
+            <nav id="categories-menu" class="categories-navigation site-navigation">
+                <div class="menu-shop-menu-container">
+                    <ul id="categories-menu" class="menu nav-menu" aria-expanded="false">
+                        @if (Model.ShowAllRestaurants)
+                        {
+                            <li restaurantid="-1">
+                                <a onclick="Restaurant.ShowGoods(-1);">@Umamido.Resources.Resources.All</a>
+                            </li>
+                        }
+                        @foreach (var r in Model.Restaurants)
+                        {
+                            <li restaurantid="@r.RestaurantId">
+                                <a onclick="Restaurant.ShowGoods(@r.RestaurantId);">@r.FirstTitleNoHtml</a>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
+            </nav><!-- .categories -->
+        </div>
+    </div>
+</div>
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <div id="content" role="main">
+            <div id="primary" class="content-area">
+                <div class="container">
+                    <div class="row">
+                        <ul class="products" style="position: relative; height: 1223.3px;" id="ulProducts">
+                            
+                        </ul>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div><!-- #content -->
+
+
+<div class="modal fade" id="dlgOrder" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">Вход в профил / Провери адрес</h2>
+                <p>Продуктът е добавен в количката. За да продължите с пазаруването, моля, въведете потребителско име и парола за вход в системата или, ако нямате регистрация, въведете адрес за доставка и направете проверка.</p>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12" style="border-bottom:1px solid #ccc; padding-bottom:30px; margin-bottom:30px;">
+                        <p>Вход</p>
+                        <form>
+                            <div style="margin-bottom:15px;">
+                                <input type="text" name="username" id="username" placeholder="Потребителско име">
+                            </div>
+                            <div style="margin-bottom:15px;">
+                                <input type="password" name="pass" id="pass" placeholder="Парола">
+                            </div>
+                            <div style="margin-bottom:15px;display:none" id="dInvalidLogin">
+                                Невалидно потребителско име/и или парола
+                            </div>
+                            <div>
+                                <button type="button" onclick="Restaurant.LoginClient()">Влез</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-12">
+                        <p>Провери адрес</p>
+                        <div style="margin-bottom:15px;">
+                            <input type="text" name="address" id="address" placeholder="Въведи улица, номер"><br />
+                            <button type="button" onclick="Restaurant.CheckAddress()">Провери</button>
+                        </div>
+                        <div style="margin-bottom:15px;">
+                            
+                            <div id="dAddressOK" style="display:none">
+                                <p>Вашият адрес "<label id="lCorrectAddress"></label>" е в зоната за доставка. Моля, продължете с пазаруването.</p>
+                                
+                                <button type="button" onclick="Restaurant.ConfirmAddress()">ОК</button>
+                            </div>    <!--      -->
+                            <div id="dFarAddress" style="display:none">
+                                <p>Вашият адрес все още не е в зоната за доставка. Можете да ни посетите на място на адрес .... . Моля, оставете email адрес, на който да ви уведомим за включването на вашия адрес в зоната на доставка.</p>
+                                <input type="text" name="email" id="email" placeholder="Въведи email адрес"><br />
+                                <button type="button" onclick="Restaurant.SendDistantAddress()">Изпрати</button>
+                            </div><!--      -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    var template = '<li class="product type-product status-publish has-post-thumbnail product_cat-gifts product_cat-kitchen  instock shipping-taxable purchasable product-type-simple" style="position: absolute; left: {left}px; top: {top}px;">' +
+        '<div class="product-image">' +
+        '<a href="{url}" title="{name}">' +
+        '   <img width="370" height="270" src="{img}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">' +
+        '</a>' +
+        '</div>' +
+        '<div class="product-header">' +
+        '   <h3 class="product-title">' +
+        '      <a class="shop-item-title-link" href="{url}" title="{name}">{name}</a>' +
+        ' </h3>' +
+        '<div class="price">' +
+        '   <span class="woocommerce-Price-amount amount">{price} <span class="woocommerce-Price-currencySymbol">@Umamido.Resources.Resources.LV</span></span>' +
+        '</div>' +
+        ' <div style="text-align:right;"><button type="button" class="btn btn-add" id="add-to-cart-1"  onclick="Restaurant.CallRegister({ID})"><i class="fa fa-2x fa-cart-plus"></i></button></div>' +
+        ' </div>'
+</script>
+<script src="~/js/pages/restaurant.js"></script>
+<script>
+    function getQueryParam(param) {
+        var result = null,
+            tmp = [];
+        location.search
+            .substr(1)
+            .split("&")
+            .forEach(function (item) {
+                tmp = item.split("=");
+                if (tmp[0] === param) result = decodeURIComponent(tmp[1]);
+            });
+        return result;
+    }
+    var rid = getQueryParam('restaurantId');
+    if (rid == null)
+        rid = -1;
+    Restaurant.ShowGoods(rid);
+</script>
