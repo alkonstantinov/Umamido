@@ -67,6 +67,7 @@ namespace Umamido.Site.Controllers
             return File(filedata, contentType);
         }
 
+        
 
         [HttpGet]
         public ActionResult Restaurant(int restaurantId)
@@ -127,7 +128,8 @@ namespace Umamido.Site.Controllers
         public ActionResult GoodsPartial(GoodsDisplayInfoModel model)
         {
             model.Restaurants = DL.GetRestaurantsByLang(Lang);
-            model.IsLogged = this.ClientData.UserId.HasValue;
+            model.IsLogged = this.ClientData.UserId.HasValue || (ClientData.GoodAddress1 != null && ClientData.GoodAddress2 != null);
+            ModelState.Clear();
             return PartialView(model);
         }
 
@@ -160,8 +162,8 @@ namespace Umamido.Site.Controllers
 
             }
 
-            
-            return Json(result.ToArray(),JsonRequestBehavior.AllowGet);
+
+            return Json(result.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -174,12 +176,67 @@ namespace Umamido.Site.Controllers
         }
 
         [HttpPost]
-        public ActionResult GoodAddress(string address1, string address2 )
+        public ActionResult GoodAddress(string address1, string address2)
         {
             this.ClientData.GoodAddress1 = address1;
             this.ClientData.GoodAddress2 = address2;
 
             return Json("OK", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddToCart(int goodId)
+        {
+            foreach (var item in this.ClientData.Goods)
+                if (item.GoodId == goodId)
+                {
+                    item.Quantity++;
+                    return Json("OK", JsonRequestBehavior.AllowGet);
+                }
+
+            ClientData.Goods.Add(new CartSessionModel() { GoodId = goodId, Quantity = 1 });
+            return Json("OK", JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public ActionResult ChangeCartQuantity(int goodId, int quantity)
+        {
+            foreach (var item in this.ClientData.Goods)
+                if (item.GoodId == goodId)
+                {
+                    item.Quantity=quantity;
+                    return Json("OK", JsonRequestBehavior.AllowGet);
+                }
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteFromCart(int goodId)
+        {
+            int i = 0;
+            while (this.ClientData.Goods[i].GoodId != goodId && i < this.ClientData.Goods.Count)
+                i++;
+            if (i < this.ClientData.Goods.Count)
+                this.ClientData.Goods.RemoveAt(i);
+
+            return Json("OK", JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult Cart()
+        {
+            List<GoodPresentationModel> model = new List<GoodPresentationModel>();
+            foreach (var item in this.ClientData.Goods)
+            {
+                var good = DL.GetGoodByLang(item.GoodId, Lang);
+                good.Count = item.Quantity;
+                model.Add(good);
+            }
+            return View(model.ToArray());
         }
 
     }

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AboutUsModel.cs" />
     <Compile Include="AddressCheckModel.cs" />
+    <Compile Include="CartSessionModel.cs" />
     <Compile Include="ClientData.cs" />
     <Compile Include="DispatchModel.cs" />
     <Compile Include="DistantAddressModel.cs" />

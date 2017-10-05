@@ -1,6 +1,6 @@
 ﻿@model Umamido.Common.GoodsDisplayInfoModel
 <input type="hidden" id="hGoodId" />
-@Html.HiddenFor(m => m.IsLogged)
+@Html.HiddenFor(m => m.IsLogged, new { id = "hIsLogged" })
 <div class="categories">
     <div class="container">
         <div class="row">
@@ -37,10 +37,8 @@
             <div id="primary" class="content-area">
                 <div class="container">
                     <div class="row">
-                        <ul class="products" style="position: relative; height: 1223.3px;" id="ulProducts">
-                            
-                        </ul>
-                        
+                        <ul class="products" style="position: relative; height: 1223.3px;" id="ulProducts"></ul>
+
                     </div>
                 </div>
             </div>
@@ -59,46 +57,45 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h2 class="modal-title">Вход в профил / Провери адрес</h2>
-                <p>Продуктът е добавен в количката. За да продължите с пазаруването, моля, въведете потребителско име и парола за вход в системата или, ако нямате регистрация, въведете адрес за доставка и направете проверка.</p>
+                <h2 class="modal-title">@Resources.EnterCheckProfile</h2>
+                <p>@Resources.EnterCheckExplain</p>
             </div>
             <div class="modal-body">
 
                 <div class="row">
                     <div class="col-md-12" style="border-bottom:1px solid #ccc; padding-bottom:30px; margin-bottom:30px;">
-                        <p>Вход</p>
-                        <form>
-                            <div style="margin-bottom:15px;">
-                                <input type="text" name="username" id="username" placeholder="Потребителско име">
-                            </div>
-                            <div style="margin-bottom:15px;">
-                                <input type="password" name="pass" id="pass" placeholder="Парола">
-                            </div>
-                            <div style="margin-bottom:15px;display:none" id="dInvalidLogin">
-                                Невалидно потребителско име/и или парола
-                            </div>
-                            <div>
-                                <button type="button" onclick="Restaurant.LoginClient()">Влез</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="col-md-12">
-                        <p>Провери адрес</p>
+                        <p>@Resources.Login</p>
                         <div style="margin-bottom:15px;">
-                            <input type="text" name="address" id="address" placeholder="Въведи улица, номер"><br />
-                            <button type="button" onclick="Restaurant.CheckAddress()">Провери</button>
+                            <input type="text" name="username" id="username" placeholder="@Resources.Username">
                         </div>
                         <div style="margin-bottom:15px;">
-                            
+                            <input type="password" name="pass" id="pass" placeholder="@Resources.Password">
+                        </div>
+                        <div style="margin-bottom:15px;display:none" id="dInvalidLogin">
+                            @Resources.InvalidUsernamePassword
+                        </div>
+                        <div>
+                            <button type="button" onclick="Restaurant.LoginClient()" class="umamidobtn">@Resources.Login</button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <p>@Resources.CheckAddress</p>
+                        <div style="margin-bottom:15px;">
+                            <input type="text" name="address" id="address" placeholder="@Resources.EnterStreetNumber"><br />
+                            <button type="button" onclick="Restaurant.CheckAddress()" class="umamidobtn">@Resources.Check</button>
+                        </div>
+                        <div style="margin-bottom:15px;">
+
                             <div id="dAddressOK" style="display:none">
-                                <p>Вашият адрес "<label id="lCorrectAddress"></label>" е в зоната за доставка. Моля, продължете с пазаруването.</p>
-                                
-                                <button type="button" onclick="Restaurant.ConfirmAddress()">ОК</button>
+                                <p>@Resources.YourAddress <label id="lCorrectAddress"></label> @Resources.PleaseContinue</p>
+
+                                <button type="button" onclick="Restaurant.ConfirmAddress()" class="umamidobtn">ОК</button>
                             </div>    <!--      -->
                             <div id="dFarAddress" style="display:none">
-                                <p>Вашият адрес все още не е в зоната за доставка. Можете да ни посетите на място на адрес .... . Моля, оставете email адрес, на който да ви уведомим за включването на вашия адрес в зоната на доставка.</p>
-                                <input type="text" name="email" id="email" placeholder="Въведи email адрес"><br />
-                                <button type="button" onclick="Restaurant.SendDistantAddress()">Изпрати</button>
+                                <p>@Resources.FarAddress</p>
+                                <input type="text" name="email" id="email" placeholder="@Resources.Email"><br />
+                                <button type="button" onclick="Restaurant.SendDistantAddress()" class="umamidobtn">Изпрати</button>
                             </div><!--      -->
 
                         </div>
@@ -125,7 +122,8 @@
         '<div class="price">' +
         '   <span class="woocommerce-Price-amount amount">{price} <span class="woocommerce-Price-currencySymbol">@Umamido.Resources.Resources.LV</span></span>' +
         '</div>' +
-        ' <div style="text-align:right;"><button type="button" class="btn btn-add" id="add-to-cart-1"  onclick="Restaurant.CallRegister({ID})"><i class="fa fa-2x fa-cart-plus"></i></button></div>' +
+        ' <div style="text-align:right;"><button type="button" class="btn btn-add AddToCartLog" id="add-to-cart-1"  onclick="Restaurant.CallRegister({ID})"><i class="fa fa-2x fa-cart-plus"></i></button>' +
+        '<a href="javascript: void(0)" class="btn add-to-cart AddToCartNoLog" onclick="Restaurant.AddToCart({ID})"><i class="fa fa-2x fa-cart-plus"></i></a></div>' +
         ' </div>'
 </script>
 <script src="~/js/pages/restaurant.js"></script>
@@ -146,4 +144,5 @@
     if (rid == null)
         rid = -1;
     Restaurant.ShowGoods(rid);
+    Restaurant.ShowProperButton($("#hIsLogged").val() === "True")
 </script>

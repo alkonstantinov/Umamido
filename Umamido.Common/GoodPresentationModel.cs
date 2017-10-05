@@ -8,6 +8,8 @@ namespace Umamido.Common
 {
     public class GoodPresentationModel:GoodRowModel
     {
+        public int Count { get; set; }
+
         public RestaurantRowModel[] AllRestaurants { get; set; }
 
         public GoodRowModel[] SimilarGoods { get; set; }

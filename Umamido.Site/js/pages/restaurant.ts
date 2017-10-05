@@ -8,6 +8,43 @@ class Restaurant {
         jQuery("#dlgOrder").modal("show");
     }
 
+
+    public static ShowProperButton(canAdd) {
+        if (!canAdd) {
+            jQuery(".AddToCartLog").show();
+            jQuery(".AddToCartNoLog").hide();
+        }
+        else {
+            jQuery(".AddToCartLog").hide();
+            jQuery(".AddToCartNoLog").show();
+        }
+
+    }
+
+
+    public static AddToCart(goodId) {
+        var data = {
+            goodId: goodId
+        }
+
+        var result;
+        jQuery.ajax({
+            cache: false,
+            url: "/home/AddToCart",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(data),
+            async: false,
+            success: function (res) {
+
+            },
+            error: function (a, b, c) {
+
+            }
+        });
+    }
+
     public static CheckAddress() {
 
         var data = {
@@ -30,8 +67,7 @@ class Restaurant {
             }
         });
 
-        if (result.length == 0 || (result.length == 1 && !result[0].IsOk))
-        {
+        if (result.length == 0 || (result.length == 1 && !result[0].IsOk)) {
             jQuery("#dFarAddress").show();
             jQuery("#dAddressOK").hide();
             return;
@@ -44,7 +80,7 @@ class Restaurant {
             return;
         }
 
-        
+
     }
 
     public static SendDistantAddress() {
@@ -64,7 +100,7 @@ class Restaurant {
             data: JSON.stringify(data),
             async: false,
             success: function (res) {
-                
+
             },
             error: function (a, b, c) {
 
@@ -90,13 +126,14 @@ class Restaurant {
             data: JSON.stringify(data),
             async: false,
             success: function (res) {
+                Restaurant.AddToCart(jQuery("#hGoodId").val());
                 location.reload(true);
             },
             error: function (a, b, c) {
 
             }
         });
-        
+
     }
 
     public static LoginClient() {
@@ -104,7 +141,7 @@ class Restaurant {
             Username: jQuery("#username").val(),
             Password: jQuery("#pass").val()
         }
-    
+
 
         var result;
         jQuery.ajax({
@@ -117,9 +154,11 @@ class Restaurant {
             async: false,
             success: function (res) {
                 if (res == null) {
+
                     jQuery("#dInvalidLogin").show();
                 }
                 else {
+                    Restaurant.AddToCart(jQuery("#hGoodId").val());
                     location.reload(true);
                 }
             },
@@ -183,5 +222,74 @@ class Restaurant {
             jQuery("#ulProducts").append(item);
         }
 
+
     }
+
+    public static RedisplayCart() {
+        let total = 0.00;
+        jQuery("#tGoods tbody tr").each(function (i, e) {
+            if (jQuery(e).find(".__Price").length == 0)
+                return;
+            let subtotal = parseFloat(jQuery(e).find(".__Price").text()) * parseFloat(jQuery(e).find(".__Count").val());
+            jQuery(e).find(".__Total").text(subtotal.toFixed(2));
+            total += subtotal;
+        });
+
+        jQuery("#sTotalGoods").text(total.toFixed(2));
+        total += parseFloat(jQuery("#lDeliveryPrice").text());
+        jQuery("#lFinalTotal").text(total.toFixed(2));
+    } 
+
+    public static ChangeCartQuantity(el) {
+
+
+        var data = {
+            goodId: jQuery(el).parent().find(".__Id").val(),
+            quantity: jQuery(el).val()
+        }
+        alert(JSON.stringify(data));
+        var result;
+        jQuery.ajax({
+            cache: false,
+            url: "/home/ChangeCartQuantity",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(data),
+            async: false,
+            success: function (res) {
+                Restaurant.RedisplayCart();
+            },
+            error: function (a, b, c) {
+
+            }
+        });
+    }
+
+    public static DeleteFromCart(el) {
+
+
+        var data = {
+            goodId: jQuery(el).parent().find(".__Id").val()
+        }
+
+        var result;
+        jQuery.ajax({
+            cache: false,
+            url: "/home/DeleteFromCart",
+            method: "POST",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(data),
+            async: false,
+            success: function (res) {
+                jQuery(el).parent().parent().remove();
+                Restaurant.RedisplayCart();
+            },
+            error: function (a, b, c) {
+
+            }
+        });
+    }
+
 }

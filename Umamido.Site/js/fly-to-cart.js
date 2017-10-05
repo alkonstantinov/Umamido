@@ -5,7 +5,7 @@
 */   
 
 $('.add-to-cart').on('click', function () {
-        var cart = $('.shopping-cart');
+        var cart = $('.menu-shopping-cart');
         var imgtodrag = $(this).parent().parent().siblings('.product-image').find("img").eq(0);
         if (imgtodrag) {
             var imgclone = imgtodrag.clone()
@@ -38,11 +38,11 @@ $('.add-to-cart').on('click', function () {
                 'width': 0,
                 'height': 0
             }, function () {
-                $(this).detach()
+                //$(this).detach()
             });
         }
 		
-		$(this).parent().append('<div style="float:left;"><a href="javascript: void(0)" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>');
-		$(this).html('<div style="padding:7px 0;"><a href="cart.html">Виж количка</a></div>');
+        //$(this).parent().append('<div style="float:left;"><a href="javascript: void(0)" class="btn add-to-cart" onclick="Restaurant.AddToCart({ID})"><i class="fa fa-2x fa-cart-plus"></i></a></div>');
+		//$(this).html('<div style="padding:7px 0;"><a href="cart.html">Виж количка</a></div>');
 		
     });

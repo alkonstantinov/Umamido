@@ -19,7 +19,7 @@ namespace Umamido.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -124,6 +124,24 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to КОЛИЧКА.
+        /// </summary>
+        public static string Cart {
+            get {
+                return ResourceManager.GetString("Cart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Провери.
+        /// </summary>
+        public static string Check {
+            get {
+                return ResourceManager.GetString("Check", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Провери адрес.
         /// </summary>
         public static string CheckAddress {
@@ -178,11 +196,74 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Продължаване с поръчката.
+        /// </summary>
+        public static string ContinueOrder {
+            get {
+                return ResourceManager.GetString("ContinueOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Доставка.
+        /// </summary>
+        public static string Delivery {
+            get {
+                return ResourceManager.GetString("Delivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Продуктът е добавен в количката. За да продължите с пазаруването, моля, въведете потребителско име и парола за вход в системата или, ако нямате регистрация, въведете адрес за доставка и направете проверка..
+        /// </summary>
+        public static string EnterCheckExplain {
+            get {
+                return ResourceManager.GetString("EnterCheckExplain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вход в профил / Провери адрес.
+        /// </summary>
+        public static string EnterCheckProfile {
+            get {
+                return ResourceManager.GetString("EnterCheckProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Въведи улица, номер.
+        /// </summary>
+        public static string EnterStreetNumber {
+            get {
+                return ResourceManager.GetString("EnterStreetNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вашият адрес все още не е в зоната за доставка. Можете да ни посетите на място на адрес .... . Моля, оставете email адрес, на който да ви уведомим за включването на вашия адрес в зоната на доставка..
+        /// </summary>
+        public static string FarAddress {
+            get {
+                return ResourceManager.GetString("FarAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Продукт.
+        /// </summary>
+        public static string Good {
+            get {
+                return ResourceManager.GetString("Good", resourceCulture);
             }
         }
         
@@ -214,6 +295,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Невалидно потребителско име/и или парола.
+        /// </summary>
+        public static string InvalidUsernamePassword {
+            get {
+                return ResourceManager.GetString("InvalidUsernamePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Последно от блога.
         /// </summary>
         public static string LastBlogPosts {
@@ -228,6 +318,15 @@ namespace Umamido.Resources {
         public static string LearnProposals {
             get {
                 return ResourceManager.GetString("LearnProposals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вход.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -295,6 +394,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Парола.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Плати с карта или кеш.
         /// </summary>
         public static string PayWithCardOrCache {
@@ -309,6 +417,42 @@ namespace Umamido.Resources {
         public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to е в зоната за доставка. Моля, продължете с пазаруването..
+        /// </summary>
+        public static string PleaseContinue {
+            get {
+                return ResourceManager.GetString("PleaseContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Цена.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Общо продукти.
+        /// </summary>
+        public static string ProductsTotal {
+            get {
+                return ResourceManager.GetString("ProductsTotal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Количество.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
             }
         }
         
@@ -412,6 +556,24 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Общо.
+        /// </summary>
+        public static string Total {
+            get {
+                return ResourceManager.GetString("Total", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Потребителско име.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Очаквай до &lt;span&gt;25&lt;/span&gt; минути.
         /// </summary>
         public static string WaitMinutes {
@@ -435,6 +597,15 @@ namespace Umamido.Resources {
         public static string WorkTimeTitle {
             get {
                 return ResourceManager.GetString("WorkTimeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вашият адрес.
+        /// </summary>
+        public static string YourAddress {
+            get {
+                return ResourceManager.GetString("YourAddress", resourceCulture);
             }
         }
         

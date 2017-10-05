@@ -441,6 +441,7 @@ h6 {
 
 button,
 .btn,
+.umamidobtn,
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
@@ -964,16 +965,17 @@ table {
 --------------------------------------------------------------*/
 
 button,
+.umamidobtn,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-	padding: 0 80px;
-	border: 1px solid #363639;
-	border-radius: 0;
-	background-color: #363639;
-	line-height: 1;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
+    padding: 0 80px;
+    border: 1px solid #363639;
+    border-radius: 0;
+    background-color: #363639;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
 button:hover,
@@ -6171,9 +6173,43 @@ input[type="submit"],
 	padding:10px 15px 0 0 !important;
 }
 
+.add-to-cart:active, .btn-add:active, .add-to-cart:focus, .btn-add:focus {
+	color:#fff !important;
+	border:none !important;
+}
 
+.add-to-cart:hover, .btn-add:hover {
+	color:#363639 !important;
+}
 
+.order-status {
+	border-top: none;
+}
 
+.order-status-steps li {
+	width:33% !important;
+}
+
+.current-order {
+	margin-bottom:0 !important;
+}
+
+.steps div.current-step {
+    background: #f28503;
+    color: #fff;
+}
+
+.umamidobtn {
+    padding: 15px 80px !important;
+    border: 1px solid #363639 !important;
+    border-radius: 0 !important;
+    background-color: #363639 !important;
+    line-height: 1 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    color: #fff !important;
+    width: 100% !important;
+}
 
 
 

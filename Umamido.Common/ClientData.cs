@@ -14,5 +14,11 @@ namespace Umamido.Common
 
         public string GoodAddress2 { get; set; }
 
+        public List<CartSessionModel> Goods { get; set; }
+
+        public ClientData() {
+            Goods = new List<CartSessionModel>();
+        }
+
     }
 }

@@ -1,0 +1,115 @@
+﻿@model Umamido.Common.GoodPresentationModel[]
+
+@{
+
+}
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Resources.Cart</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+                    <div class="entry-content">
+                        <form class="woocommerce-cart-form" action="#" method="post">
+                            <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0" id="tGoods">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name" style="text-align:left">@Resources.Good</th>
+                                        <th class="product-price" style="text-align:left">@Resources.Price</th>
+                                        <th class="product-quantity" style="text-align:left">@Resources.Quantity</th>
+                                        <th class="product-subtotal" style="text-align:left">@Resources.Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="woocommerce-cart-form__cart-item cart_item">
+                                            <td class="product-remove">
+                                                <input type="hidden" class="__Id" value="@item.GoodId"/>
+                                                <a class="remove" aria-label="Remove this item" data-product_id="584" data-product_sku="" onclick="Restaurant.DeleteFromCart(this)">×</a>
+                                            </td>
+                                            <td class="product-thumbnail">
+                                                <a href="#"><img width="120" src="/home/getimage?imageid=@item.ImageId"></a>
+                                            </td>
+                                            <td class="product-name" data-title="Продукт" style="text-align:left">
+                                                <a href="#">@item.FirstTitleNoHtml</a>
+                                            </td>
+                                            <td class="product-price" data-title="Цена" style="text-align:left">
+                                                <span class="woocommerce-Price-amount amount"><label class="__Price" >@item.Price</label> лв.</span>
+                                            </td>
+                                            <td class="product-quantity" data-title="Количество" style="text-align:left">
+                                                <div class="quantity">
+                                                    <input type="hidden" class="__Id" value="@item.GoodId"/>
+                                                    <input type="number" class="input-text qty text __Count" step="1" min="1" max="" name="cart[1][qty]" value="@item.Count" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" onchange="Restaurant.ChangeCartQuantity(this);">
+                                                </div>
+                                            </td>
+                                            <td class="product-subtotal" data-title="Общо" style="text-align:left">
+                                                <span class="woocommerce-Price-amount amount"><label class="__Total"/> </span> лв.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="12" class="actions" style="text-align:right"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </form>
+                        <div class="cart-collaterals">
+                            <div class="cart_totals ">
+                                <h2>Общо</h2>
+                                <table cellspacing="0" class="shop_table shop_table_responsive">
+                                    <tbody>
+                                        <tr class="cart-subtotal">
+                                            <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.ProductsTotal</th>
+                                            <td data-title="Междинна сума">
+                                                <span class="woocommerce-Price-amount amount">
+                                                    <span class="woocommerce-Price-amount amount" ><label id="sTotalGoods"></label> <span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="cart-subtotal">
+                                            <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.Delivery</th>
+                                            <td data-title="Междинна сума">
+                                                <span class="woocommerce-Price-amount amount">
+                                                    <span class="woocommerce-Price-amount amount"><label id="lDeliveryPrice">@System.Configuration.ConfigurationManager.AppSettings["DeliveryPrice"]</label> <span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span>
+                                            </td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.Total</th>
+                                            <td data-title="Общо">
+                                                <strong><span class="woocommerce-Price-amount amount"><label id="lFinalTotal">19.00</label> <span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span></strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="wc-proceed-to-checkout">
+                                    <a href="checkout.html" class="checkout-button button alt wc-forward">@Resources.ContinueOrder</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .entry-content -->
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->
+<script src="~/js/pages/restaurant.js"></script>
+<script>
+    Restaurant.RedisplayCart();
+
+</script>

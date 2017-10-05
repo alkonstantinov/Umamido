@@ -246,4 +246,61 @@
   <data name="Blogs" xml:space="preserve">
     <value>Блог</value>
   </data>
+  <data name="Check" xml:space="preserve">
+    <value>Провери</value>
+  </data>
+  <data name="EnterCheckExplain" xml:space="preserve">
+    <value>Продуктът е добавен в количката. За да продължите с пазаруването, моля, въведете потребителско име и парола за вход в системата или, ако нямате регистрация, въведете адрес за доставка и направете проверка.</value>
+  </data>
+  <data name="EnterCheckProfile" xml:space="preserve">
+    <value>Вход в профил / Провери адрес</value>
+  </data>
+  <data name="EnterStreetNumber" xml:space="preserve">
+    <value>Въведи улица, номер</value>
+  </data>
+  <data name="FarAddress" xml:space="preserve">
+    <value>Вашият адрес все още не е в зоната за доставка. Можете да ни посетите на място на адрес .... . Моля, оставете email адрес, на който да ви уведомим за включването на вашия адрес в зоната на доставка.</value>
+  </data>
+  <data name="InvalidUsernamePassword" xml:space="preserve">
+    <value>Невалидно потребителско име/и или парола</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Парола</value>
+  </data>
+  <data name="PleaseContinue" xml:space="preserve">
+    <value>е в зоната за доставка. Моля, продължете с пазаруването.</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Потребителско име</value>
+  </data>
+  <data name="YourAddress" xml:space="preserve">
+    <value>Вашият адрес</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>КОЛИЧКА</value>
+  </data>
+  <data name="ContinueOrder" xml:space="preserve">
+    <value>Продължаване с поръчката</value>
+  </data>
+  <data name="Delivery" xml:space="preserve">
+    <value>Доставка</value>
+  </data>
+  <data name="Good" xml:space="preserve">
+    <value>Продукт</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Цена</value>
+  </data>
+  <data name="ProductsTotal" xml:space="preserve">
+    <value>Общо продукти</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Общо</value>
+  </data>
 </root>
