@@ -70,17 +70,35 @@ class Restaurant {
         if (result.length == 0 || (result.length == 1 && !result[0].IsOk)) {
             jQuery("#dFarAddress").show();
             jQuery("#dAddressOK").hide();
+            jQuery("#dChooseAddress").hide();
             return;
         }
 
         if (result.length == 1 && result[0].IsOk) {
             jQuery("#dFarAddress").hide();
             jQuery("#dAddressOK").show();
+            jQuery("#dChooseAddress").hide();
+
             jQuery("#lCorrectAddress").text(result[0].FormatedAddress);
             return;
         }
 
+        if (result.length > 1) {
+            jQuery("#dFarAddress").hide();
+            jQuery("#dAddressOK").hide();
+            jQuery("#dChooseAddress").show();
+            jQuery("#dMultipleAddresses").empty();
+            for (var a of result) {
+                jQuery("#dMultipleAddresses").append('<p><input type="radio" name="ac" style="width:auto !important;" onclick="Restaurant.TryAddress(\'' + encodeURI(a.FormatedAddress) + '\')">' + a.FormatedAddress + '</p>');
+            }
+        }
 
+
+    }
+
+    public static TryAddress(address) {
+        jQuery("#address").val(decodeURI(address));
+        Restaurant.CheckAddress();
     }
 
     public static SendDistantAddress() {
@@ -238,7 +256,7 @@ class Restaurant {
         jQuery("#sTotalGoods").text(total.toFixed(2));
         total += parseFloat(jQuery("#lDeliveryPrice").text());
         jQuery("#lFinalTotal").text(total.toFixed(2));
-    } 
+    }
 
     public static ChangeCartQuantity(el) {
 

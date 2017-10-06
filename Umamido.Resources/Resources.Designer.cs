@@ -430,6 +430,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Моля, изберете един от посочените адреси..
+        /// </summary>
+        public static string PleaseSelectAddress {
+            get {
+                return ResourceManager.GetString("PleaseSelectAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Цена.
         /// </summary>
         public static string Price {

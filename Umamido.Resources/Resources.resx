@@ -303,4 +303,7 @@
   <data name="Total" xml:space="preserve">
     <value>Общо</value>
   </data>
+  <data name="PleaseSelectAddress" xml:space="preserve">
+    <value>Моля, изберете един от посочените адреси.</value>
+  </data>
 </root>

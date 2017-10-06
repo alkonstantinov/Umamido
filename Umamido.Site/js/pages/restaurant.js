@@ -56,14 +56,30 @@ var Restaurant = (function () {
         if (result.length == 0 || (result.length == 1 && !result[0].IsOk)) {
             jQuery("#dFarAddress").show();
             jQuery("#dAddressOK").hide();
+            jQuery("#dChooseAddress").hide();
             return;
         }
         if (result.length == 1 && result[0].IsOk) {
             jQuery("#dFarAddress").hide();
             jQuery("#dAddressOK").show();
+            jQuery("#dChooseAddress").hide();
             jQuery("#lCorrectAddress").text(result[0].FormatedAddress);
             return;
         }
+        if (result.length > 1) {
+            jQuery("#dFarAddress").hide();
+            jQuery("#dAddressOK").hide();
+            jQuery("#dChooseAddress").show();
+            jQuery("#dMultipleAddresses").empty();
+            for (var _i = 0, result_1 = result; _i < result_1.length; _i++) {
+                var a = result_1[_i];
+                jQuery("#dMultipleAddresses").append('<p><input type="radio" name="ac" style="width:auto !important;" onclick="Restaurant.TryAddress(\'' + encodeURI(a.FormatedAddress) + '\')">' + a.FormatedAddress + '</p>');
+            }
+        }
+    };
+    Restaurant.TryAddress = function (address) {
+        jQuery("#address").val(decodeURI(address));
+        Restaurant.CheckAddress();
     };
     Restaurant.SendDistantAddress = function () {
         var data = {
@@ -161,8 +177,8 @@ var Restaurant = (function () {
         var dLeft = 413;
         var dTop = 407;
         var currentItem = 0;
-        for (var _i = 0, result_1 = result; _i < result_1.length; _i++) {
-            var g = result_1[_i];
+        for (var _i = 0, result_2 = result; _i < result_2.length; _i++) {
+            var g = result_2[_i];
             var item = template;
             item = item.replace(/\{left\}/gi, left.toString());
             item = item.replace(/\{top\}/gi, top.toString());
