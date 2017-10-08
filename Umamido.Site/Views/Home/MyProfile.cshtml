@@ -1,0 +1,178 @@
+﻿@model Umamido.Common.MyProfileModel
+
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Resources.MyProfile</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+
+                <!--<div class="categories-menu-toggle">
+                    <button class="menu-toggle" aria-controls="categories-menu" aria-expanded="false">Ресторанти</button>
+                </div>-->
+                <nav id="categories-menu" class="categories-navigation site-navigation">
+                    <div class="menu-shop-menu-container">
+                        <ul id="categories-menu" class="menu nav-menu" aria-expanded="false">
+                            <li id="menu-item-500" class="menu-item rest-menu-item current-rest">
+                                <a href="/Home/MyProfile">@Resources.YourOrders</a>
+                            </li>
+                            <li id="menu-item-394" class="menu-item rest-menu-item">
+                                <a href="/Home/MyAccountProfile">@Resources.ProfileEdit</a>
+                            </li>
+                            <li id="menu-item-392" class="menu-item rest-menu-item">
+                                <a href="my_account_address.html">@Resources.Addresses</a>
+                            </li>
+                            <li id="menu-item-395" class="menu-item rest-menu-item">
+                                <a href="#">@Resources.Exit</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+                    <div class="entry-content">
+
+
+                        <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents current-order" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-remove"></th>
+                                    <th class="product-remove">@Resources.OrderNumber</th>
+                                    <th class="product-name" style="text-align:left">@Resources.OrderProducts</th>
+                                    <th class="product-subtotal" style="text-align:left">@Resources.OrderTotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="woocommerce-cart-form__cart-item cart_item">
+                                    <td class="product-thumbnail">
+                                        <a href="order_1.html"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+                                    </td>
+                                    <td class="">
+                                        @Model.LastOrder.OrderNum
+                                    </td>
+                                    <td class="">
+                                        @Model.LastOrder.OrderDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td class="product-name" data-title="Продукт" style="text-align:left">
+                                        @Model.LastOrder.OrderProducts
+                                    </td>
+                                    <td class="product-subtotal" data-title="Общо" style="text-align:left">
+                                        <span class="woocommerce-Price-amount amount">@Model.LastOrder.Total @Resources.LV</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @if (Model.LastOrder != null)
+                        {
+                            <div class="row">
+                                <div class="operation-hours-inner">
+                                    <div class="operation-hours-title order-status">
+                                        <strong>@Resources.OrderStatus</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="operation-hours-inner">
+                                    <div class="operation-hours-content">
+                                        <ul class="order-status-steps">
+                                            <li class="steps step1">
+                                                @if (Model.LastOrder.OrderStatus == 1)
+                                                {
+                                                    <div class="step current-step">1</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="step">1</div>
+                                                }
+
+                                                <p><strong>@Resources.OrderAccepted</strong></p>
+                                            </li>
+                                            <li class="steps step1">
+                                                @if (Model.LastOrder.OrderStatus == 2)
+                                                {
+                                                    <div class="step current-step">2</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="step">2</div>
+                                                }
+                                                <p><strong>@Resources.OrderCooked</strong></p>
+                                            </li>
+                                            <li class="steps step1">
+                                                @if (Model.LastOrder.OrderStatus == 4)
+                                                {
+                                                    <div class="step current-step">4</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="step">4</div>
+                                                }
+                                                <p><strong>@Resources.OrderDelivered</strong></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <h3>@Resources.PreviousOrders</h3>
+                        <table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-remove"></th>
+                                    <th class="product-remove">@Resources.OrderNumber</th>
+                                    <th class="product-name" style="text-align:left">@Resources.OrderProducts</th>
+                                    <th class="product-subtotal" style="text-align:left">@Resources.OrderTotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PrevOrders)
+                                {
+                                <tr class="woocommerce-cart-form__cart-item cart_item">
+                                    <td class="product-thumbnail">
+                                        <a href="order_1.html"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+                                    </td>
+                                    <td class="">
+                                        @item.OrderNum
+                                    </td>
+                                    <td class="">
+                                        @item.OrderDate.ToString("dd.MM.yyyy")
+                                    </td>
+                                    <td class="product-name" data-title="Продукт" style="text-align:left">
+                                        @Html.ActionLink(item.OrderProducts,"OrderAgain",new { reqId=item.OrderNum})
+                                        
+                                    </td>
+                                    <td class="product-subtotal" data-title="Общо" style="text-align:left">
+                                        <span class="woocommerce-Price-amount amount">@item.Total @Resources.LV</span>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+
+
+                    </div><!-- .entry-content -->
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->

@@ -17,12 +17,12 @@ namespace Umamido.DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Image()
         {
+            this.Blog = new HashSet<Blog>();
             this.Good = new HashSet<Good>();
             this.Restaurant = new HashSet<Restaurant>();
             this.Restaurant1 = new HashSet<Restaurant>();
             this.Restaurant2 = new HashSet<Restaurant>();
             this.Slider = new HashSet<Slider>();
-            this.Blog = new HashSet<Blog>();
         }
     
         public int ImageId { get; set; }
@@ -31,6 +31,8 @@ namespace Umamido.DL
         public string Filename { get; set; }
         public bool IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Blog> Blog { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Good> Good { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -41,7 +43,5 @@ namespace Umamido.DL
         public virtual ICollection<Restaurant> Restaurant2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Slider> Slider { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Blog> Blog { get; set; }
     }
 }

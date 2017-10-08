@@ -23,8 +23,8 @@ namespace Umamido.DL
     
         public int SliderId { get; set; }
         public int ImageId { get; set; }
-        public bool IsActive { get; set; }
         public string ButtonUrl { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual Image Image { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -47,6 +47,9 @@
           <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Firstname" Type="nvarchar" MaxLength="200" />
+          <Property Name="Familyname" Type="nvarchar" MaxLength="200" />
+          <Property Name="eMail" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="DistantAddress">
           <Key>
@@ -127,6 +130,7 @@
           </Key>
           <Property Name="ReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PaymentTypeId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
           <Property Name="Receiver" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="LatLong" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -159,9 +163,9 @@
           </Key>
           <Property Name="RestaurantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ImageId" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="LogoImageId" Type="int" Nullable="false" />
           <Property Name="BigImageId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="RestaurantDesc">
           <Key>
@@ -247,6 +251,20 @@
           </Key>
           <Property Name="UserLevelId" Type="int" Nullable="false" />
           <Property Name="UserLevelName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwReq">
+          <Key>
+            <PropertyRef Name="ReqId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ReqId" Type="int" Nullable="false" />
+          <Property Name="OnDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="fk_Blog_ImageId">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
@@ -377,6 +395,18 @@
             </Principal>
             <Dependent Role="GoodTitle">
               <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req_ClientId">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Req" Type="Self.Req" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Req">
+              <PropertyRef Name="ClientId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -627,6 +657,14 @@
           <EntitySet Name="TextDesc" EntityType="Self.TextDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserLevel" EntityType="Self.UserLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwReq" EntityType="Self.vwReq" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwReq].[ReqId] AS [ReqId], 
+    [vwReq].[OnDate] AS [OnDate], 
+    [vwReq].[StatusId] AS [StatusId], 
+    [vwReq].[ClientId] AS [ClientId]
+    FROM [dbo].[vwReq] AS [vwReq]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="fk_Blog_ImageId" Association="Self.fk_Blog_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Blog" EntitySet="Blog" />
@@ -670,6 +708,10 @@
           <AssociationSet Name="fk_GoodTitle_LangId" Association="Self.fk_GoodTitle_LangId">
             <End Role="Lang" EntitySet="Lang" />
             <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req_ClientId" Association="Self.fk_Req_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Req" EntitySet="Req" />
           </AssociationSet>
           <AssociationSet Name="fk_Req_PaymentTypeId" Association="Self.fk_Req_PaymentTypeId">
             <End Role="PaymentType" EntitySet="PaymentType" />
@@ -745,11 +787,32 @@
     <edmx:ConceptualModels>
       <Schema Namespace="UmamidoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="UmamidoEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="CollectDetails" ReturnType="Collection(UmamidoModel.CollectDetails_Result)">
+          <Parameter Name="reqId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForCollect" ReturnType="Collection(UmamidoModel.ForCollect_Result)">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForDeliver" ReturnType="Collection(UmamidoModel.ForDeliver_Result)">
+          <Parameter Name="userId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
+          <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
+            <Parameter Name="from" Mode="In" Type="DateTime" />
+            <Parameter Name="to" Mode="In" Type="DateTime" />
+            <Parameter Name="restaurantId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="AddressCheck" EntityType="UmamidoModel.AddressCheck" />
+          <EntitySet Name="Blog" EntityType="UmamidoModel.Blog" />
+          <EntitySet Name="BlogDesc" EntityType="UmamidoModel.BlogDesc" />
+          <EntitySet Name="BlogTitle" EntityType="UmamidoModel.BlogTitle" />
+          <EntitySet Name="DistantAddress" EntityType="UmamidoModel.DistantAddress" />
           <EntitySet Name="Good" EntityType="UmamidoModel.Good" />
           <EntitySet Name="GoodDesc" EntityType="UmamidoModel.GoodDesc" />
           <EntitySet Name="GoodTitle" EntityType="UmamidoModel.GoodTitle" />
           <EntitySet Name="Image" EntityType="UmamidoModel.Image" />
           <EntitySet Name="Lang" EntityType="UmamidoModel.Lang" />
+          <EntitySet Name="Message" EntityType="UmamidoModel.Message" />
           <EntitySet Name="PaymentType" EntityType="UmamidoModel.PaymentType" />
           <EntitySet Name="Req" EntityType="UmamidoModel.Req" />
           <EntitySet Name="Req2Good" EntityType="UmamidoModel.Req2Good" />
@@ -765,6 +828,26 @@
           <EntitySet Name="TextDesc" EntityType="UmamidoModel.TextDesc" />
           <EntitySet Name="User" EntityType="UmamidoModel.User" />
           <EntitySet Name="UserLevel" EntityType="UmamidoModel.UserLevel" />
+          <AssociationSet Name="fk_Blog_ImageId" Association="UmamidoModel.fk_Blog_ImageId">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Blog" EntitySet="Blog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_BlogId" Association="UmamidoModel.fk_BlogDesc_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_BlogId" Association="UmamidoModel.fk_BlogTitle_BlogId">
+            <End Role="Blog" EntitySet="Blog" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogDesc_LangId" Association="UmamidoModel.fk_BlogDesc_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogDesc" EntitySet="BlogDesc" />
+          </AssociationSet>
+          <AssociationSet Name="fk_BlogTitle_LangId" Association="UmamidoModel.fk_BlogTitle_LangId">
+            <End Role="Lang" EntitySet="Lang" />
+            <End Role="BlogTitle" EntitySet="BlogTitle" />
+          </AssociationSet>
           <AssociationSet Name="fk_Good_ImageId" Association="UmamidoModel.fk_Good_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Good" EntitySet="Good" />
@@ -857,49 +940,99 @@
             <End Role="Text" EntitySet="Text" />
             <End Role="TextDesc" EntitySet="TextDesc" />
           </AssociationSet>
-          <FunctionImport Name="CollectDetails" ReturnType="Collection(UmamidoModel.CollectDetails_Result)">
-          <Parameter Name="reqId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ForCollect" ReturnType="Collection(UmamidoModel.ForCollect_Result)">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ForDeliver" ReturnType="Collection(UmamidoModel.ForDeliver_Result)">
-          <Parameter Name="userId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
-          <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
-            <Parameter Name="from" Mode="In" Type="DateTime" />
-            <Parameter Name="to" Mode="In" Type="DateTime" />
-            <Parameter Name="restaurantId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="Message" EntityType="UmamidoModel.Message" />
-          <EntitySet Name="Blog" EntityType="UmamidoModel.Blog" />
-          <EntitySet Name="BlogDesc" EntityType="UmamidoModel.BlogDesc" />
-          <EntitySet Name="BlogTitle" EntityType="UmamidoModel.BlogTitle" />
-          <AssociationSet Name="fk_Blog_ImageId" Association="UmamidoModel.fk_Blog_ImageId">
-            <End Role="Image" EntitySet="Image" />
-            <End Role="Blog" EntitySet="Blog" />
-          </AssociationSet>
-          <AssociationSet Name="fk_BlogDesc_BlogId" Association="UmamidoModel.fk_BlogDesc_BlogId">
-            <End Role="Blog" EntitySet="Blog" />
-            <End Role="BlogDesc" EntitySet="BlogDesc" />
-          </AssociationSet>
-          <AssociationSet Name="fk_BlogTitle_BlogId" Association="UmamidoModel.fk_BlogTitle_BlogId">
-            <End Role="Blog" EntitySet="Blog" />
-            <End Role="BlogTitle" EntitySet="BlogTitle" />
-          </AssociationSet>
-          <AssociationSet Name="fk_BlogDesc_LangId" Association="UmamidoModel.fk_BlogDesc_LangId">
-            <End Role="Lang" EntitySet="Lang" />
-            <End Role="BlogDesc" EntitySet="BlogDesc" />
-          </AssociationSet>
-          <AssociationSet Name="fk_BlogTitle_LangId" Association="UmamidoModel.fk_BlogTitle_LangId">
-            <End Role="Lang" EntitySet="Lang" />
-            <End Role="BlogTitle" EntitySet="BlogTitle" />
-          </AssociationSet>
-          <EntitySet Name="AddressCheck" EntityType="UmamidoModel.AddressCheck" />
+          <EntitySet Name="vwReq" EntityType="UmamidoModel.vwReq" />
           <EntitySet Name="Client" EntityType="UmamidoModel.Client" />
-          <EntitySet Name="DistantAddress" EntityType="UmamidoModel.DistantAddress" />
-        </EntityContainer>
+          <AssociationSet Name="fk_Req_ClientId" Association="UmamidoModel.fk_Req_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Req" EntitySet="Req" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="CollectDetails_Result">
+          <Property Type="Int32" Name="reqId" Nullable="false" />
+          <Property Type="String" Name="Good" Nullable="true" />
+          <Property Type="Int32" Name="CookMinutes" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="Restaurant" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="ForCollect_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="ForDeliver_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="ForDispatch_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="SearchReq_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="false" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="Boolean" Name="Paid" Nullable="false" />
+          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="OnDate" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <EntityType Name="AddressCheck">
+          <Key>
+            <PropertyRef Name="AddressCheckId" />
+          </Key>
+          <Property Name="AddressCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Km" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Blog">
+          <Key>
+            <PropertyRef Name="BlogId" />
+          </Key>
+          <Property Name="BlogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Blog" ToRole="Image" />
+          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="Blog" ToRole="BlogDesc" />
+          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="Blog" ToRole="BlogTitle" />
+        </EntityType>
+        <EntityType Name="BlogDesc">
+          <Key>
+            <PropertyRef Name="BlogDescId" />
+          </Key>
+          <Property Name="BlogDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="BlogDesc" ToRole="Blog" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="BlogDesc" ToRole="Lang" />
+        </EntityType>
+        <EntityType Name="BlogTitle">
+          <Key>
+            <PropertyRef Name="BlogTitleId" />
+          </Key>
+          <Property Name="BlogTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BlogId" Type="Int32" Nullable="false" />
+          <Property Name="LangId" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="BlogTitle" ToRole="Blog" />
+          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="BlogTitle" ToRole="Lang" />
+        </EntityType>
+        <EntityType Name="DistantAddress">
+          <Key>
+            <PropertyRef Name="DistantAddressId" />
+          </Key>
+          <Property Name="DistantAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="eMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Good">
           <Key>
             <PropertyRef Name="GoodId" />
@@ -947,12 +1080,12 @@
           <Property Name="Content" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Filename" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Image" ToRole="Blog" />
           <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_Good_ImageId" FromRole="Image" ToRole="Good" />
           <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Restaurant_BigImageId" FromRole="Image" ToRole="Restaurant" />
           <NavigationProperty Name="Restaurant1" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Image" ToRole="Restaurant" />
           <NavigationProperty Name="Restaurant2" Relationship="UmamidoModel.fk_Restaurant_LogoImageId" FromRole="Image" ToRole="Restaurant" />
           <NavigationProperty Name="Slider" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Image" ToRole="Slider" />
-          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Image" ToRole="Blog" />
         </EntityType>
         <EntityType Name="Lang">
           <Key>
@@ -961,6 +1094,8 @@
           <Property Name="LangId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LangName" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="Lang" ToRole="BlogDesc" />
+          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="Lang" ToRole="BlogTitle" />
           <NavigationProperty Name="GoodDesc" Relationship="UmamidoModel.fk_GoodDesc_LangId" FromRole="Lang" ToRole="GoodDesc" />
           <NavigationProperty Name="GoodTitle" Relationship="UmamidoModel.fk_GoodTitle_LangId" FromRole="Lang" ToRole="GoodTitle" />
           <NavigationProperty Name="RestaurantDesc" Relationship="UmamidoModel.fk_RestaurantDesc_LangId" FromRole="Lang" ToRole="RestaurantDesc" />
@@ -968,8 +1103,17 @@
           <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_LangId" FromRole="Lang" ToRole="SliderDesc" />
           <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_LangId" FromRole="Lang" ToRole="SliderTitle" />
           <NavigationProperty Name="TextDesc" Relationship="UmamidoModel.fk_TextDesc_LangId" FromRole="Lang" ToRole="TextDesc" />
-          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="Lang" ToRole="BlogDesc" />
-          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="Lang" ToRole="BlogTitle" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FromName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -985,12 +1129,14 @@
           </Key>
           <Property Name="ReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PaymentTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
           <Property Name="Receiver" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LatLong" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Paid" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
+          <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Req" ToRole="Client" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -1021,9 +1167,9 @@
           </Key>
           <Property Name="RestaurantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImageId" Type="Int32" Nullable="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LogoImageId" Type="Int32" Nullable="false" />
           <Property Name="BigImageId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Good" Relationship="UmamidoModel.fk_Good_RestaurantId" FromRole="Restaurant" ToRole="Good" />
           <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Restaurant_BigImageId" FromRole="Restaurant" ToRole="Image" />
           <NavigationProperty Name="Image1" Relationship="UmamidoModel.fk_Restaurant_ImageId" FromRole="Restaurant" ToRole="Image" />
@@ -1059,11 +1205,11 @@
           </Key>
           <Property Name="SliderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ImageId" Type="Int32" Nullable="false" />
+          <Property Name="ButtonUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Slider_ImageId" FromRole="Slider" ToRole="Image" />
           <NavigationProperty Name="SliderDesc" Relationship="UmamidoModel.fk_SliderDesc_SliderId" FromRole="Slider" ToRole="SliderDesc" />
           <NavigationProperty Name="SliderTitle" Relationship="UmamidoModel.fk_SliderTitle_SliderId" FromRole="Slider" ToRole="SliderTitle" />
-          <Property Name="ButtonUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SliderDesc">
           <Key>
@@ -1130,6 +1276,66 @@
           <Property Name="UserLevelId" Type="Int32" Nullable="false" />
           <Property Name="UserLevelName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="fk_Blog_ImageId">
+          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="ImageId" />
+            </Principal>
+            <Dependent Role="Blog">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_BlogId">
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_BlogId">
+          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blog">
+              <PropertyRef Name="BlogId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="BlogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogDesc_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogDesc">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_BlogTitle_LangId">
+          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
+          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lang">
+              <PropertyRef Name="LangId" />
+            </Principal>
+            <Dependent Role="BlogTitle">
+              <PropertyRef Name="LangId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Good_ImageId">
           <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
           <End Type="UmamidoModel.Good" Role="Good" Multiplicity="*" />
@@ -1406,154 +1612,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="CollectDetails_Result">
-          <Property Type="Int32" Name="reqId" Nullable="false" />
-          <Property Type="String" Name="Good" Nullable="true" />
-          <Property Type="Int32" Name="CookMinutes" Nullable="false" />
-          <Property Type="Int32" Name="Quantity" Nullable="false" />
-          <Property Type="String" Name="Restaurant" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="ForCollect_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="ForDeliver_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="ForDispatch_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="SearchReq_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="Boolean" Name="Paid" Nullable="false" />
-          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="OnDate" Nullable="false" />
-          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Note" Nullable="true" />
-          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
-        </ComplexType>
-        <EntityType Name="Message">
+        <EntityType Name="vwReq">
           <Key>
-            <PropertyRef Name="MessageId" />
+            <PropertyRef Name="ReqId" />
+            <PropertyRef Name="OnDate" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="ClientId" />
           </Key>
-          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="FromName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Blog">
-          <Key>
-            <PropertyRef Name="BlogId" />
-          </Key>
-          <Property Name="BlogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ImageId" Type="Int32" Nullable="false" />
-          <Property Name="OnDate" Type="DateTime" Precision="0" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Blog_ImageId" FromRole="Blog" ToRole="Image" />
-          <NavigationProperty Name="BlogDesc" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="Blog" ToRole="BlogDesc" />
-          <NavigationProperty Name="BlogTitle" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="Blog" ToRole="BlogTitle" />
-        </EntityType>
-        <EntityType Name="BlogDesc">
-          <Key>
-            <PropertyRef Name="BlogDescId" />
-          </Key>
-          <Property Name="BlogDescId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BlogId" Type="Int32" Nullable="false" />
-          <Property Name="LangId" Type="Int32" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogDesc_BlogId" FromRole="BlogDesc" ToRole="Blog" />
-          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogDesc_LangId" FromRole="BlogDesc" ToRole="Lang" />
-        </EntityType>
-        <EntityType Name="BlogTitle">
-          <Key>
-            <PropertyRef Name="BlogTitleId" />
-          </Key>
-          <Property Name="BlogTitleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BlogId" Type="Int32" Nullable="false" />
-          <Property Name="LangId" Type="Int32" Nullable="false" />
-          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="BlogTitle" ToRole="Blog" />
-          <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="BlogTitle" ToRole="Lang" />
-        </EntityType>
-        <Association Name="fk_Blog_ImageId">
-          <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
-          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Image">
-              <PropertyRef Name="ImageId" />
-            </Principal>
-            <Dependent Role="Blog">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_BlogDesc_BlogId">
-          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
-          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Blog">
-              <PropertyRef Name="BlogId" />
-            </Principal>
-            <Dependent Role="BlogDesc">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_BlogTitle_BlogId">
-          <End Type="UmamidoModel.Blog" Role="Blog" Multiplicity="1" />
-          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Blog">
-              <PropertyRef Name="BlogId" />
-            </Principal>
-            <Dependent Role="BlogTitle">
-              <PropertyRef Name="BlogId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_BlogDesc_LangId">
-          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
-          <End Type="UmamidoModel.BlogDesc" Role="BlogDesc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Lang">
-              <PropertyRef Name="LangId" />
-            </Principal>
-            <Dependent Role="BlogDesc">
-              <PropertyRef Name="LangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_BlogTitle_LangId">
-          <End Type="UmamidoModel.Lang" Role="Lang" Multiplicity="1" />
-          <End Type="UmamidoModel.BlogTitle" Role="BlogTitle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Lang">
-              <PropertyRef Name="LangId" />
-            </Principal>
-            <Dependent Role="BlogTitle">
-              <PropertyRef Name="LangId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="AddressCheck">
-          <Key>
-            <PropertyRef Name="AddressCheckId" />
-          </Key>
-          <Property Name="AddressCheckId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Km" Type="Int32" Nullable="false" />
+          <Property Name="ReqId" Type="Int32" Nullable="false" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
@@ -1562,21 +1631,133 @@
           <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="DistantAddress">
-          <Key>
-            <PropertyRef Name="DistantAddressId" />
-          </Key>
-          <Property Name="DistantAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Familyname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="eMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Client" ToRole="Req" />
         </EntityType>
-      </Schema>
+        <Association Name="fk_Req_ClientId">
+          <End Type="UmamidoModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Req">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="UmamidoModelStoreContainer" CdmEntityContainer="UmamidoEntities">
+          <FunctionImportMapping FunctionImportName="CollectDetails" FunctionName="UmamidoModel.Store.CollectDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.CollectDetails_Result">
+                <ScalarProperty Name="reqId" ColumnName="reqId" />
+                <ScalarProperty Name="Good" ColumnName="Good" />
+                <ScalarProperty Name="CookMinutes" ColumnName="CookMinutes" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Restaurant" ColumnName="Restaurant" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForCollect" FunctionName="UmamidoModel.Store.ForCollect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForCollect_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForDeliver" FunctionName="UmamidoModel.Store.ForDeliver">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForDeliver_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ForDispatch" FunctionName="UmamidoModel.Store.ForDispatch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.ForDispatch_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="AddressCheck">
+            <EntityTypeMapping TypeName="UmamidoModel.AddressCheck">
+              <MappingFragment StoreEntitySet="AddressCheck">
+                <ScalarProperty Name="Km" ColumnName="Km" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressCheckId" ColumnName="AddressCheckId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blog">
+            <EntityTypeMapping TypeName="UmamidoModel.Blog">
+              <MappingFragment StoreEntitySet="Blog">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogDesc">
+            <EntityTypeMapping TypeName="UmamidoModel.BlogDesc">
+              <MappingFragment StoreEntitySet="BlogDesc">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogDescId" ColumnName="BlogDescId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlogTitle">
+            <EntityTypeMapping TypeName="UmamidoModel.BlogTitle">
+              <MappingFragment StoreEntitySet="BlogTitle">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="LangId" ColumnName="LangId" />
+                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
+                <ScalarProperty Name="BlogTitleId" ColumnName="BlogTitleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistantAddress">
+            <EntityTypeMapping TypeName="UmamidoModel.DistantAddress">
+              <MappingFragment StoreEntitySet="DistantAddress">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="DistantAddressId" ColumnName="DistantAddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Good">
             <EntityTypeMapping TypeName="UmamidoModel.Good">
               <MappingFragment StoreEntitySet="Good">
@@ -1629,6 +1810,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="UmamidoModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="FromName" ColumnName="FromName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PaymentType">
             <EntityTypeMapping TypeName="UmamidoModel.PaymentType">
               <MappingFragment StoreEntitySet="PaymentType">
@@ -1644,6 +1837,7 @@
                 <ScalarProperty Name="LatLong" ColumnName="LatLong" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />
               </MappingFragment>
@@ -1675,9 +1869,9 @@
           <EntitySetMapping Name="Restaurant">
             <EntityTypeMapping TypeName="UmamidoModel.Restaurant">
               <MappingFragment StoreEntitySet="Restaurant">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="BigImageId" ColumnName="BigImageId" />
                 <ScalarProperty Name="LogoImageId" ColumnName="LogoImageId" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="RestaurantId" ColumnName="RestaurantId" />
               </MappingFragment>
@@ -1706,8 +1900,8 @@
           <EntitySetMapping Name="Slider">
             <EntityTypeMapping TypeName="UmamidoModel.Slider">
               <MappingFragment StoreEntitySet="Slider">
-                <ScalarProperty Name="ButtonUrl" ColumnName="ButtonUrl" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ButtonUrl" ColumnName="ButtonUrl" />
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="SliderId" ColumnName="SliderId" />
               </MappingFragment>
@@ -1778,132 +1972,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="CollectDetails" FunctionName="UmamidoModel.Store.CollectDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.CollectDetails_Result">
-                <ScalarProperty Name="reqId" ColumnName="reqId" />
-                <ScalarProperty Name="Good" ColumnName="Good" />
-                <ScalarProperty Name="CookMinutes" ColumnName="CookMinutes" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Restaurant" ColumnName="Restaurant" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ForCollect" FunctionName="UmamidoModel.Store.ForCollect">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.ForCollect_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ForDeliver" FunctionName="UmamidoModel.Store.ForDeliver">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.ForDeliver_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ForDispatch" FunctionName="UmamidoModel.Store.ForDispatch">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.ForDispatch_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="LatLong" ColumnName="LatLong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
-                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+          <EntitySetMapping Name="vwReq">
+            <EntityTypeMapping TypeName="UmamidoModel.vwReq">
+              <MappingFragment StoreEntitySet="vwReq">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="Message">
-            <EntityTypeMapping TypeName="UmamidoModel.Message">
-              <MappingFragment StoreEntitySet="Message">
-                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
-                <ScalarProperty Name="Subject" ColumnName="Subject" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
-                <ScalarProperty Name="FromName" ColumnName="FromName" />
-                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
-                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Blog">
-            <EntityTypeMapping TypeName="UmamidoModel.Blog">
-              <MappingFragment StoreEntitySet="Blog">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BlogDesc">
-            <EntityTypeMapping TypeName="UmamidoModel.BlogDesc">
-              <MappingFragment StoreEntitySet="BlogDesc">
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="LangId" ColumnName="LangId" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
-                <ScalarProperty Name="BlogDescId" ColumnName="BlogDescId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BlogTitle">
-            <EntityTypeMapping TypeName="UmamidoModel.BlogTitle">
-              <MappingFragment StoreEntitySet="BlogTitle">
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="LangId" ColumnName="LangId" />
-                <ScalarProperty Name="BlogId" ColumnName="BlogId" />
-                <ScalarProperty Name="BlogTitleId" ColumnName="BlogTitleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AddressCheck">
-            <EntityTypeMapping TypeName="UmamidoModel.AddressCheck">
-              <MappingFragment StoreEntitySet="AddressCheck">
-                <ScalarProperty Name="Km" ColumnName="Km" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="AddressCheckId" ColumnName="AddressCheckId" />
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Client">
             <EntityTypeMapping TypeName="UmamidoModel.Client">
               <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="Familyname" ColumnName="Familyname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ClientId" ColumnName="ClientId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DistantAddress">
-            <EntityTypeMapping TypeName="UmamidoModel.DistantAddress">
-              <MappingFragment StoreEntitySet="DistantAddress">
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="eMail" ColumnName="eMail" />
-                <ScalarProperty Name="DistantAddressId" ColumnName="DistantAddressId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

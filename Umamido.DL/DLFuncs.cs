@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Caching;
@@ -330,6 +331,8 @@ namespace Umamido.DL
                 Restaurant r = new Restaurant()
                 {
                     ImageId = model.ImageId,
+                    BigImageId = model.BigImageId,
+                    LogoImageId = model.LogoImageId,
                     IsActive = model.IsActive
                 };
                 entities.Restaurant.Add(r);
@@ -1199,6 +1202,139 @@ namespace Umamido.DL
         {
             entities.DistantAddress.Add(new DistantAddress() { Address = model.Address, eMail = model.Email });
             entities.SaveChanges();
+        }
+        #endregion
+
+        #region MyProfile
+        public string OrderDetails(int reqId, string lang)
+        {
+            List<string> od = new List<string>();
+            foreach (var item in entities.Req2Good.Where(r => r.ReqId == reqId))
+            {
+                od.Add(Tools.StripHtmlTags(item.Good.GoodTitle.First(gt => gt.Lang.LangName == lang).Text));
+            }
+
+            return string.Join(", ", od.ToArray());
+
+        }
+
+        public decimal OrderTotal(int reqId)
+        {
+            decimal result = entities.Req2Good.Sum(r => r.Price * r.Quantity);
+            return result;
+
+        }
+
+        public MyProfileModel GetMyProfile(int clientId, string lang)
+        {
+            MyProfileModel result = new MyProfileModel();
+            List<OrderInfoModel> prevOrders = new List<OrderInfoModel>();
+
+            var lastOrder = entities.vwReq.Where(r => r.StatusId < 5).OrderByDescending(r => r.OnDate).FirstOrDefault();
+            if (lastOrder != null)
+            {
+                result.LastOrder = new OrderInfoModel();
+                result.LastOrder.OrderProducts = this.OrderDetails(lastOrder.ReqId, lang);
+                result.LastOrder.OrderDate = lastOrder.OnDate;
+                result.LastOrder.OrderNum = lastOrder.ReqId;
+                result.LastOrder.OrderStatus = lastOrder.StatusId;
+                result.LastOrder.Total = this.OrderTotal(lastOrder.ReqId);
+            }
+            foreach (var item in entities.vwReq.Where(r => r.StatusId >= 5).OrderByDescending(r => r.OnDate).Take(5))
+            {
+                var order = new OrderInfoModel();
+                order.OrderProducts = this.OrderDetails(item.ReqId, lang);
+                order.OrderDate = item.OnDate;
+                order.OrderNum = item.ReqId;
+                order.OrderStatus = item.StatusId;
+                order.Total = this.OrderTotal(item.ReqId);
+                prevOrders.Add(order);
+            }
+
+
+
+            result.PrevOrders = prevOrders.ToArray();
+            return result;
+
+        }
+
+
+        public List<CartSessionModel> GetForOrderAgain(int reqId)
+        {
+            List<CartSessionModel> result = new List<CartSessionModel>();
+            foreach (var item in entities.Req2Good.Where(rg => rg.ReqId == reqId))
+            {
+                CartSessionModel element = new CartSessionModel()
+                {
+                    GoodId = item.GoodId,
+                    Quantity = item.Quantity
+                };
+                result.Add(element);
+            }
+            return result;
+        }
+
+        public MyAccountProfileModel GetAccountProfile(int clientId)
+        {
+            var rec = entities.Client.First(c => c.ClientId == clientId);
+            return new MyAccountProfileModel()
+            {
+                EMail = rec.eMail,
+                Family = rec.Familyname,
+                Name = rec.Firstname
+            };
+        }
+
+        public void UpdateMyAccountProfile(MyAccountProfileModel model)
+        {
+            if (model.Password != null && entities.Client.FirstOrDefault(cl => cl.ClientId == model.ClientId && cl.Password == model.PasswordMd5) == null)
+            {
+                model.Error = Umamido.Resources.Resources.InvalidUsernamePassword;
+                return;
+            }
+
+            if (model.NewPassword == null && model.Password != null)
+            {
+                model.Error = Umamido.Resources.Resources.EnterPassword;
+                return;
+            }
+            if (model.NewPassword != model.RePassword)
+            {
+                model.Error = Umamido.Resources.Resources.PasswordDoNotMatch;
+                return;
+            }
+
+            if (model.Name == null)
+            {
+                model.Error = Umamido.Resources.Resources.EnterName;
+                return;
+            }
+
+            if (model.Family == null)
+            {
+                model.Error = Umamido.Resources.Resources.EnterFamily;
+                return;
+            }
+
+            try
+            {
+                MailAddress m = new MailAddress(model.EMail);
+
+            }
+            catch (FormatException)
+            {
+                model.Error = Umamido.Resources.Resources.EnterEmail;
+                return;
+            }
+
+            var c = entities.Client.First(cl => cl.ClientId == model.ClientId);
+            c.Firstname = model.Name;
+            c.Familyname = model.Family;
+            c.eMail = model.EMail;
+            if (model.Password != null)
+                c.Password = model.NewPassword;
+            entities.SaveChanges();
+
         }
         #endregion
     }

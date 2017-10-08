@@ -4,6 +4,7 @@
     ViewBag.Title = Model.FirstTitleNoHtml;
 }
 
+
 <div class="categories">
     <div class="container">
         <div class="row">
@@ -41,7 +42,7 @@
                     <div class="row">
                         <div itemscope="" itemtype="http://schema.org/Product" id="product-586" class="post-586 product type-product status-publish has-post-thumbnail product_cat-herbs product_cat-kitchen first instock shipping-taxable purchasable product-type-simple">
                             <div class="images">
-                                <a href="images/ramen-of-the-chef.jpg" itemprop="image" class="woocommerce-main-image zoom" title=""><img src="images/ramen-of-the-chef.jpg" class="attachment-shop_single size-shop_single wp-post-image" alt="Ramen of the Chef" title="fresh-fruits"></a>
+                                <a href="images/ramen-of-the-chef.jpg" itemprop="image" class="woocommerce-main-image zoom" title=""><img src="/home/getimage?imageid=@Model.ImageId" class="attachment-shop_single size-shop_single wp-post-image" alt="Ramen of the Chef" title="fresh-fruits"></a>
                             </div>
                             <div class="summary entry-summary">
                                 <h1 itemprop="name" class="product_title entry-title">@Model.FirstTitleNoHtml</h1>
@@ -120,4 +121,70 @@
         </div>
     </div>
 </div>
-	</div><!-- #content -->
+
+
+<div class="modal fade" id="dlgOrder" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h2 class="modal-title">@Resources.EnterCheckProfile</h2>
+                <p>@Resources.EnterCheckExplain</p>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12" style="border-bottom:1px solid #ccc; padding-bottom:30px; margin-bottom:30px;">
+                        <p>@Resources.Login</p>
+                        <div style="margin-bottom:15px;">
+                            <input type="text" name="username" id="username" placeholder="@Resources.Username">
+                        </div>
+                        <div style="margin-bottom:15px;">
+                            <input type="password" name="pass" id="pass" placeholder="@Resources.Password">
+                        </div>
+                        <div style="margin-bottom:15px;display:none" id="dInvalidLogin">
+                            @Resources.InvalidUsernamePassword
+                        </div>
+                        <div>
+                            <button type="button" onclick="Restaurant.LoginClient()" class="umamidobtn">@Resources.Login</button>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <p>@Resources.CheckAddress</p>
+                        <div style="margin-bottom:15px;">
+                            <input type="text" name="address" id="address" placeholder="@Resources.EnterStreetNumber"><br />
+                            <button type="button" onclick="Restaurant.CheckAddress()" class="umamidobtn">@Resources.Check</button>
+                        </div>
+                        <div style="margin-bottom:15px;">
+
+                            <div id="dAddressOK" style="display:none">
+                                <p>@Resources.YourAddress <label id="lCorrectAddress"></label> @Resources.PleaseContinue</p>
+
+                                <button type="button" onclick="Restaurant.ConfirmAddress()" class="umamidobtn">ОК</button>
+                            </div>    <!--      -->
+                            <div id="dChooseAddress" style="display:none">
+                                <p>@Resources.PleaseSelectAddress</p>
+                                <div id="dMultipleAddresses">
+
+                                </div>
+
+
+                            </div>
+                            <div id="dFarAddress" style="display:none">
+                                <p>@Resources.FarAddress</p>
+                                <input type="text" name="email" id="email" placeholder="@Resources.Email"><br />
+                                <button type="button" onclick="Restaurant.SendDistantAddress()" class="umamidobtn">Изпрати</button>
+                            </div><!--      -->
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

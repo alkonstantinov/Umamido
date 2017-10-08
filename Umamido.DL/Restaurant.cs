@@ -24,9 +24,9 @@ namespace Umamido.DL
     
         public int RestaurantId { get; set; }
         public int ImageId { get; set; }
-        public bool IsActive { get; set; }
         public int LogoImageId { get; set; }
         public int BigImageId { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Good> Good { get; set; }

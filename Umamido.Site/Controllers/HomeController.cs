@@ -93,6 +93,7 @@ namespace Umamido.Site.Controllers
         public ActionResult Good(int goodId)
         {
             var model = DL.GetGoodByLang(goodId, Lang);
+            model.ClientId = this.ClientData.UserId;
             return View(model);
         }
 
@@ -237,6 +238,56 @@ namespace Umamido.Site.Controllers
                 model.Add(good);
             }
             return View(model.ToArray());
+        }
+
+        public ActionResult Login()
+        {
+            
+            return View(new LoginModel());
+        }
+
+
+        [HttpPost]
+        public ActionResult Login(LoginModel model)
+        {
+            var result = DL.ClientLogin(model);
+            if (result.HasValue)
+            { 
+                this.ClientData.UserId = result;
+                return RedirectToAction("MyProfile");
+            }
+            model.LoginFailure = true;
+            ModelState.Clear();
+            return View(model);
+        }
+
+
+
+        public ActionResult MyProfile()
+        {
+
+            return View(DL.GetMyProfile(this.ClientData.UserId.Value, this.Lang));
+        }
+
+        public ActionResult OrderAgain(int reqId)
+        {
+            this.ClientData.Goods = DL.GetForOrderAgain(reqId);
+            return RedirectToAction("MyProfile");
+        }
+
+        public ActionResult MyAccountProfile()
+        {
+            
+            return View(DL.GetAccountProfile(this.ClientData.UserId.Value));
+        }
+
+        [HttpPost]
+        public ActionResult MyAccountProfile(MyAccountProfileModel model)
+        {
+            model.ClientId = this.ClientData.UserId.Value;
+            DL.UpdateMyAccountProfile(model);
+
+            return View(model);
         }
 
     }

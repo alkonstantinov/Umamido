@@ -1,0 +1,109 @@
+﻿@model Umamido.Common.MyAccountProfileModel
+
+@{
+    ViewBag.Title = "MyAccountProfile";
+}
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">МОЯТ ПРОФИЛ</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+
+                <!--<div class="categories-menu-toggle">
+                    <button class="menu-toggle" aria-controls="categories-menu" aria-expanded="false">Ресторанти</button>
+                </div>-->
+                <nav id="categories-menu" class="categories-navigation site-navigation">
+                    <div class="menu-shop-menu-container">
+                        <ul id="categories-menu" class="menu nav-menu" aria-expanded="false">
+                            <li id="menu-item-500" class="menu-item rest-menu-item">
+                                <a href="/Home/MyProfile">@Resources.YourOrders</a>
+                            </li>
+                            <li id="menu-item-394" class="menu-item rest-menu-item current-rest">
+                                <a href="/Home/MyAccountProfile">@Resources.ProfileEdit</a>
+                            </li>
+                            <li id="menu-item-392" class="menu-item rest-menu-item">
+                                <a href="/Home/MyAccountAddresses">@Resources.Addresses</a>
+                            </li>
+                            <li id="menu-item-395" class="menu-item rest-menu-item">
+                                <a href="/Home/MyAccountExit">@Resources.Exit</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+                    <div class="entry-content">
+                        <div class="woocommerce-MyAccount-content">
+
+                            <form class="woocommerce-EditAccountForm edit-account" action="/home/MyAccountProfile" method="post">
+
+                                @if (Model.Error != null)
+                                {
+                                    <p class="woocommerce-FormRow woocommerce-FormRow--first form-row form-row-first">
+                                        @Model.Error
+                                    </p>
+                                }
+                                <p class="woocommerce-FormRow woocommerce-FormRow--first form-row form-row-first">
+                                    <label for="Name">@Resources.Name <span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "woocommerce-Input woocommerce-Input--text input-text" })
+                                    
+                                </p>
+                                <p class="woocommerce-FormRow woocommerce-FormRow--last form-row form-row-last">
+                                    <label for="Family">Фамилия <span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Family, new { @class = "woocommerce-Input woocommerce-Input--text input-text" })
+                                </p>
+                                <div class="clear"></div>
+
+                                <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                    <label for="EMail">@Resources.Email <span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.EMail, new { @class = "woocommerce-Input woocommerce-Input--text input-text" })
+                                </p>
+                                <br>
+
+                                <fieldset>
+                                    <legend>@Resources.PasswordChange</legend>
+
+                                    <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                        <label for="Password">@Resources.PCCurrentPassword</label>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "woocommerce-Input woocommerce-Input--password input-text" })                                        
+                                    </p>
+                                    <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                        <label for="NewPassword">@Resources.PCNewPassword</label>
+                                        @Html.PasswordFor(m => m.NewPassword, new { @class = "woocommerce-Input woocommerce-Input--password input-text" })
+                                    </p>
+                                    <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                        <label for="RePassword">@Resources.PCReNewPassword</label>
+                                        @Html.PasswordFor(m => m.RePassword, new { @class = "woocommerce-Input woocommerce-Input--password input-text" })
+                                    </p>
+                                </fieldset>
+                                <div class="clear"></div>
+
+                                <br>
+                                <p>
+                                    <input type="submit" class="woocommerce-Button button" name="save_account_details" value="@Resources.Save">
+                                </p>
+
+                            </form>
+
+                        </div>
+
+                    </div><!-- .entry-content -->
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->

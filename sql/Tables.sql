@@ -2,6 +2,8 @@ use Umamido
 go
 
 
+
+
 if object_id('UserLevel') is not null
 begin
   exec p_ak_drop_all_foreign_keys 'UserLevel'
@@ -44,6 +46,29 @@ exec p_ak_create_fk_indeces 'User'
 go
 
 insert into [User] (UserName, Password, UserLevelId, IsActive) values ('alex', '202cb962ac59075b964b07152d234b70', 1, 1)
+go
+
+if object_id('Client') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Client'
+  drop table Client
+end
+go
+
+create table Client
+( 
+  ClientId int not null identity(1,1)
+  , Name nvarchar(200) not null 
+  , Password nvarchar(64) not null
+  , Firstname nvarchar(200)
+  , Familyname nvarchar(200)
+  , eMail nvarchar(200)
+  , constraint pk_ClientId primary key(ClientId)   
+)
+go
+exec p_ak_create_fk_indeces 'Client'
+go
+insert into Client (Name, Password) values ('a','202cb962ac59075b964b07152d234b70')
 go
 
 if object_id('Lang') is not null
@@ -394,12 +419,14 @@ create table Req
 ( 
   ReqId int not null identity(1,1)
   , PaymentTypeId int not null 
+  , ClientId int not null
   , Receiver nvarchar(max) not null
   , Address nvarchar(max) not null
   , LatLong nvarchar(100) not null
   , Paid bit not null default 0 
   , constraint pk_ReqId primary key(ReqId)   
   , constraint fk_Req_PaymentTypeId foreign key (PaymentTypeId) references PaymentType(PaymentTypeId)  
+  , constraint fk_Req_ClientId foreign key (ClientId) references Client(ClientId)  
 )
 go
 exec p_ak_create_fk_indeces 'Req'
@@ -540,58 +567,40 @@ go
 
 
 
-if object_id('AddressCheck') is not null
-begin
-  exec p_ak_drop_all_foreign_keys 'AddressCheck'
-  drop table AddressCheck
-end
-go
+--if object_id('AddressCheck') is not null
+--begin
+--  exec p_ak_drop_all_foreign_keys 'AddressCheck'
+--  drop table AddressCheck
+--end
+--go
 
-create table AddressCheck
-( 
-  AddressCheckId int not null identity(1,1)
-  , Address nvarchar(200) not null 
-  , Km int not null
-  , constraint pk_AddressCheckId primary key(AddressCheckId)   
-)
-go
-exec p_ak_create_fk_indeces 'AddressCheck'
-go
+--create table AddressCheck
+--( 
+--  AddressCheckId int not null identity(1,1)
+--  , Address nvarchar(200) not null 
+--  , Km int not null
+--  , constraint pk_AddressCheckId primary key(AddressCheckId)   
+--)
+--go
+--exec p_ak_create_fk_indeces 'AddressCheck'
+--go
 
 
-if object_id('Client') is not null
-begin
-  exec p_ak_drop_all_foreign_keys 'Client'
-  drop table Client
-end
-go
 
-create table Client
-( 
-  ClientId int not null identity(1,1)
-  , Name nvarchar(200) not null 
-  , Password nvarchar(64) not null
-  , constraint pk_ClientId primary key(ClientId)   
-)
-go
-exec p_ak_create_fk_indeces 'Client'
-go
+--if object_id('DistantAddress') is not null
+--begin
+--  exec p_ak_drop_all_foreign_keys 'DistantAddress'
+--  drop table DistantAddress
+--end
+--go
 
---insert into Client (Name, Password) values ('a','202cb962ac59075b964b07152d234b70')
-if object_id('DistantAddress') is not null
-begin
-  exec p_ak_drop_all_foreign_keys 'DistantAddress'
-  drop table DistantAddress
-end
-go
-
-create table DistantAddress
-( 
-  DistantAddressId int not null identity(1,1)
-  , eMail nvarchar(200) 
-  , Address nvarchar(300)
-  , constraint pk_DistantAddressId primary key(DistantAddressId)   
-)
-go
-exec p_ak_create_fk_indeces 'DistantAddress'
-go
+--create table DistantAddress
+--( 
+--  DistantAddressId int not null identity(1,1)
+--  , eMail nvarchar(200) 
+--  , Address nvarchar(300)
+--  , constraint pk_DistantAddressId primary key(DistantAddressId)   
+--)
+--go
+--exec p_ak_create_fk_indeces 'DistantAddress'
+--go

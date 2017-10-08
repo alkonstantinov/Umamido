@@ -61,6 +61,9 @@
     <Compile Include="LoginModel.cs" />
     <Compile Include="MessageBrowseModel.cs" />
     <Compile Include="MessageModel.cs" />
+    <Compile Include="MyAccountProfileModel.cs" />
+    <Compile Include="MyProfileModel.cs" />
+    <Compile Include="OrderInfoModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LangRowModel.cs" />
     <Compile Include="GoodRowModel.cs" />

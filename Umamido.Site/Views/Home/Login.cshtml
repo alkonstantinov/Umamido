@@ -1,0 +1,50 @@
+﻿@model Umamido.Common.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Resources.Login</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+<div id="content" class="site-content">
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+                    <div class="entry-content">
+                        <div class="woocommerce">
+                            <form class="login" method="post" action="/home/login">
+                                <p class="form-row form-row-first">
+                                    <label for="username">@Resources.Username<span class="required">*</span></label>
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "input-text" })
+                                </p>
+                                <p class="form-row form-row-last" style="margin:30px 0;">
+                                    <label for="password">@Resources.Password<span class="required">*</span></label>
+                                    @Html.PasswordFor(m => m.Password, new { @class = "input-text" })
+                                </p>
+                                @if (Model.LoginFailure)
+                                {
+                                    <p class="form-row form-row-last" style="margin:30px 0;">
+                                        @Resources.InvalidUsernamePassword
+                                    </p>
+                                }
+                                <p>
+                                    <input type="submit" value="@Resources.Login">
+                                </p>
+                                <div class="clear"></div>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->

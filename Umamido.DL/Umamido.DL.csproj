@@ -166,6 +166,9 @@
     <Compile Include="UserLevel.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwReq.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DataModel.edmx">
@@ -199,6 +202,10 @@
     <ProjectReference Include="..\Umamido.Common\Umamido.Common.csproj">
       <Project>{d318689f-d6de-4d84-9d0c-8b4bcf326292}</Project>
       <Name>Umamido.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Umamido.Resources\Umamido.Resources.csproj">
+      <Project>{eebb85b8-d799-4df0-a174-1de089883c2b}</Project>
+      <Name>Umamido.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

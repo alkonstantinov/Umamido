@@ -5,26 +5,37 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="da8b383f5a5444759cd51e3b746a4db3" Name="Diagram1">
-        <EntityTypeShape EntityType="UmamidoModel.Good" Width="1.5" PointX="0.75" PointY="14.625" />
-        <EntityTypeShape EntityType="UmamidoModel.GoodDesc" Width="1.5" PointX="6" PointY="14.125" />
-        <EntityTypeShape EntityType="UmamidoModel.GoodTitle" Width="1.5" PointX="3" PointY="8.125" />
-        <EntityTypeShape EntityType="UmamidoModel.Image" Width="1.5" PointX="1.5" PointY="0.75" />
-        <EntityTypeShape EntityType="UmamidoModel.Lang" Width="1.5" PointX="0.75" PointY="10.75" />
-        <EntityTypeShape EntityType="UmamidoModel.PaymentType" Width="1.5" PointX="1.5" PointY="26.375" />
-        <EntityTypeShape EntityType="UmamidoModel.Req" Width="1.5" PointX="0.75" PointY="23" />
-        <EntityTypeShape EntityType="UmamidoModel.Req2Good" Width="1.5" PointX="3" PointY="17" />
-        <EntityTypeShape EntityType="UmamidoModel.Req2Status" Width="1.5" PointX="5.75" PointY="1.25" />
-        <EntityTypeShape EntityType="UmamidoModel.Restaurant" Width="1.5" PointX="0.75" PointY="4.625" />
-        <EntityTypeShape EntityType="UmamidoModel.RestaurantDesc" Width="1.5" PointX="3" PointY="5.125" />
-        <EntityTypeShape EntityType="UmamidoModel.RestaurantTitle" Width="1.5" PointX="3" PointY="14.125" />
-        <EntityTypeShape EntityType="UmamidoModel.Slider" Width="1.5" PointX="0.75" PointY="19.125" />
-        <EntityTypeShape EntityType="UmamidoModel.SliderDesc" Width="1.5" PointX="3" PointY="11.125" />
-        <EntityTypeShape EntityType="UmamidoModel.SliderTitle" Width="1.5" PointX="6" PointY="11.125" />
-        <EntityTypeShape EntityType="UmamidoModel.Status" Width="1.5" PointX="5.75" PointY="4.25" />
-        <EntityTypeShape EntityType="UmamidoModel.Text" Width="1.5" PointX="3.75" PointY="2.375" />
-        <EntityTypeShape EntityType="UmamidoModel.TextDesc" Width="1.5" PointX="6" PointY="8.125" />
-        <EntityTypeShape EntityType="UmamidoModel.User" Width="1.5" PointX="7.75" PointY="1.25" />
-        <EntityTypeShape EntityType="UmamidoModel.UserLevel" Width="1.5" PointX="7.75" PointY="4.25" />
+        <EntityTypeShape EntityType="UmamidoModel.AddressCheck" Width="1.5" PointX="7.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Blog" Width="1.5" PointX="0.75" PointY="19.625" />
+        <EntityTypeShape EntityType="UmamidoModel.BlogDesc" Width="1.5" PointX="3" PointY="12.75" />
+        <EntityTypeShape EntityType="UmamidoModel.BlogTitle" Width="1.5" PointX="6" PointY="15.75" />
+        <EntityTypeShape EntityType="UmamidoModel.DistantAddress" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Good" Width="1.5" PointX="3.75" PointY="1.25" />
+        <EntityTypeShape EntityType="UmamidoModel.GoodDesc" Width="1.5" PointX="3" PointY="18.75" />
+        <EntityTypeShape EntityType="UmamidoModel.GoodTitle" Width="1.5" PointX="6" PointY="12.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Image" Width="1.5" PointX="1.5" PointY="5.25" />
+        <EntityTypeShape EntityType="UmamidoModel.Lang" Width="1.5" PointX="0.75" PointY="15.25" />
+        <EntityTypeShape EntityType="UmamidoModel.Message" Width="1.5" PointX="9.75" PointY="6.75" />
+        <EntityTypeShape EntityType="UmamidoModel.PaymentType" Width="1.5" PointX="5.75" PointY="3.625" />
+        <EntityTypeShape EntityType="UmamidoModel.Req" Width="1.5" PointX="8" PointY="3" />
+        <EntityTypeShape EntityType="UmamidoModel.Req2Good" Width="1.5" PointX="10.25" PointY="2.375" />
+        <EntityTypeShape EntityType="UmamidoModel.Req2Status" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Restaurant" Width="1.5" PointX="1.5" PointY="0.75" />
+        <EntityTypeShape EntityType="UmamidoModel.RestaurantDesc" Width="1.5" PointX="9" PointY="15.75" />
+        <EntityTypeShape EntityType="UmamidoModel.RestaurantTitle" Width="1.5" PointX="6" PointY="18.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Slider" Width="1.5" PointX="0.75" PointY="9.625" />
+        <EntityTypeShape EntityType="UmamidoModel.SliderDesc" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="UmamidoModel.SliderTitle" Width="1.5" PointX="3" PointY="21.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Status" Width="1.5" PointX="8.75" PointY="12.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Text" Width="1.5" PointX="0.75" PointY="23.125" />
+        <EntityTypeShape EntityType="UmamidoModel.TextDesc" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="UmamidoModel.User" Width="1.5" PointX="10.75" PointY="12.75" />
+        <EntityTypeShape EntityType="UmamidoModel.UserLevel" Width="1.5" PointX="11.75" PointY="5.75" />
+        <AssociationConnector Association="UmamidoModel.fk_Blog_ImageId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_BlogId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_BlogId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_LangId" />
+        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_LangId" />
         <AssociationConnector Association="UmamidoModel.fk_Good_ImageId" />
         <AssociationConnector Association="UmamidoModel.fk_Good_RestaurantId" />
         <AssociationConnector Association="UmamidoModel.fk_GoodDesc_GoodId" />
@@ -48,18 +59,9 @@
         <AssociationConnector Association="UmamidoModel.fk_SliderDesc_SliderId" />
         <AssociationConnector Association="UmamidoModel.fk_SliderTitle_SliderId" />
         <AssociationConnector Association="UmamidoModel.fk_TextDesc_RestaurantId" />
-        <EntityTypeShape EntityType="UmamidoModel.Message" Width="1.5" PointX="8.375" PointY="6.75" />
-        <EntityTypeShape EntityType="UmamidoModel.Blog" Width="1.5" PointX="3.75" PointY="20.125" />
-        <EntityTypeShape EntityType="UmamidoModel.BlogDesc" Width="1.5" PointX="9" PointY="15.5" />
-        <EntityTypeShape EntityType="UmamidoModel.BlogTitle" Width="1.5" PointX="6" PointY="17.5" />
-        <AssociationConnector Association="UmamidoModel.fk_Blog_ImageId" />
-        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_BlogId" />
-        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_BlogId" />
-        <AssociationConnector Association="UmamidoModel.fk_BlogDesc_LangId" />
-        <AssociationConnector Association="UmamidoModel.fk_BlogTitle_LangId" />
-        <EntityTypeShape EntityType="UmamidoModel.AddressCheck" Width="1.5" PointX="8.375" PointY="9.75" />
-        <EntityTypeShape EntityType="UmamidoModel.Client" Width="1.5" PointX="10.375" PointY="0.75" />
-        <EntityTypeShape EntityType="UmamidoModel.DistantAddress" Width="1.5" PointX="10.375" PointY="3.75" />
+        <EntityTypeShape EntityType="UmamidoModel.vwReq" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Client" Width="1.5" PointX="12.375" PointY="9" />
+        <AssociationConnector Association="UmamidoModel.fk_Req_ClientId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -306,4 +306,79 @@
   <data name="PleaseSelectAddress" xml:space="preserve">
     <value>Моля, изберете един от посочените адреси.</value>
   </data>
+  <data name="Addresses" xml:space="preserve">
+    <value>Адреси</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Изход</value>
+  </data>
+  <data name="OrderAccepted" xml:space="preserve">
+    <value>Приета</value>
+  </data>
+  <data name="OrderCooked" xml:space="preserve">
+    <value>Приготвя се</value>
+  </data>
+  <data name="OrderDate" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="OrderDelivered" xml:space="preserve">
+    <value>Доставя се</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Номер</value>
+  </data>
+  <data name="OrderProducts" xml:space="preserve">
+    <value>Продукти</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>Статус</value>
+  </data>
+  <data name="OrderTotal" xml:space="preserve">
+    <value>Общо</value>
+  </data>
+  <data name="PreviousOrders" xml:space="preserve">
+    <value>Предишни поръчки</value>
+  </data>
+  <data name="ProfileEdit" xml:space="preserve">
+    <value>Редакция на профил</value>
+  </data>
+  <data name="YourOrders" xml:space="preserve">
+    <value>Вашите поръчки</value>
+  </data>
+  <data name="EnterEmail" xml:space="preserve">
+    <value>Моля, въведете коректен имейл</value>
+  </data>
+  <data name="EnterFamily" xml:space="preserve">
+    <value>Моля, въведете фамилия</value>
+  </data>
+  <data name="EnterName" xml:space="preserve">
+    <value>Моля, въведете име</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Моля въведете парола</value>
+  </data>
+  <data name="Family" xml:space="preserve">
+    <value>Фамилия</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="PasswordChange" xml:space="preserve">
+    <value>Промяна на парола</value>
+  </data>
+  <data name="PasswordDoNotMatch" xml:space="preserve">
+    <value>Въведените пароли не съвпадат</value>
+  </data>
+  <data name="PCCurrentPassword" xml:space="preserve">
+    <value>Текуща парола (оставете празно за да избегнете нежелана промяна)</value>
+  </data>
+  <data name="PCNewPassword" xml:space="preserve">
+    <value>Нова парола (оставете празно за да избегнете нежелана промяна)</value>
+  </data>
+  <data name="PCReNewPassword" xml:space="preserve">
+    <value>Потвърждение на новата парола</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Запис</value>
+  </data>
 </root>

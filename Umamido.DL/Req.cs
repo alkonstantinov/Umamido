@@ -22,6 +22,7 @@ namespace Umamido.DL
     
         public int ReqId { get; set; }
         public int PaymentTypeId { get; set; }
+        public int ClientId { get; set; }
         public string Receiver { get; set; }
         public string Address { get; set; }
         public string LatLong { get; set; }
@@ -30,5 +31,6 @@ namespace Umamido.DL
         public virtual PaymentType PaymentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Req2Good> Req2Good { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

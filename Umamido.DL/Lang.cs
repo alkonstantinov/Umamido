@@ -17,6 +17,8 @@ namespace Umamido.DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lang()
         {
+            this.BlogDesc = new HashSet<BlogDesc>();
+            this.BlogTitle = new HashSet<BlogTitle>();
             this.GoodDesc = new HashSet<GoodDesc>();
             this.GoodTitle = new HashSet<GoodTitle>();
             this.RestaurantDesc = new HashSet<RestaurantDesc>();
@@ -24,14 +26,16 @@ namespace Umamido.DL
             this.SliderDesc = new HashSet<SliderDesc>();
             this.SliderTitle = new HashSet<SliderTitle>();
             this.TextDesc = new HashSet<TextDesc>();
-            this.BlogDesc = new HashSet<BlogDesc>();
-            this.BlogTitle = new HashSet<BlogTitle>();
         }
     
         public int LangId { get; set; }
         public string LangName { get; set; }
         public bool IsActive { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogDesc> BlogDesc { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlogTitle> BlogTitle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodDesc> GoodDesc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -46,9 +50,5 @@ namespace Umamido.DL
         public virtual ICollection<SliderTitle> SliderTitle { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TextDesc> TextDesc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BlogDesc> BlogDesc { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BlogTitle> BlogTitle { get; set; }
     }
 }

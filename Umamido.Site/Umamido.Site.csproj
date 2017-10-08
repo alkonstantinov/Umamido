@@ -252,6 +252,9 @@
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Views\Home\GoodsPartial.cshtml" />
     <Content Include="Views\Home\Cart.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Home\MyAccountProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

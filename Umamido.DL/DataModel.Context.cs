@@ -27,11 +27,17 @@ namespace Umamido.DL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AddressCheck> AddressCheck { get; set; }
+        public virtual DbSet<Blog> Blog { get; set; }
+        public virtual DbSet<BlogDesc> BlogDesc { get; set; }
+        public virtual DbSet<BlogTitle> BlogTitle { get; set; }
+        public virtual DbSet<DistantAddress> DistantAddress { get; set; }
         public virtual DbSet<Good> Good { get; set; }
         public virtual DbSet<GoodDesc> GoodDesc { get; set; }
         public virtual DbSet<GoodTitle> GoodTitle { get; set; }
         public virtual DbSet<Image> Image { get; set; }
         public virtual DbSet<Lang> Lang { get; set; }
+        public virtual DbSet<Message> Message { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<Req> Req { get; set; }
         public virtual DbSet<Req2Good> Req2Good { get; set; }
@@ -47,13 +53,8 @@ namespace Umamido.DL
         public virtual DbSet<TextDesc> TextDesc { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
-        public virtual DbSet<Message> Message { get; set; }
-        public virtual DbSet<Blog> Blog { get; set; }
-        public virtual DbSet<BlogDesc> BlogDesc { get; set; }
-        public virtual DbSet<BlogTitle> BlogTitle { get; set; }
-        public virtual DbSet<AddressCheck> AddressCheck { get; set; }
+        public virtual DbSet<vwReq> vwReq { get; set; }
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<DistantAddress> DistantAddress { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

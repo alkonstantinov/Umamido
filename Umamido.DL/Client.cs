@@ -14,8 +14,20 @@ namespace Umamido.DL
     
     public partial class Client
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Client()
+        {
+            this.Req = new HashSet<Req>();
+        }
+    
         public int ClientId { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
+        public string Firstname { get; set; }
+        public string Familyname { get; set; }
+        public string eMail { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Req> Req { get; set; }
     }
 }
