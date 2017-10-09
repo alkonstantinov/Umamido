@@ -39,6 +39,9 @@ var Goods = (function (_super) {
         }
         var tbl = $("#tItems tbody");
         tbl.empty();
+        $("#ddlSimilar1").empty();
+        $("#ddlSimilar2").empty();
+        $("#ddlSimilar3").empty();
         for (var _i = 0, result_2 = result; _i < result_2.length; _i++) {
             var e = result_2[_i];
             var row = "<tr data='" + JSON.stringify(e) + "'>" +
@@ -49,6 +52,9 @@ var Goods = (function (_super) {
                 "<td><span class=\"glyphicon glyphicon-edit\" aria-hidden=\"true\" onclick=\"goods.EditGood(this)\"></span>" +
                 "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"goods.GoodChangeActive(this)\"></span></td></tr>";
             tbl.append(row);
+            $("#ddlSimilar1").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
+            $("#ddlSimilar2").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
+            $("#ddlSimilar3").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
         }
     };
     Goods.prototype.RedisplayLogo = function () {
@@ -74,6 +80,9 @@ var Goods = (function (_super) {
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             CookTime: $("#ddlCookTime").val(),
+            Similar1Id: $("#ddlSimilar1").val(),
+            Similar2Id: $("#ddlSimilar2").val(),
+            Similar3Id: $("#ddlSimilar3").val(),
             Titles: [],
             Descriptions: []
         };
@@ -138,6 +147,9 @@ var Goods = (function (_super) {
             $("#cbIsActive").prop("checked", obj.IsActive);
             $("#ddlLogo").val(obj.ImageId);
             $("#ddlCookTime").val(obj.CookTime);
+            $("#ddlSimilar1").val(obj.Similar1Id);
+            $("#ddlSimilar2").val(obj.Similar2Id);
+            $("#ddlSimilar3").val(obj.Similar3Id);
             this.currentId = obj.GoodId;
             for (var _b = 0, _c = obj.Titles; _b < _c.length; _b++) {
                 var lang = _c[_b];

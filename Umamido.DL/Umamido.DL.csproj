@@ -68,6 +68,9 @@
     <Compile Include="Client.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClientAddress.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CollectDetails_Result.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

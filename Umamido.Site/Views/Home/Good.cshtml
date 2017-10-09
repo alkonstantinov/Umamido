@@ -4,6 +4,8 @@
     ViewBag.Title = Model.FirstTitleNoHtml;
 }
 
+@Html.HiddenFor(m => m.CanOrder, new { @id = "hCanOrder" })
+@Html.HiddenFor(m => m.GoodId, new { @id = "hGoodId" })
 
 <div class="categories">
     <div class="container">
@@ -56,10 +58,10 @@
                                 </div>
                                 <form class="cart" method="post" enctype="multipart/form-data">
                                     <div class="quantity">
-                                        <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric">
+                                        <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="[0-9]*" inputmode="numeric" id="tbQuantity">
                                     </div>
                                     <input type="hidden" name="add-to-cart" value="586">
-                                    <button type="submit" class="single_add_to_cart_button button alt">@Umamido.Resources.Resources.Order</button>
+                                    <button type="button" class="single_add_to_cart_button button alt" onclick="Restaurant.OrderGood()">@Umamido.Resources.Resources.Order</button>
                                 </form>
 
                                 <div class="sharedaddy sd-sharing-enabled">
@@ -95,25 +97,9 @@
             <div class="related products">
                 <h2>@Umamido.Resources.Resources.SimilarProducts</h2>
                 <ul class="products">
-                    @foreach (var g in Model.SimilarGoods)
-                    {
-                        <li class="product type-product status-publish has-post-thumbnail product_cat-ceramic product_cat-kitchen first instock shipping-taxable purchasable product-type-simple">
-                            <div class="product-image">
-                                <a href="home/good?goodId=@g.GoodId" title="@g.FirstTitleNoHtml">
-                                    <img width="370" height="270" src="home/GetImage?imageid=@g.ImageId" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
-                                </a>
-                            </div>
-                            <div class="product-header">
-                                <h3 class="product-title">
-                                    <a class="shop-item-title-link" href="product.html" title="@g.FirstTitleNoHtml">@g.FirstTitleNoHtml</a>
-                                </h3>
-                                <div class="price">
-                                    <span class="woocommerce-Price-amount amount">@g.Price.ToString("#.00") <span class="woocommerce-Price-currencySymbol">лв.</span></span>
-                                </div>
-                                <div style="text-align:right;"><a href="#" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>
-                            </div>
-                        </li>
-                    }
+                    @Html.Action("SmallGoodPartial", new { goodId = Model.Similar1Id })
+                    @Html.Action("SmallGoodPartial", new { goodId = Model.Similar2Id })
+                    @Html.Action("SmallGoodPartial", new { goodId = Model.Similar3Id })
 
                 </ul>
             </div>
@@ -188,3 +174,4 @@
 
     </div>
 </div>
+<script src="~/js/pages/restaurant.js"></script>

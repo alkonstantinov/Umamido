@@ -31,6 +31,8 @@ namespace Umamido.DL
         public virtual DbSet<Blog> Blog { get; set; }
         public virtual DbSet<BlogDesc> BlogDesc { get; set; }
         public virtual DbSet<BlogTitle> BlogTitle { get; set; }
+        public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<ClientAddress> ClientAddress { get; set; }
         public virtual DbSet<DistantAddress> DistantAddress { get; set; }
         public virtual DbSet<Good> Good { get; set; }
         public virtual DbSet<GoodDesc> GoodDesc { get; set; }
@@ -54,7 +56,6 @@ namespace Umamido.DL
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
         public virtual DbSet<vwReq> vwReq { get; set; }
-        public virtual DbSet<Client> Client { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

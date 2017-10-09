@@ -28,9 +28,9 @@ namespace Umamido.DL
         public string LatLong { get; set; }
         public bool Paid { get; set; }
     
+        public virtual Client Client { get; set; }
         public virtual PaymentType PaymentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Req2Good> Req2Good { get; set; }
-        public virtual Client Client { get; set; }
     }
 }

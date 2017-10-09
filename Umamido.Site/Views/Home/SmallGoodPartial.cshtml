@@ -1,0 +1,18 @@
+﻿@model Umamido.Common.GoodPresentationModel
+
+<li class="product type-product status-publish has-post-thumbnail product_cat-ceramic product_cat-kitchen first instock shipping-taxable purchasable product-type-simple">
+    <div class="product-image">
+        <a href="/home/good?goodid=@Model.GoodId" title="@Model.FirstTitleNoHtml">
+            <img width="370" height="270" src="/home/getimage?imageid=@Model.ImageId" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+        </a>
+    </div>
+    <div class="product-header">
+        <h3 class="product-title">
+            <a class="shop-item-title-link" href="/home/good?goodid=@Model.GoodId" title="@Model.FirstTitleNoHtml">@Model.FirstTitleNoHtml</a>
+        </h3>
+        <div class="price">
+            <span class="woocommerce-Price-amount amount">@Model.Price<span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span>
+        </div>
+        @*<div style="text-align:right;"><a href="#" class="btn add-to-cart"><i class="fa fa-2x fa-cart-plus"></i></a></div>*@
+    </div>
+</li>

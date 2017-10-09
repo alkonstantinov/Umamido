@@ -17,6 +17,9 @@ namespace Umamido.DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Good()
         {
+            this.Good1 = new HashSet<Good>();
+            this.Good11 = new HashSet<Good>();
+            this.Good12 = new HashSet<Good>();
             this.GoodDesc = new HashSet<GoodDesc>();
             this.GoodTitle = new HashSet<GoodTitle>();
             this.Req2Good = new HashSet<Req2Good>();
@@ -28,9 +31,21 @@ namespace Umamido.DL
         public decimal Price { get; set; }
         public int CookMinutes { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<int> Similar1Id { get; set; }
+        public Nullable<int> Similar2Id { get; set; }
+        public Nullable<int> Similar3Id { get; set; }
     
         public virtual Image Image { get; set; }
         public virtual Restaurant Restaurant { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Good> Good1 { get; set; }
+        public virtual Good Good2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Good> Good11 { get; set; }
+        public virtual Good Good3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Good> Good12 { get; set; }
+        public virtual Good Good4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodDesc> GoodDesc { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -50,6 +50,25 @@
           <Property Name="Firstname" Type="nvarchar" MaxLength="200" />
           <Property Name="Familyname" Type="nvarchar" MaxLength="200" />
           <Property Name="eMail" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="200" />
+          <Property Name="EIK" Type="nvarchar" MaxLength="20" />
+          <Property Name="VAT" Type="nvarchar" MaxLength="30" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="200" />
+          <Property Name="CompanyAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="PK" Type="nvarchar" MaxLength="10" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ClientAddress">
+          <Key>
+            <PropertyRef Name="ClientAddressId" />
+          </Key>
+          <Property Name="ClientAddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressNum" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Faimly" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="DistantAddress">
           <Key>
@@ -69,6 +88,9 @@
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CookMinutes" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Similar1Id" Type="int" />
+          <Property Name="Similar2Id" Type="int" />
+          <Property Name="Similar3Id" Type="int" />
         </EntityType>
         <EntityType Name="GoodDesc">
           <Key>
@@ -326,6 +348,18 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ClientAddress_ClientId">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientAddress" Type="Self.ClientAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientAddress">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Good_ImageId">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
           <End Role="Good" Type="Self.Good" Multiplicity="*" />
@@ -347,6 +381,42 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Principal>
             <Dependent Role="Good">
               <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar1Id">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="Good1" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar2Id">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="Good1" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar2Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar3Id">
+          <End Role="Good" Type="Self.Good" Multiplicity="0..1" />
+          <End Role="Good1" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar3Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -635,6 +705,7 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySet Name="BlogDesc" EntityType="Self.BlogDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlogTitle" EntityType="Self.BlogTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientAddress" EntityType="Self.ClientAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistantAddress" EntityType="Self.DistantAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
@@ -685,6 +756,10 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             <End Role="Lang" EntitySet="Lang" />
             <End Role="BlogTitle" EntitySet="BlogTitle" />
           </AssociationSet>
+          <AssociationSet Name="fk_ClientAddress_ClientId" Association="Self.fk_ClientAddress_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientAddress" EntitySet="ClientAddress" />
+          </AssociationSet>
           <AssociationSet Name="fk_Good_ImageId" Association="Self.fk_Good_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Good" EntitySet="Good" />
@@ -692,6 +767,18 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <AssociationSet Name="fk_Good_RestaurantId" Association="Self.fk_Good_RestaurantId">
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar1Id" Association="Self.fk_Good_Similar1Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar2Id" Association="Self.fk_Good_Similar2Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar3Id" Association="Self.fk_Good_Similar3Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
           </AssociationSet>
           <AssociationSet Name="fk_GoodDesc_GoodId" Association="Self.fk_GoodDesc_GoodId">
             <End Role="Good" EntitySet="Good" />
@@ -806,6 +893,8 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySet Name="Blog" EntityType="UmamidoModel.Blog" />
           <EntitySet Name="BlogDesc" EntityType="UmamidoModel.BlogDesc" />
           <EntitySet Name="BlogTitle" EntityType="UmamidoModel.BlogTitle" />
+          <EntitySet Name="Client" EntityType="UmamidoModel.Client" />
+          <EntitySet Name="ClientAddress" EntityType="UmamidoModel.ClientAddress" />
           <EntitySet Name="DistantAddress" EntityType="UmamidoModel.DistantAddress" />
           <EntitySet Name="Good" EntityType="UmamidoModel.Good" />
           <EntitySet Name="GoodDesc" EntityType="UmamidoModel.GoodDesc" />
@@ -848,6 +937,14 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             <End Role="Lang" EntitySet="Lang" />
             <End Role="BlogTitle" EntitySet="BlogTitle" />
           </AssociationSet>
+          <AssociationSet Name="fk_ClientAddress_ClientId" Association="UmamidoModel.fk_ClientAddress_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientAddress" EntitySet="ClientAddress" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Req_ClientId" Association="UmamidoModel.fk_Req_ClientId">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Req" EntitySet="Req" />
+          </AssociationSet>
           <AssociationSet Name="fk_Good_ImageId" Association="UmamidoModel.fk_Good_ImageId">
             <End Role="Image" EntitySet="Image" />
             <End Role="Good" EntitySet="Good" />
@@ -855,6 +952,18 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <AssociationSet Name="fk_Good_RestaurantId" Association="UmamidoModel.fk_Good_RestaurantId">
             <End Role="Restaurant" EntitySet="Restaurant" />
             <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar1Id" Association="UmamidoModel.fk_Good_Similar1Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar2Id" Association="UmamidoModel.fk_Good_Similar2Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Good_Similar3Id" Association="UmamidoModel.fk_Good_Similar3Id">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Good1" EntitySet="Good" />
           </AssociationSet>
           <AssociationSet Name="fk_GoodDesc_GoodId" Association="UmamidoModel.fk_GoodDesc_GoodId">
             <End Role="Good" EntitySet="Good" />
@@ -941,11 +1050,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             <End Role="TextDesc" EntitySet="TextDesc" />
           </AssociationSet>
           <EntitySet Name="vwReq" EntityType="UmamidoModel.vwReq" />
-          <EntitySet Name="Client" EntityType="UmamidoModel.Client" />
-          <AssociationSet Name="fk_Req_ClientId" Association="UmamidoModel.fk_Req_ClientId">
-            <End Role="Client" EntitySet="Client" />
-            <End Role="Req" EntitySet="Req" />
-          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="CollectDetails_Result">
           <Property Type="Int32" Name="reqId" Nullable="false" />
@@ -1025,6 +1129,39 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <NavigationProperty Name="Blog" Relationship="UmamidoModel.fk_BlogTitle_BlogId" FromRole="BlogTitle" ToRole="Blog" />
           <NavigationProperty Name="Lang" Relationship="UmamidoModel.fk_BlogTitle_LangId" FromRole="BlogTitle" ToRole="Lang" />
         </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Familyname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="eMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="EIK" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="VAT" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="PersonName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PK" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientAddress" Relationship="UmamidoModel.fk_ClientAddress_ClientId" FromRole="Client" ToRole="ClientAddress" />
+          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Client" ToRole="Req" />
+        </EntityType>
+        <EntityType Name="ClientAddress">
+          <Key>
+            <PropertyRef Name="ClientAddressId" />
+          </Key>
+          <Property Name="ClientAddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressNum" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Faimly" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_ClientAddress_ClientId" FromRole="ClientAddress" ToRole="Client" />
+        </EntityType>
         <EntityType Name="DistantAddress">
           <Key>
             <PropertyRef Name="DistantAddressId" />
@@ -1043,8 +1180,17 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="CookMinutes" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Similar1Id" Type="Int32" />
+          <Property Name="Similar2Id" Type="Int32" />
+          <Property Name="Similar3Id" Type="Int32" />
           <NavigationProperty Name="Image" Relationship="UmamidoModel.fk_Good_ImageId" FromRole="Good" ToRole="Image" />
           <NavigationProperty Name="Restaurant" Relationship="UmamidoModel.fk_Good_RestaurantId" FromRole="Good" ToRole="Restaurant" />
+          <NavigationProperty Name="Good1" Relationship="UmamidoModel.fk_Good_Similar1Id" FromRole="Good" ToRole="Good1" />
+          <NavigationProperty Name="Good2" Relationship="UmamidoModel.fk_Good_Similar1Id" FromRole="Good1" ToRole="Good" />
+          <NavigationProperty Name="Good11" Relationship="UmamidoModel.fk_Good_Similar2Id" FromRole="Good" ToRole="Good1" />
+          <NavigationProperty Name="Good3" Relationship="UmamidoModel.fk_Good_Similar2Id" FromRole="Good1" ToRole="Good" />
+          <NavigationProperty Name="Good12" Relationship="UmamidoModel.fk_Good_Similar3Id" FromRole="Good" ToRole="Good1" />
+          <NavigationProperty Name="Good4" Relationship="UmamidoModel.fk_Good_Similar3Id" FromRole="Good1" ToRole="Good" />
           <NavigationProperty Name="GoodDesc" Relationship="UmamidoModel.fk_GoodDesc_GoodId" FromRole="Good" ToRole="GoodDesc" />
           <NavigationProperty Name="GoodTitle" Relationship="UmamidoModel.fk_GoodTitle_GoodId" FromRole="Good" ToRole="GoodTitle" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_GoodId" FromRole="Good" ToRole="Req2Good" />
@@ -1134,9 +1280,9 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LatLong" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Req" ToRole="Client" />
           <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
-          <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Req" ToRole="Client" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -1336,6 +1482,30 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_ClientAddress_ClientId">
+          <End Type="UmamidoModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="UmamidoModel.ClientAddress" Role="ClientAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientAddress">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Req_ClientId">
+          <End Type="UmamidoModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="Req">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Good_ImageId">
           <End Type="UmamidoModel.Image" Role="Image" Multiplicity="1" />
           <End Type="UmamidoModel.Good" Role="Good" Multiplicity="*" />
@@ -1357,6 +1527,42 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Principal>
             <Dependent Role="Good">
               <PropertyRef Name="RestaurantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar1Id">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="0..1" />
+          <End Type="UmamidoModel.Good" Role="Good1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar1Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar2Id">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="0..1" />
+          <End Type="UmamidoModel.Good" Role="Good1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar2Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Good_Similar3Id">
+          <End Type="UmamidoModel.Good" Role="Good" Multiplicity="0..1" />
+          <End Type="UmamidoModel.Good" Role="Good1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="GoodId" />
+            </Principal>
+            <Dependent Role="Good1">
+              <PropertyRef Name="Similar3Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1624,30 +1830,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="Client">
-          <Key>
-            <PropertyRef Name="ClientId" />
-          </Key>
-          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="Firstname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Familyname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="eMail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Client" ToRole="Req" />
-        </EntityType>
-        <Association Name="fk_Req_ClientId">
-          <End Type="UmamidoModel.Client" Role="Client" Multiplicity="1" />
-          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Client">
-              <PropertyRef Name="ClientId" />
-            </Principal>
-            <Dependent Role="Req">
-              <PropertyRef Name="ClientId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1749,6 +1931,38 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="UmamidoModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PK" ColumnName="PK" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="EIK" ColumnName="EIK" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="eMail" ColumnName="eMail" />
+                <ScalarProperty Name="Familyname" ColumnName="Familyname" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientAddress">
+            <EntityTypeMapping TypeName="UmamidoModel.ClientAddress">
+              <MappingFragment StoreEntitySet="ClientAddress">
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Faimly" ColumnName="Faimly" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="AddressNum" ColumnName="AddressNum" />
+                <ScalarProperty Name="ClientAddressId" ColumnName="ClientAddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="DistantAddress">
             <EntityTypeMapping TypeName="UmamidoModel.DistantAddress">
               <MappingFragment StoreEntitySet="DistantAddress">
@@ -1761,6 +1975,9 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySetMapping Name="Good">
             <EntityTypeMapping TypeName="UmamidoModel.Good">
               <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="Similar3Id" ColumnName="Similar3Id" />
+                <ScalarProperty Name="Similar2Id" ColumnName="Similar2Id" />
+                <ScalarProperty Name="Similar1Id" ColumnName="Similar1Id" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CookMinutes" ColumnName="CookMinutes" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -1979,18 +2196,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Client">
-            <EntityTypeMapping TypeName="UmamidoModel.Client">
-              <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="eMail" ColumnName="eMail" />
-                <ScalarProperty Name="Familyname" ColumnName="Familyname" />
-                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

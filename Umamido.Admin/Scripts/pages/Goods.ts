@@ -39,6 +39,11 @@ class Goods extends BasePage {
         }
         let tbl = $("#tItems tbody");
         tbl.empty();
+
+        $("#ddlSimilar1").empty();
+        $("#ddlSimilar2").empty();
+        $("#ddlSimilar3").empty();
+
         for (let e of result) {
             let row: String = "<tr data='" + JSON.stringify(e) + "'>" +
                 "<td>" + e.FirstTitle + "</td>" +
@@ -49,6 +54,10 @@ class Goods extends BasePage {
                 "<span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\" onclick=\"goods.GoodChangeActive(this)\"></span></td></tr>";
 
             tbl.append(row);
+            $("#ddlSimilar1").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
+            $("#ddlSimilar2").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
+            $("#ddlSimilar3").append("<option value='" + e.GoodId + "'>" + e.FirstTitle + "</option>");
+
         }
 
     }
@@ -80,6 +89,9 @@ class Goods extends BasePage {
             ImageId: $("#ddlLogo").val(),
             IsActive: $("#cbIsActive").prop("checked"),
             CookTime: $("#ddlCookTime").val(),
+            Similar1Id: $("#ddlSimilar1").val(),
+            Similar2Id: $("#ddlSimilar2").val(),
+            Similar3Id: $("#ddlSimilar3").val(),
             Titles: [],
             Descriptions: []
         };
@@ -157,7 +169,9 @@ class Goods extends BasePage {
             $("#cbIsActive").prop("checked", obj.IsActive);
             $("#ddlLogo").val(obj.ImageId);
             $("#ddlCookTime").val(obj.CookTime);
-            
+            $("#ddlSimilar1").val(obj.Similar1Id);
+            $("#ddlSimilar2").val(obj.Similar2Id);
+            $("#ddlSimilar3").val(obj.Similar3Id);
             this.currentId = obj.GoodId;
 
 

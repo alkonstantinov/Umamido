@@ -17,6 +17,7 @@ namespace Umamido.DL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
         {
+            this.ClientAddress = new HashSet<ClientAddress>();
             this.Req = new HashSet<Req>();
         }
     
@@ -26,7 +27,16 @@ namespace Umamido.DL
         public string Firstname { get; set; }
         public string Familyname { get; set; }
         public string eMail { get; set; }
+        public string CompanyName { get; set; }
+        public string EIK { get; set; }
+        public string VAT { get; set; }
+        public string PersonName { get; set; }
+        public string CompanyAddress { get; set; }
+        public string PK { get; set; }
+        public string Country { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ClientAddress> ClientAddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Req> Req { get; set; }
     }

@@ -55,6 +55,8 @@ begin
 end
 go
 
+
+
 create table Client
 ( 
   ClientId int not null identity(1,1)
@@ -63,6 +65,14 @@ create table Client
   , Firstname nvarchar(200)
   , Familyname nvarchar(200)
   , eMail nvarchar(200)
+  --inv
+  , CompanyName nvarchar(200)
+  , EIK nvarchar(20)
+  , VAT nvarchar(30)
+  , PersonName nvarchar(200)
+  , CompanyAddress nvarchar(200)
+  , PK nvarchar(10)
+  , Country nvarchar(100)
   , constraint pk_ClientId primary key(ClientId)   
 )
 go
@@ -196,10 +206,17 @@ create table Good
   , ImageId int not null
   , Price decimal (10,2) not null
   , CookMinutes int not null
+  , Similar1Id int 
+  , Similar2Id int 
+  , Similar3Id int 
   , IsActive bit not null default 1
   , constraint pk_GoodId primary key(GoodId)   
   , constraint fk_Good_RestaurantId foreign key (RestaurantId) references Restaurant(RestaurantId)
   , constraint fk_Good_ImageId foreign key (ImageId) references [Image](ImageId)
+  , constraint fk_Good_Similar1Id foreign key (Similar1Id) references Good(GoodId)
+  , constraint fk_Good_Similar2Id foreign key (Similar2Id) references Good(GoodId)
+  , constraint fk_Good_Similar3Id foreign key (Similar3Id) references Good(GoodId)
+
 
 )
 go
@@ -587,20 +604,46 @@ go
 
 
 
---if object_id('DistantAddress') is not null
---begin
---  exec p_ak_drop_all_foreign_keys 'DistantAddress'
---  drop table DistantAddress
---end
---go
+if object_id('DistantAddress') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'DistantAddress'
+  drop table DistantAddress
+end
+go
 
---create table DistantAddress
---( 
---  DistantAddressId int not null identity(1,1)
---  , eMail nvarchar(200) 
---  , Address nvarchar(300)
---  , constraint pk_DistantAddressId primary key(DistantAddressId)   
---)
---go
---exec p_ak_create_fk_indeces 'DistantAddress'
---go
+create table DistantAddress
+( 
+  DistantAddressId int not null identity(1,1)
+  , eMail nvarchar(200) 
+  , Address nvarchar(300)
+  , constraint pk_DistantAddressId primary key(DistantAddressId)   
+)
+go
+exec p_ak_create_fk_indeces 'DistantAddress'
+go
+
+
+if object_id('ClientAddress') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'ClientAddress'
+  drop table ClientAddress
+end
+go
+
+create table ClientAddress
+( 
+  ClientAddressId int not null identity(1,1)
+  , AddressNum int not null
+  , ClientId int not null
+  , FirstName nvarchar(200)
+  , Faimly nvarchar(200)
+  , Address nvarchar(200)
+  , Phone nvarchar(200)   
+  , constraint pk_ClientAddressId primary key(ClientAddressId)   
+  , constraint fk_ClientAddress_ClientId foreign key (ClientId) references Client(ClientId)
+  
+)
+go
+exec p_ak_create_fk_indeces 'ClientAddress'
+go
+

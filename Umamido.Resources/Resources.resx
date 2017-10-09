@@ -381,4 +381,37 @@
   <data name="Save" xml:space="preserve">
     <value>Запис</value>
   </data>
+  <data name="Address" xml:space="preserve">
+    <value>Адрес</value>
+  </data>
+  <data name="AddressNotFound" xml:space="preserve">
+    <value>Адресът не е открит</value>
+  </data>
+  <data name="AddressOutOfRange" xml:space="preserve">
+    <value>Адресът не може да бъде обслужен</value>
+  </data>
+  <data name="CompanyName" xml:space="preserve">
+    <value>Име на фирма</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Държава</value>
+  </data>
+  <data name="DeliveryAddress" xml:space="preserve">
+    <value>Адрес за доставка</value>
+  </data>
+  <data name="EIK" xml:space="preserve">
+    <value>ЕИК</value>
+  </data>
+  <data name="InvoiceAddress" xml:space="preserve">
+    <value>Адрес за фактуриране</value>
+  </data>
+  <data name="PK" xml:space="preserve">
+    <value>ПК</value>
+  </data>
+  <data name="PleaseEnterValue" xml:space="preserve">
+    <value>Моля, въведете задължителните стойности</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>ДДС Номер</value>
+  </data>
 </root>

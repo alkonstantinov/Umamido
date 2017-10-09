@@ -67,7 +67,7 @@ namespace Umamido.Site.Controllers
             return File(filedata, contentType);
         }
 
-        
+
 
         [HttpGet]
         public ActionResult Restaurant(int restaurantId)
@@ -94,6 +94,7 @@ namespace Umamido.Site.Controllers
         {
             var model = DL.GetGoodByLang(goodId, Lang);
             model.ClientId = this.ClientData.UserId;
+            model.CanOrder = this.ClientData.UserId.HasValue || (ClientData.GoodAddress1 != null && ClientData.GoodAddress2 != null);
             return View(model);
         }
 
@@ -187,16 +188,16 @@ namespace Umamido.Site.Controllers
 
 
         [HttpPost]
-        public ActionResult AddToCart(int goodId)
+        public ActionResult AddToCart(int goodId, int? quantity)
         {
             foreach (var item in this.ClientData.Goods)
                 if (item.GoodId == goodId)
                 {
-                    item.Quantity++;
+                    item.Quantity += quantity.HasValue ? quantity.Value : 1;
                     return Json("OK", JsonRequestBehavior.AllowGet);
                 }
 
-            ClientData.Goods.Add(new CartSessionModel() { GoodId = goodId, Quantity = 1 });
+            ClientData.Goods.Add(new CartSessionModel() { GoodId = goodId, Quantity = quantity.HasValue ? quantity.Value : 1 });
             return Json("OK", JsonRequestBehavior.AllowGet);
 
         }
@@ -207,7 +208,7 @@ namespace Umamido.Site.Controllers
             foreach (var item in this.ClientData.Goods)
                 if (item.GoodId == goodId)
                 {
-                    item.Quantity=quantity;
+                    item.Quantity = quantity;
                     return Json("OK", JsonRequestBehavior.AllowGet);
                 }
 
@@ -242,7 +243,7 @@ namespace Umamido.Site.Controllers
 
         public ActionResult Login()
         {
-            
+
             return View(new LoginModel());
         }
 
@@ -252,7 +253,7 @@ namespace Umamido.Site.Controllers
         {
             var result = DL.ClientLogin(model);
             if (result.HasValue)
-            { 
+            {
                 this.ClientData.UserId = result;
                 return RedirectToAction("MyProfile");
             }
@@ -265,6 +266,8 @@ namespace Umamido.Site.Controllers
 
         public ActionResult MyProfile()
         {
+            if (this.ClientData.UserId == null)
+                return RedirectToAction("Login");
 
             return View(DL.GetMyProfile(this.ClientData.UserId.Value, this.Lang));
         }
@@ -277,7 +280,9 @@ namespace Umamido.Site.Controllers
 
         public ActionResult MyAccountProfile()
         {
-            
+            if (this.ClientData.UserId == null)
+                return RedirectToAction("Login");
+
             return View(DL.GetAccountProfile(this.ClientData.UserId.Value));
         }
 
@@ -289,6 +294,103 @@ namespace Umamido.Site.Controllers
 
             return View(model);
         }
+
+
+        public ActionResult MyProfileAddress()
+        {
+            if (this.ClientData.UserId == null)
+                return RedirectToAction("Login");
+            return View(DL.GetInvoiceAddressModel(this.ClientData.UserId.Value));
+        }
+
+        [HttpPost]
+        public ActionResult SaveInvoiceAddress(InvoiceAddressModel model)
+        {
+            model.ClientId = this.ClientData.UserId.Value;
+
+            if (
+                string.IsNullOrEmpty(model.CompanyAddress) ||
+                string.IsNullOrEmpty(model.CompanyName) ||
+                string.IsNullOrEmpty(model.Country) ||
+                string.IsNullOrEmpty(model.EIK) ||
+                string.IsNullOrEmpty(model.PersonName) ||
+                string.IsNullOrEmpty(model.PK) ||
+                string.IsNullOrEmpty(model.VAT)
+                )
+            {
+                model.ErrorMessage = Resources.Resources.PleaseEnterValue;
+            }
+            else
+                DL.SetInvoiceAddressModel(model);
+
+
+
+            return View("MyProfileAddress", model);
+        }
+
+        public ActionResult GetProfileAddress(int addressNum)
+        {
+            AddressModel model = new AddressModel();
+            model.AddressNum = addressNum;
+            model.ClientId = this.ClientData.UserId.Value;
+            DL.GetProfileAddress(model);
+            return PartialView("AddressPartial", model);
+        }
+
+        public ActionResult SetProfileAddress(AddressModel model)
+        {
+            if (
+                string.IsNullOrEmpty(model.Address) ||
+                string.IsNullOrEmpty(model.Family) ||
+                string.IsNullOrEmpty(model.Name) ||
+                string.IsNullOrEmpty(model.Phone)
+                )
+                model.ErrorMessage = Resources.Resources.PleaseEnterValue;
+            else
+            {
+                GoogleSigned.AssignAllServices(new GoogleSigned(ConfigurationManager.AppSettings["GoogleMapsHash"]));
+
+                var request = new GeocodingRequest { Address = "София," + model.Address, Sensor = false };
+                var response = new GeocodingService().GetResponse(request);
+                if (response.Results.Count() == 0)
+                    model.ErrorMessage = Resources.Resources.AddressNotFound;
+                else
+                if (response.Results.Count() == 1)
+                {
+                    if (Tools.getDistanceFromLatLonInKm(double.Parse(ConfigurationManager.AppSettings["BaseLat"]), double.Parse(ConfigurationManager.AppSettings["BaseLong"]), response.Results[0].Geometry.Location.Latitude, response.Results[0].Geometry.Location.Longitude) < int.Parse(ConfigurationManager.AppSettings["DistanceOK"]))
+                    {
+                        model.ClientId = this.ClientData.UserId.Value;
+                        model.Address = response.Results[0].FormattedAddress;
+                        DL.StoreProfileAddress(model);
+                    }
+                    else
+                        model.ErrorMessage = Resources.Resources.AddressOutOfRange;
+                }
+                else
+                {
+                    List<string> result = new List<string>();
+                    foreach (var item in response.Results)
+                    {
+                        result.Add(item.FormattedAddress);
+                    }
+                    model.AddressVariants = result.ToArray();
+                }
+            }
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult QuitProfile()
+        {
+            this.ClientData.UserId = null;
+            return RedirectToAction("Order");
+        }
+
+        public ActionResult SmallGoodPartial(int goodId)
+        {
+            return PartialView(DL.GetGoodByLang(goodId, Lang));
+        }
+
 
     }
 }

@@ -28,6 +28,15 @@ namespace Umamido.Common
 
         public Int32 CookTime { get; set; }
 
+        public Int32 Similar1Id { get; set; }
+
+        public Int32 Similar2Id { get; set; }
+
+        public Int32 Similar3Id { get; set; }
+
+        
+
+
         public TranslatableItemModel[] Titles { get; set; }
 
         public TranslatableItemModel[] Descriptions { get; set; }

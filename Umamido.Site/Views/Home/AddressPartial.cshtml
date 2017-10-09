@@ -1,0 +1,51 @@
+﻿@model Umamido.Common.AddressModel
+
+
+@Html.HiddenFor(m => m.AddressNum)
+<h3>@Resources.DeliveryAddress</h3>
+
+<p class="form-row form-row form-row-first validate-required" id='dError_@Model.AddressNum' style="display:none">
+    @Model.ErrorMessage
+</p>
+
+
+
+
+<p class="form-row form-row form-row-first validate-required" id="shipping_first_name_field">
+    <label for="shipping_first_name" class="">@Resources.Name <abbr class="required" title="задължително">*</abbr></label>
+    @Html.TextBoxFor(m => m.Name, new { @class = "input-text", @id = "tbName" + Model.AddressNum.ToString() })
+</p>
+<p class="form-row form-row form-row-last validate-required" id="shipping_last_name_field">
+    <label for="shipping_last_name" class="">@Resources.Family <abbr class="required" title="задължително">*</abbr></label>
+    @Html.TextBoxFor(m => m.Family, new { @class = "input-text", @id = "tbFamily" + Model.AddressNum.ToString() })
+</p>
+<div class="clear"></div>
+
+<p class="form-row form-row form-row-wide address-field validate-required" id="shipping_address_1_field">
+    <label for="shipping_address_1" class="">@Resources.Address <abbr class="required" title="задължително">*</abbr></label>
+    @Html.TextBoxFor(m => m.Address, new { @class = "input-text", @id = "tbAddress" + Model.AddressNum.ToString() })
+</p>
+<p id="pSelectAddress_@Model.AddressNum" style="display:none">
+    @Resources.PleaseSelectAddress
+    <div id="dAddresses_@Model.AddressNum">
+
+    </div>
+</p>
+
+
+<p class="form-row form-row form-row-wide" id="shipping_company_field">
+    <label for="phone" class="">@Resources.Phone</label>
+    @Html.TextBoxFor(m => m.Phone, new { @class = "input-text", @id = "tbPhone" + Model.AddressNum.ToString() })
+</p>
+
+<div class="clear"></div>
+
+<br>
+<p>
+    <button type="button" class="button" onclick="Addresses.SaveAddress(@Model.AddressNum)">@Resources.Save</button>    
+</p>
+
+<script src="~/js/pages/addresses.js"></script>
+<script>
+
+</script>

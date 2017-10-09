@@ -15,9 +15,10 @@ var Restaurant = (function () {
             jQuery(".AddToCartNoLog").show();
         }
     };
-    Restaurant.AddToCart = function (goodId) {
+    Restaurant.AddToCart = function (goodId, quantity) {
         var data = {
-            goodId: goodId
+            goodId: goodId,
+            quantity: quantity
         };
         var result;
         jQuery.ajax({
@@ -117,7 +118,7 @@ var Restaurant = (function () {
             data: JSON.stringify(data),
             async: false,
             success: function (res) {
-                Restaurant.AddToCart(jQuery("#hGoodId").val());
+                Restaurant.AddToCart(jQuery("#hGoodId").val(), jQuery("#tbQuantity").val());
                 location.reload(true);
             },
             error: function (a, b, c) {
@@ -143,7 +144,7 @@ var Restaurant = (function () {
                     jQuery("#dInvalidLogin").show();
                 }
                 else {
-                    Restaurant.AddToCart(jQuery("#hGoodId").val());
+                    Restaurant.AddToCart(jQuery("#hGoodId").val(), jQuery("#tbQuantity").val());
                     location.reload(true);
                 }
             },
@@ -253,6 +254,14 @@ var Restaurant = (function () {
             error: function (a, b, c) {
             }
         });
+    };
+    Restaurant.OrderGood = function () {
+        if (jQuery("#hCanOrder").val() == "False") {
+            jQuery("#dlgOrder").modal("show");
+        }
+        else {
+            Restaurant.AddToCart(jQuery("#hGoodId").val(), jQuery("#tbQuantity").val());
+        }
     };
     return Restaurant;
 }());

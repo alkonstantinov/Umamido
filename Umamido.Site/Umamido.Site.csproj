@@ -255,6 +255,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\MyProfile.cshtml" />
     <Content Include="Views\Home\MyAccountProfile.cshtml" />
+    <Content Include="Views\Home\MyProfileAddress.cshtml" />
+    <Content Include="Views\Home\AddressPartial.cshtml" />
+    <Content Include="Views\Home\SmallGoodPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -282,6 +285,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="js\pages\addresses.ts" />
     <TypeScriptCompile Include="js\pages\map.ts" />
     <TypeScriptCompile Include="js\pages\restaurant.ts" />
   </ItemGroup>

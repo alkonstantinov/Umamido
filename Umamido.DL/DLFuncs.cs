@@ -431,6 +431,9 @@ namespace Umamido.DL
                 item.ImageId = r.ImageId;
                 item.CookTime = r.CookMinutes;
                 item.IsActive = r.IsActive;
+                item.Similar1Id = r.Similar1Id.HasValue ? r.Similar1Id.Value : 0;
+                item.Similar2Id = r.Similar2Id.HasValue ? r.Similar2Id.Value : 0;
+                item.Similar3Id = r.Similar3Id.HasValue ? r.Similar3Id.Value : 0;
                 List<TranslatableItemModel> titles = new List<TranslatableItemModel>();
                 List<TranslatableItemModel> descs = new List<TranslatableItemModel>();
                 foreach (var l in entities.Lang)
@@ -502,6 +505,10 @@ namespace Umamido.DL
             item.ImageId = r.ImageId;
             item.CookTime = r.CookMinutes;
             item.IsActive = r.IsActive;
+            item.Similar1Id = r.Similar1Id.Value;
+            item.Similar2Id = r.Similar2Id.Value;
+            item.Similar3Id = r.Similar3Id.Value;
+
             var gt = r.GoodTitle.FirstOrDefault(t => t.Lang.LangName == lang);
             if (gt != null)
                 item.FirstTitle = gt.Text;
@@ -533,7 +540,10 @@ namespace Umamido.DL
                     RestaurantId = model.RestaurantId,
                     IsActive = model.IsActive,
                     Price = model.Price,
-                    CookMinutes = model.CookTime
+                    CookMinutes = model.CookTime,
+                    Similar1Id = model.Similar1Id,
+                    Similar2Id = model.Similar2Id,
+                    Similar3Id = model.Similar3Id
                 };
                 entities.Good.Add(r);
                 entities.SaveChanges();
@@ -546,6 +556,9 @@ namespace Umamido.DL
                 r.IsActive = model.IsActive;
                 r.Price = model.Price;
                 r.CookMinutes = model.CookTime;
+                r.Similar1Id = model.Similar1Id;
+                r.Similar2Id = model.Similar2Id;
+                r.Similar3Id = model.Similar3Id;
                 entities.SaveChanges();
             }
             foreach (var tt in model.Titles)
@@ -1332,10 +1345,80 @@ namespace Umamido.DL
             c.Familyname = model.Family;
             c.eMail = model.EMail;
             if (model.Password != null)
-                c.Password = model.NewPassword;
+                c.Password = model.NewPasswordMd5;
             entities.SaveChanges();
 
         }
+
+
+        public InvoiceAddressModel GetInvoiceAddressModel(int clientId)
+        {
+            InvoiceAddressModel model = new InvoiceAddressModel();
+            var el = entities.Client.FirstOrDefault(c => c.ClientId == clientId);
+            model.CompanyAddress = el.CompanyAddress;
+            model.CompanyName = el.CompanyName;
+            model.Country = el.Country;
+            model.EIK = el.EIK;
+            model.PersonName = el.PersonName;
+            model.PK = el.PK;
+            model.VAT = el.VAT;
+
+            return model;
+
+
+        }
+
+        public void SetInvoiceAddressModel(InvoiceAddressModel model)
+        {
+
+            var el = entities.Client.FirstOrDefault(c => c.ClientId == model.ClientId);
+            el.CompanyAddress = model.CompanyAddress;
+            el.CompanyName = model.CompanyName;
+            el.Country = model.Country;
+            el.EIK = model.EIK;
+            el.PersonName = model.PersonName;
+            el.PK = model.PK;
+            el.VAT = model.VAT;
+            entities.SaveChanges();
+
+
+        }
+
+
+        public void GetProfileAddress(AddressModel model)
+        {
+            var el = entities.ClientAddress.FirstOrDefault(ca => ca.ClientId == model.ClientId && ca.AddressNum == model.AddressNum);
+            if (el == null)
+                return;
+            model.Address = el.Address;
+            model.Family = el.Faimly;
+            model.Name = el.FirstName;
+            model.Phone = el.Phone;
+
+        }
+
+        public void StoreProfileAddress(AddressModel model)
+        {
+            var el = entities.ClientAddress.FirstOrDefault(ca => ca.ClientId == model.ClientId && ca.AddressNum == model.AddressNum);
+            if (el != null)
+            {
+                entities.ClientAddress.Remove(el);
+                entities.SaveChanges();
+            }
+            entities.ClientAddress.Add(
+                new ClientAddress()
+                {
+                    Address = model.Address,
+                    AddressNum = model.AddressNum,
+                    ClientId = model.ClientId,
+                    Faimly = model.Family,
+                    FirstName = model.Name,
+                    Phone = model.Phone
+                }
+                );
+            entities.SaveChanges();
+        }
+
         #endregion
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Umamido.Common
 {
-    public class GoodPresentationModel:GoodRowModel
+    public class GoodPresentationModel : GoodRowModel
     {
         public int? ClientId { get; set; }
+
+        public Boolean CanOrder { get; set; }
 
         public int Count { get; set; }
 
