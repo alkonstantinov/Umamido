@@ -420,8 +420,8 @@ go
 exec p_ak_create_fk_indeces 'PaymentType'
 go
 
-insert into PaymentType (PaymentTypeId, PaymentTypeName) values (1, 'Credit card')
-insert into PaymentType (PaymentTypeId, PaymentTypeName) values (2, 'Cash on delivery')
+insert into PaymentType (PaymentTypeId, PaymentTypeName) values (2, 'Card on delivery')
+insert into PaymentType (PaymentTypeId, PaymentTypeName) values (1, 'Cash on delivery')
 go
 
 
@@ -432,15 +432,22 @@ begin
 end
 go
 
+
+--alter table req drop column LatLong
+--alter table req add LatLong nvarchar(100)
+
 create table Req
 ( 
   ReqId int not null identity(1,1)
+  , OnDate date not null default getdate()
   , PaymentTypeId int not null 
   , ClientId int not null
-  , Receiver nvarchar(max) not null
+  , Receiver nvarchar(max) 
   , Address nvarchar(max) not null
-  , LatLong nvarchar(100) not null
-  , Paid bit not null default 0 
+  , Address2 nvarchar(max)
+  , LatLong nvarchar(100)
+  , Invoice bit not null default 0 
+  , Note nvarchar(max)
   , constraint pk_ReqId primary key(ReqId)   
   , constraint fk_Req_PaymentTypeId foreign key (PaymentTypeId) references PaymentType(PaymentTypeId)  
   , constraint fk_Req_ClientId foreign key (ClientId) references Client(ClientId)  
@@ -630,6 +637,8 @@ begin
 end
 go
 
+
+
 create table ClientAddress
 ( 
   ClientAddressId int not null identity(1,1)
@@ -638,6 +647,7 @@ create table ClientAddress
   , FirstName nvarchar(200)
   , Faimly nvarchar(200)
   , Address nvarchar(200)
+  , Address2 nvarchar(200)
   , Phone nvarchar(200)   
   , constraint pk_ClientAddressId primary key(ClientAddressId)   
   , constraint fk_ClientAddress_ClientId foreign key (ClientId) references Client(ClientId)

@@ -21,6 +21,7 @@ namespace Umamido.DL
         public string Faimly { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
+        public string Address2 { get; set; }
     
         public virtual Client Client { get; set; }
     }

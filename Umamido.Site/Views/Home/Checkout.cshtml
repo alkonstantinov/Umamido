@@ -1,0 +1,222 @@
+﻿@model Umamido.Common.CheckOutModel
+
+@{
+    ViewBag.Title = "Checkout";
+}
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Resources.Order</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+
+                    <div class="entry-content">
+                        <div class="woocommerce">
+
+                            <form name="checkout" method="post" class="checkout woocommerce-checkout" action="/home/checkout" enctype="multipart/form-data" novalidate>
+                                <div class="col2-set" id="customer_details">
+                                    <div class="col-1">
+                                        <div class="woocommerce-billing-fields">
+                                            <h3>@Resources.DeliveryAddress</h3>
+                                            @if (Model.ErrorMessage != null)
+                                            {
+                                                <p>@Model.ErrorMessage</p>
+                                            }
+                                            <div class="woocommerce-billing-fields__field-wrapper">
+                                                @if (Model.ClientId.HasValue)
+                                                {
+                                                    <p class="form-row form-row-first validate-required woocommerce-invalid woocommerce-invalid-required-field" id="billing_first_name_field" data-priority="10" style="width:100% !important;">
+                                                        <label for="exist_address" class="">Избери съществуващ адрес: </label>
+                                                        <select name="AddressNum" id="exist_address">
+                                                            @for (int i = 0; i < Model.Addresses.Length; i++)
+                                                            {
+                                                                <option value="@(i + 1)">@Model.Addresses[i]</option>
+                                                            }
+                                                        </select>
+
+                                                    </p>
+                                                    <br>
+                                                }
+                                                else
+                                                {
+                                                    <p class="form-row form-row-first">
+                                                        <label for="username">@Resources.Username <span class="required">*</span></label>
+                                                        @Html.TextBoxFor(m => m.UserName, new { @class = "input-text" })
+                                                    </p>
+                                                    <p class="form-row form-row-last">
+                                                        <label for="password">@Resources.Password<span class="required">*</span></label>
+                                                        @Html.PasswordFor(m => m.Password, new { @class = "input-text" })
+                                                    </p>
+
+                                                    <p class="form-row form-row-first validate-required woocommerce-invalid woocommerce-invalid-required-field" id="billing_first_name_field" data-priority="10" style="width:100% !important;">
+                                                        <label for="billing_first_name" class="">@Resources.Name <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.FirstName, new { @class = "input-text" })
+                                                    </p>
+                                                    <p class="form-row form-row-last validate-required" id="billing_last_name_field" data-priority="20" style="width:100% !important;">
+                                                        <label for="billing_last_name" class="">@Resources.Family <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.Family, new { @class = "input-text" })
+                                                    </p>
+                                                    <p class="form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
+                                                        <label for="billing_address_1" class="">@Resources.Address <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.Address, new { @class = "input-text", @readonly = true })
+                                                    </p>
+                                                    <p class="form-row form-row-wide address-field validate-required" id="billing_address_1_field" data-priority="50">
+                                                        <label for="billing_address_2" class="">@Resources.Address <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.Address2, new { @class = "input-text" })
+                                                    </p>
+                                                    <p class="form-row form-row-first validate-required validate-phone" id="billing_phone_field" data-priority="100" style="width:100% !important;">
+                                                        <label for="billing_phone" class="">@Resources.Phone <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.Phone, new { @class = "input-text" })
+                                                    </p>
+                                                    <p class="form-row form-row-last validate-required validate-email" id="billing_email_field" data-priority="110" style="width:100% !important;">
+                                                        <label for="billing_email" class="">@Resources.Email <abbr class="required" title="required">*</abbr></label>
+                                                        @Html.TextBoxFor(m => m.EMail, new { @class = "input-text" })
+                                                    </p>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="woocommerce-account-fields" style="padding-left:20px;">
+                                            <p class="form-row form-row-wide create-account woocommerce-validated">
+                                                <label class="woocommerce-form__label woocommerce-form__label-for-checkbox checkbox">
+                                                    @Html.CheckBoxFor(m => m.Invoice, new { @class = "woocommerce-form__input woocommerce-form__input-checkbox input-checkbox", @onClick = "$('#invoice-data').toggle('show');" })
+                                                    @Resources.WantInvoice
+                                                </label>
+                                            </p>
+                                            <div id="invoice-data" style="display:none;">
+                                                <h5>@Resources.InvoiceData</h5>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company" class="">@Resources.CompanyName</label>
+                                                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company_eik" class="">@Resources.EIK</label>
+                                                    @Html.TextBoxFor(m => m.EIK, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_" class="">@Resources.VAT</label>
+                                                    @Html.TextBoxFor(m => m.VAT, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company_eik" class="">@Resources.Country</label>
+                                                    @Html.TextBoxFor(m => m.Country, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company_eik" class="">@Resources.Address</label>
+                                                    @Html.TextBoxFor(m => m.CompanyAddress, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company_eik" class="">@Resources.Name</label>
+                                                    @Html.TextBoxFor(m => m.PersonName, new { @class = "input-text" })
+                                                </p>
+                                                <p class="form-row form-row-wide" style="width:100% !important;">
+                                                    <label for="billing_company_eik" class="">@Resources.PK</label>
+                                                    @Html.TextBoxFor(m => m.PK, new { @class = "input-text" })
+                                                </p>
+                                                
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="woocommerce-shipping-fields"></div>
+                                        <div class="woocommerce-additional-fields">
+                                            <div class="woocommerce-additional-fields__field-wrapper">
+                                                <p class="form-row notes" id="order_comments_field" data-priority="">
+                                                    <label for="order_comments" class="">@Resources.Notes</label>
+                                                    @Html.TextAreaFor(m => m.Note, new { @class = "input-text" })
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 id="order_review_heading">@Resources.Order</h3>
+                                <div id="order_review" class="woocommerce-checkout-review-order">
+                                    <table class="shop_table woocommerce-checkout-review-order-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="product-name">@Resources.Good</th>
+                                                <th class="product-total">@Resources.Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.CartItems)
+                                            {
+                                                <tr class="cart_item">
+                                                    <td class="product-name">
+                                                        @item.FirstTitleNoHtml &nbsp; <strong class="product-quantity">× @item.Count</strong>
+                                                    </td>
+                                                    <td class="product-total">
+                                                        <span class="woocommerce-Price-amount amount">@(item.Count * item.Price) @Resources.LV</span>
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+
+                                        <tfoot>
+                                            <tr class="cart-subtotal">
+                                                <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.ProductsTotal</th>
+                                                <td>
+                                                    <span class="woocommerce-Price-amount amount">
+                                                        <span class="woocommerce-Price-amount amount">@Model.ProductsTotal.ToString("#.00") @Resources.LV</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="cart-subtotal">
+                                                <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.Delivery</th>
+                                                <td>
+                                                    <span class="woocommerce-Price-amount amount">
+                                                        <span class="woocommerce-Price-amount amount">@Model.DeliveryTotal.ToString("#.00") @Resources.LV</span>
+                                                </td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.Total</th>
+                                                <td>
+                                                    <strong><span class="woocommerce-Price-amount amount">@Model.TotalTotal.ToString("#.00") @Resources.LV</span></strong>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+
+
+                                    <div id="payment" class="woocommerce-checkout-payment">
+                                        <ul class="wc_payment_methods payment_methods methods" style="margin:0;">
+                                            <li class="wc_payment_method payment_method_cod">
+                                                <input id="payment_method_cod" type="radio" class="input-radio" name="PaymentTypeId" value="1" checked='checked' data-order_button_text="" style="margin-right: 7px;" />
+                                                <label for="payment_method_cod" style="display:inline;">@Resources.PayCache</label>
+                                            </li>
+                                            <li class="wc_payment_method payment_method_other_payment">
+                                                <input id="payment_method_other_payment" type="radio" class="input-radio" name="PaymentTypeId" value="2" data-order_button_text="" style="margin-right: 7px;" />
+                                                <label for="payment_method_other_payment" style="display:inline;">@Resources.PayCard</label>
+                                            </li>
+                                        </ul>
+                                        <div class="form-row place-order">
+                                            <p class="form-row terms wc-terms-and-conditions" style="margin-bottom:30px;">
+                                                <input type="checkbox" class="input-checkbox" name="terms" id="cbterms" style="margin-right:7px; width:auto;" />
+                                                <label for="cbterms" class="checkbox" style="display:inline;">@Resources.ReadAndAgreeWith <a href="terms.html" target="_blank">@Resources.TermsOfUse</a> <span class="required">*</span></label>
+                                            </p>
+                                            <input type="submit" class="button alt" name="woocommerce_checkout_place_order" id="place_order" value="@Resources.Order" data-value="Поръчване" onclick="if ($('#cbterms').prop('checked')) return true; alert('@Resources.AcceptTerms'); return false;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->

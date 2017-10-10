@@ -23,10 +23,13 @@ namespace Umamido.DL
         public int ReqId { get; set; }
         public int PaymentTypeId { get; set; }
         public int ClientId { get; set; }
-        public string Receiver { get; set; }
         public string Address { get; set; }
+        public bool Invoice { get; set; }
+        public string Address2 { get; set; }
+        public string Note { get; set; }
+        public System.DateTime OnDate { get; set; }
+        public string Receiver { get; set; }
         public string LatLong { get; set; }
-        public bool Paid { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual PaymentType PaymentType { get; set; }

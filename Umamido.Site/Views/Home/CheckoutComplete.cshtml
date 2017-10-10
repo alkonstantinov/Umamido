@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "CheckoutComplete";
+}
+
+<div id="hero">
+    <div class="hero-content">
+        <div class="container">
+            <h1 class="hero-title">@Resources.SuccessfulOrder</h1>
+        </div>
+    </div><!-- .hero-content -->
+    <div class="hero-image" style="background: url(images/contacts_hero.jpg); background-size: cover; background-position: center center;"></div>
+</div><!-- #hero -->
+
+
+
+
+<div id="content" class="site-content">
+
+    <div id="container">
+        <section class="rest-descr" style="padding-top:10px; padding-bottom:10px;">
+            <div class="container">
+                <article class="hentry" style="background:#fff; padding:30px 0;">
+                    <div class="entry-content">
+
+                        <h2>@Resources.ThankYou</h2>
+                        <p>@Html.Raw(Resources.SuccessfulOrderText).</p>
+
+                    </div><!-- .entry-content -->
+                </article>
+            </div>
+        </section>
+    </div>
+
+</div><!-- #content -->
+
+

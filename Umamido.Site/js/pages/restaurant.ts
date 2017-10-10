@@ -3,6 +3,11 @@ declare var template: string;
 declare var restaurant: Restaurant;
 
 class Restaurant {
+    public static GoToCheckout() {
+        if (jQuery("#lFinalTotal").text() != jQuery("#lDeliveryPrice").text())
+            document.location.href = "/home/checkout";
+    }
+
     public static CallRegister(goodId) {
         jQuery("#hGoodId").val(goodId);
         jQuery("#dlgOrder").modal("show");
@@ -311,13 +316,11 @@ class Restaurant {
         });
     }
 
-    public static OrderGood()
-    {
+    public static OrderGood() {
         if (jQuery("#hCanOrder").val() == "False") {
             jQuery("#dlgOrder").modal("show");
         }
-        else
-        {
+        else {
             Restaurant.AddToCart(jQuery("#hGoodId").val(), jQuery("#tbQuantity").val())
         }
 

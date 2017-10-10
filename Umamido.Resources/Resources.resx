@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutUs" xml:space="preserve">
-    <value>За нас</value>
-  </data>
   <data name="Blog" xml:space="preserve">
     <value>Блог</value>
   </data>
@@ -413,5 +410,44 @@
   </data>
   <data name="VAT" xml:space="preserve">
     <value>ДДС Номер</value>
+  </data>
+  <data name="AboutUs" xml:space="preserve">
+    <value>За нас</value>
+  </data>
+  <data name="UsernameExists" xml:space="preserve">
+    <value>Потребителското име вече е използвано</value>
+  </data>
+  <data name="InvoiceData" xml:space="preserve">
+    <value>Данни за фактура</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Допълнителни бележки</value>
+  </data>
+  <data name="WantInvoice" xml:space="preserve">
+    <value>Желая да ми бъде издадена фактура</value>
+  </data>
+  <data name="PayCache" xml:space="preserve">
+    <value>Плащане при доставка с наложен платеж (в брой)</value>
+  </data>
+  <data name="PayCard" xml:space="preserve">
+    <value>Плащане при доставка с наложен платеж (с карта)</value>
+  </data>
+  <data name="ReadAndAgreeWith" xml:space="preserve">
+    <value>Прочетох и се съгласявам с</value>
+  </data>
+  <data name="TermsOfUse" xml:space="preserve">
+    <value>условията за ползване</value>
+  </data>
+  <data name="SuccessfulOrder" xml:space="preserve">
+    <value>УСПЕШНА ПОРЪЧКА</value>
+  </data>
+  <data name="SuccessfulOrderText" xml:space="preserve">
+    <value>Вашата поръчка е приета. Информация за нея е изпратена на вашия email адрес. Можете да следите статуса ѝ във &lt;a href="/home/Login"&gt;Вашия профил&lt;/a&gt;</value>
+  </data>
+  <data name="ThankYou" xml:space="preserve">
+    <value>Благодарим ви!</value>
+  </data>
+  <data name="AcceptTerms" xml:space="preserve">
+    <value>Моля, Приемете общите условия</value>
   </data>
 </root>

@@ -1420,5 +1420,102 @@ namespace Umamido.DL
         }
 
         #endregion
+
+        #region Checkout
+        public void CreateReq(CheckOutModel model)
+        {
+            var ca = entities.ClientAddress.First(c => c.AddressNum == model.AddressNum && c.ClientId == model.ClientId.Value);
+            var req = new Req()
+            {
+                Address = ca.Address,
+                ClientId = model.ClientId.Value,
+                Invoice = model.Invoice,
+                Note = model.Note,
+                Address2 = model.Address2,
+                OnDate = DateTime.Now,
+                PaymentTypeId = model.PaymentTypeId,
+                Receiver = ca.FirstName + " " + ca.Faimly
+
+            };
+            entities.Req.Add(req);
+            entities.SaveChanges();
+            foreach (var item in model.CartItems)
+            {
+                entities.Req2Good.Add(
+                    new Req2Good()
+                    {
+                        GoodId = item.GoodId,
+                        Price = entities.Good.First(g => g.GoodId == item.GoodId).Price,
+                        Quantity = item.Count,
+                        ReqId = req.ReqId
+                    }
+                    );
+            }
+
+            entities.Req2Status.Add(
+                new Req2Status()
+                {
+                    ReqId = req.ReqId,
+                    OnDate = DateTime.Now,
+                    StatusId = 1
+                }
+                );
+
+            entities.SaveChanges();
+        }
+
+        public bool ClientNameExists(string clientName)
+        {
+            return entities.Client.Any(c => c.Name == clientName);
+        }
+
+        public int CreateClient(CheckOutModel model)
+        {
+            Client c = new Client();
+            c.CompanyAddress = model.CompanyAddress;
+            c.CompanyName = model.CompanyName;
+            c.Country = model.Country;
+            c.EIK = model.EIK;
+            c.PersonName = model.PersonName;
+            c.PK = model.PK;
+            c.VAT = model.VAT;
+            c.Name = model.UserName;
+            c.Password = model.PasswordMd5;
+
+
+            c.eMail = model.EMail;
+            c.Familyname = model.Family;
+            c.Firstname = model.FirstName;
+            entities.Client.Add(c);
+            entities.SaveChanges();
+
+            ClientAddress cla = new ClientAddress();
+            cla.Address = model.Address;
+            cla.Address2 = model.Address2;
+            cla.AddressNum = 1;
+            cla.ClientId = c.ClientId;
+            cla.Faimly = model.Family;
+            cla.FirstName = model.FirstName;
+            cla.Phone = model.Phone;
+            entities.ClientAddress.Add(cla);
+            entities.SaveChanges();
+
+
+            return c.ClientId;
+
+        }
+
+        public string[] GetAddresses (int clientId)
+        {
+            List<string> lAddresses = new List<string>();
+            foreach (var addr in entities.ClientAddress.Where(c => c.ClientId == clientId).OrderBy(a=>a.AddressNum))
+            {
+                lAddresses.Add(addr.Address);
+            }
+            return lAddresses.ToArray();
+        }
+
+
+        #endregion
     }
 }

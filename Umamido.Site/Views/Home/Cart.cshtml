@@ -39,7 +39,7 @@
                                     {
                                         <tr class="woocommerce-cart-form__cart-item cart_item">
                                             <td class="product-remove">
-                                                <input type="hidden" class="__Id" value="@item.GoodId"/>
+                                                <input type="hidden" class="__Id" value="@item.GoodId" />
                                                 <a class="remove" aria-label="Remove this item" data-product_id="584" data-product_sku="" onclick="Restaurant.DeleteFromCart(this)">×</a>
                                             </td>
                                             <td class="product-thumbnail">
@@ -49,16 +49,16 @@
                                                 <a href="#">@item.FirstTitleNoHtml</a>
                                             </td>
                                             <td class="product-price" data-title="Цена" style="text-align:left">
-                                                <span class="woocommerce-Price-amount amount"><label class="__Price" >@item.Price</label> лв.</span>
+                                                <span class="woocommerce-Price-amount amount"><label class="__Price">@item.Price</label> лв.</span>
                                             </td>
                                             <td class="product-quantity" data-title="Количество" style="text-align:left">
                                                 <div class="quantity">
-                                                    <input type="hidden" class="__Id" value="@item.GoodId"/>
+                                                    <input type="hidden" class="__Id" value="@item.GoodId" />
                                                     <input type="number" class="input-text qty text __Count" step="1" min="1" max="" name="cart[1][qty]" value="@item.Count" title="Qty" size="4" pattern="[0-9]*" inputmode="numeric" onchange="Restaurant.ChangeCartQuantity(this);">
                                                 </div>
                                             </td>
                                             <td class="product-subtotal" data-title="Общо" style="text-align:left">
-                                                <span class="woocommerce-Price-amount amount"><label class="__Total"/> </span> лв.
+                                                <span class="woocommerce-Price-amount amount"><label class="__Total" /> </span> лв.
                                             </td>
                                         </tr>
                                         <tr>
@@ -77,7 +77,7 @@
                                             <th style="border-top: 1px solid rgba(0,0,0,0.1);">@Resources.ProductsTotal</th>
                                             <td data-title="Междинна сума">
                                                 <span class="woocommerce-Price-amount amount">
-                                                    <span class="woocommerce-Price-amount amount" ><label id="sTotalGoods"></label> <span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span>
+                                                    <span class="woocommerce-Price-amount amount"><label id="sTotalGoods"></label> <span class="woocommerce-Price-currencySymbol">@Resources.LV</span></span>
                                             </td>
                                         </tr>
                                         <tr class="cart-subtotal">
@@ -97,7 +97,7 @@
                                 </table>
 
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="checkout.html" class="checkout-button button alt wc-forward">@Resources.ContinueOrder</a>
+                                    <a  class="checkout-button button alt wc-forward" onclick="Restaurant.GoToCheckout()">@Resources.ContinueOrder</a>
                                 </div>
                             </div>
                         </div>

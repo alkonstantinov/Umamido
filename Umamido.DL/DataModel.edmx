@@ -69,6 +69,7 @@
           <Property Name="Faimly" Type="nvarchar" MaxLength="200" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
           <Property Name="Phone" Type="nvarchar" MaxLength="200" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="DistantAddress">
           <Key>
@@ -153,10 +154,13 @@
           <Property Name="ReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PaymentTypeId" Type="int" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
-          <Property Name="Receiver" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="LatLong" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Paid" Type="bit" Nullable="false" />
+          <Property Name="Invoice" Type="bit" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar(max)" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="OnDate" Type="date" Nullable="false" />
+          <Property Name="Receiver" Type="nvarchar(max)" />
+          <Property Name="LatLong" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -1160,6 +1164,7 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="Faimly" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_ClientAddress_ClientId" FromRole="ClientAddress" ToRole="Client" />
         </EntityType>
         <EntityType Name="DistantAddress">
@@ -1276,10 +1281,13 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="ReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PaymentTypeId" Type="Int32" Nullable="false" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
-          <Property Name="Receiver" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LatLong" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <Property Name="Invoice" Type="Boolean" Nullable="false" />
+          <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OnDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Receiver" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LatLong" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Req" ToRole="Client" />
           <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
@@ -1953,6 +1961,7 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySetMapping Name="ClientAddress">
             <EntityTypeMapping TypeName="UmamidoModel.ClientAddress">
               <MappingFragment StoreEntitySet="ClientAddress">
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Faimly" ColumnName="Faimly" />
@@ -2050,10 +2059,13 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySetMapping Name="Req">
             <EntityTypeMapping TypeName="UmamidoModel.Req">
               <MappingFragment StoreEntitySet="Req">
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
                 <ScalarProperty Name="LatLong" ColumnName="LatLong" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="PaymentTypeId" ColumnName="PaymentTypeId" />
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />

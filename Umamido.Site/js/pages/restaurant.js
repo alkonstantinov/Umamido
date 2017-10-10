@@ -1,6 +1,10 @@
 var Restaurant = (function () {
     function Restaurant() {
     }
+    Restaurant.GoToCheckout = function () {
+        if (jQuery("#lFinalTotal").text() != jQuery("#lDeliveryPrice").text())
+            document.location.href = "/home/checkout";
+    };
     Restaurant.CallRegister = function (goodId) {
         jQuery("#hGoodId").val(goodId);
         jQuery("#dlgOrder").modal("show");

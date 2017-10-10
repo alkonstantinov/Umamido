@@ -46,6 +46,7 @@
     <Compile Include="AddressCheckModel.cs" />
     <Compile Include="AddressModel.cs" />
     <Compile Include="CartSessionModel.cs" />
+    <Compile Include="CheckOutModel.cs" />
     <Compile Include="ClientData.cs" />
     <Compile Include="DispatchModel.cs" />
     <Compile Include="DistantAddressModel.cs" />

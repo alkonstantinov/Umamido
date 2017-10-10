@@ -16,6 +16,9 @@ namespace Umamido.Common
         public String CompanyAddress { get; set; }
         public String Country{ get; set; }
         public String PK { get; set; }
+        public String Email { get; set; }
+        public String Phone { get; set; }
+
         public String ErrorMessage { get; set; }
 
 

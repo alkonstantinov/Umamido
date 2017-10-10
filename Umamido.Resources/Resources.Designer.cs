@@ -70,6 +70,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Моля, Приемете общите условия.
+        /// </summary>
+        public static string AcceptTerms {
+            get {
+                return ResourceManager.GetString("AcceptTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Адрес.
         /// </summary>
         public static string Address {
@@ -439,6 +448,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Данни за фактура.
+        /// </summary>
+        public static string InvoiceData {
+            get {
+                return ResourceManager.GetString("InvoiceData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Последно от блога.
         /// </summary>
         public static string LastBlogPosts {
@@ -507,6 +525,15 @@ namespace Umamido.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Допълнителни бележки.
+        /// </summary>
+        public static string Notes {
+            get {
+                return ResourceManager.GetString("Notes", resourceCulture);
             }
         }
         
@@ -637,6 +664,24 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Плащане при доставка с наложен платеж (в брой).
+        /// </summary>
+        public static string PayCache {
+            get {
+                return ResourceManager.GetString("PayCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Плащане при доставка с наложен платеж (с карта).
+        /// </summary>
+        public static string PayCard {
+            get {
+                return ResourceManager.GetString("PayCard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Плати с карта или кеш.
         /// </summary>
         public static string PayWithCardOrCache {
@@ -763,6 +808,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Прочетох и се съгласявам с.
+        /// </summary>
+        public static string ReadAndAgreeWith {
+            get {
+                return ResourceManager.GetString("ReadAndAgreeWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ресторанти.
         /// </summary>
         public static string Restaurants {
@@ -862,11 +916,47 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to УСПЕШНА ПОРЪЧКА.
+        /// </summary>
+        public static string SuccessfulOrder {
+            get {
+                return ResourceManager.GetString("SuccessfulOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Вашата поръчка е приета. Информация за нея е изпратена на вашия email адрес. Можете да следите статуса ѝ във &lt;a href=&quot;/home/Login&quot;&gt;Вашия профил&lt;/a&gt;.
+        /// </summary>
+        public static string SuccessfulOrderText {
+            get {
+                return ResourceManager.GetString("SuccessfulOrderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ОБЩИ УСЛОВИЯ.
         /// </summary>
         public static string Terms {
             get {
                 return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to условията за ползване.
+        /// </summary>
+        public static string TermsOfUse {
+            get {
+                return ResourceManager.GetString("TermsOfUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Благодарим ви!.
+        /// </summary>
+        public static string ThankYou {
+            get {
+                return ResourceManager.GetString("ThankYou", resourceCulture);
             }
         }
         
@@ -889,6 +979,15 @@ namespace Umamido.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Потребителското име вече е използвано.
+        /// </summary>
+        public static string UsernameExists {
+            get {
+                return ResourceManager.GetString("UsernameExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ДДС Номер.
         /// </summary>
         public static string VAT {
@@ -903,6 +1002,15 @@ namespace Umamido.Resources {
         public static string WaitMinutes {
             get {
                 return ResourceManager.GetString("WaitMinutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Желая да ми бъде издадена фактура.
+        /// </summary>
+        public static string WantInvoice {
+            get {
+                return ResourceManager.GetString("WantInvoice", resourceCulture);
             }
         }
         

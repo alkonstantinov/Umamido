@@ -258,6 +258,8 @@
     <Content Include="Views\Home\MyProfileAddress.cshtml" />
     <Content Include="Views\Home\AddressPartial.cshtml" />
     <Content Include="Views\Home\SmallGoodPartial.cshtml" />
+    <Content Include="Views\Home\Checkout.cshtml" />
+    <Content Include="Views\Home\CheckoutComplete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

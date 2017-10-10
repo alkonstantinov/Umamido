@@ -441,7 +441,6 @@ h6 {
 
 button,
 .btn,
-.umamidobtn,
 input[type="button"],
 input[type="reset"],
 input[type="submit"],
@@ -965,17 +964,16 @@ table {
 --------------------------------------------------------------*/
 
 button,
-.umamidobtn,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
-    padding: 0 80px;
-    border: 1px solid #363639;
-    border-radius: 0;
-    background-color: #363639;
-    line-height: 1;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+	padding: 0 80px;
+	border: 1px solid #363639;
+	border-radius: 0;
+	background-color: #363639;
+	line-height: 1;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
 }
 
 button:hover,
@@ -6165,6 +6163,11 @@ input[type="submit"],
 	list-style:none;
 }
 
+ul.products li.product {
+    float: left;
+    position: relative;
+}
+
 #payment li {
 	list-style:none;
 }
@@ -6200,6 +6203,34 @@ input[type="submit"],
 }
 
 .umamidobtn {
+	padding: 0 80px !important;
+	border: 1px solid #363639 !important;
+	border-radius: 0 !important;
+	background-color: #363639 !important;
+	line-height: 1 !important;
+	letter-spacing: 0.1em !important;
+	text-transform: uppercase !important;
+	color:#fff !important;
+	width:100% !important;
+}
+
+
+.menu-shopping-cart {
+    display: inline-block !important;
+    width: 48px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+    height: 48px !important;
+    padding: 13px 15px 17px !important;
+    border-right: 1px solid #e1e1e1 !important;
+    vertical-align: top !important;
+}
+
+.cart-item {
+	border-left: none !important;
+}
+
+.umamidobtn {
     padding: 15px 80px !important;
     border: 1px solid #363639 !important;
     border-radius: 0 !important;
@@ -6210,9 +6241,6 @@ input[type="submit"],
     color: #fff !important;
     width: 100% !important;
 }
-
-
-
 
 
 

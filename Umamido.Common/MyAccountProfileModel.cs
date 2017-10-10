@@ -17,6 +17,8 @@ namespace Umamido.Common
 
         public String EMail { get; set; }
 
+        public String Phone { get; set; }
+
         public String Error { get; set; }
 
         public String Password { get; set; }

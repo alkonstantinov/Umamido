@@ -243,7 +243,8 @@ namespace Umamido.Site.Controllers
 
         public ActionResult Login()
         {
-
+            if (this.ClientData.UserId.HasValue)
+                return RedirectToAction("MyProfile");
             return View(new LoginModel());
         }
 
@@ -391,6 +392,146 @@ namespace Umamido.Site.Controllers
             return PartialView(DL.GetGoodByLang(goodId, Lang));
         }
 
+        public ActionResult Checkout()
+        {
+            CheckOutModel model = new CheckOutModel();
+            model.ClientId = this.ClientData.UserId;
+            if (model.ClientId.HasValue)
+            {
+                model.Addresses = DL.GetAddresses(model.ClientId.Value);
+                var inv = DL.GetInvoiceAddressModel(model.ClientId.Value);
+                model.CompanyName = inv.CompanyName;
+                model.CompanyAddress = inv.CompanyAddress;
+                model.Country = inv.Country;
+                model.PK = inv.PK;
+                model.PersonName = inv.PersonName;
+                model.EIK = inv.EIK;
+                model.VAT = inv.VAT;
+                
+
+
+            }
+            else
+            {
+                model.Address = this.ClientData.GoodAddress2;
+            }
+
+            decimal total = 0;
+            foreach (var item in this.ClientData.Goods.ToArray())
+            {
+                var good = DL.GetGoodByLang(item.GoodId, Lang);
+                good.Count = item.Quantity;
+                model.CartItems.Add(good);
+                total += good.Count * good.Price;
+            }
+
+            model.ProductsTotal = total;
+            model.DeliveryTotal = decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["DeliveryPrice"]);
+            model.TotalTotal = total + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["DeliveryPrice"]);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Checkout(CheckOutModel model)
+        {
+            if (!this.ClientData.UserId.HasValue)
+            {
+                if (DL.ClientNameExists(model.UserName))
+                {
+                    model.ErrorMessage = Resources.Resources.UsernameExists;
+                    model.ClientId = this.ClientData.UserId;
+                    return View(model);
+                }
+
+                if (
+                string.IsNullOrEmpty(model.Address) ||
+                string.IsNullOrEmpty(model.Family) ||
+                string.IsNullOrEmpty(model.FirstName) ||
+                string.IsNullOrEmpty(model.Phone) ||
+                (
+                    model.Invoice && (
+                        string.IsNullOrEmpty(model.CompanyAddress) ||
+                        string.IsNullOrEmpty(model.CompanyName) ||
+                        string.IsNullOrEmpty(model.Country) ||
+                        string.IsNullOrEmpty(model.EIK) ||
+                        string.IsNullOrEmpty(model.PersonName) ||
+                        string.IsNullOrEmpty(model.PK) ||
+                        string.IsNullOrEmpty(model.VAT)
+                )
+                )
+                )
+                {
+                    model.ErrorMessage = Resources.Resources.PleaseEnterValue;
+                    model.ClientId = this.ClientData.UserId;
+                    return View(model);
+                }
+
+                this.ClientData.UserId = DL.CreateClient(model);
+                model.AddressNum = 1;
+
+
+
+            }
+            else
+            {
+
+                if (
+                    model.Invoice && (
+                        string.IsNullOrEmpty(model.CompanyAddress) ||
+                        string.IsNullOrEmpty(model.CompanyName) ||
+                        string.IsNullOrEmpty(model.Country) ||
+                        string.IsNullOrEmpty(model.EIK) ||
+                        string.IsNullOrEmpty(model.PersonName) ||
+                        string.IsNullOrEmpty(model.PK) ||
+                        string.IsNullOrEmpty(model.VAT)
+                        )
+                        )
+                {
+                    model.ErrorMessage = Resources.Resources.PleaseEnterValue;
+                    model.ClientId = this.ClientData.UserId;
+                    return View(model);
+                }
+
+                InvoiceAddressModel iam = new InvoiceAddressModel()
+                {
+                    CompanyName = model.CompanyName,
+                    CompanyAddress = model.CompanyAddress,
+                    ClientId = this.ClientData.UserId.Value,
+                    Country = model.Country,
+                    EIK = model.EIK,
+                    Email = model.EMail,
+                    PersonName = model.PersonName,
+                    Phone = model.Phone,
+                    PK = model.PK,
+                    VAT = model.VAT
+                };
+                DL.SetInvoiceAddressModel(iam);
+            }
+
+            model.ClientId = this.ClientData.UserId;
+            decimal total = 0;
+            foreach (var item in this.ClientData.Goods.ToArray())
+            {
+                var good = DL.GetGoodByLang(item.GoodId, Lang);
+                good.Count = item.Quantity;
+                model.CartItems.Add(good);
+                total += good.Count * good.Price;
+            }
+
+            model.ProductsTotal = total;
+            model.DeliveryTotal = decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["DeliveryPrice"]);
+            model.TotalTotal = total + decimal.Parse(System.Configuration.ConfigurationManager.AppSettings["DeliveryPrice"]);
+            DL.CreateReq(model);
+            this.ClientData.Goods.Clear();
+            return RedirectToAction("CheckoutComplete");
+        }
+
+        public ActionResult CheckoutComplete()
+        {
+            
+            return View();
+        }
 
     }
 }
