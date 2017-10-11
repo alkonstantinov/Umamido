@@ -1505,10 +1505,10 @@ namespace Umamido.DL
 
         }
 
-        public string[] GetAddresses (int clientId)
+        public string[] GetAddresses(int clientId)
         {
             List<string> lAddresses = new List<string>();
-            foreach (var addr in entities.ClientAddress.Where(c => c.ClientId == clientId).OrderBy(a=>a.AddressNum))
+            foreach (var addr in entities.ClientAddress.Where(c => c.ClientId == clientId).OrderBy(a => a.AddressNum))
             {
                 lAddresses.Add(addr.Address);
             }
@@ -1516,6 +1516,65 @@ namespace Umamido.DL
         }
 
 
+        #endregion
+
+        #region Invoices
+        public ReqForInvoiceModel[] GetReqForInvoice()
+        {
+            DateTime date = DateTime.Now.Date;
+            List<ReqForInvoiceModel> result = new List<ReqForInvoiceModel>();
+
+            foreach (var item in entities.Req.Where(r => r.OnDate == date && r.Invoice))
+                result.Add(
+                    new ReqForInvoiceModel()
+                    {
+                        ReqId = item.ReqId,
+                        Mail = item.Client.eMail
+
+                    }
+                    );
+            return result.ToArray();
+        }
+
+        public InvModel GetInvoiceFromReq(int reqId)
+        {
+            var req = entities.Req.First(r => r.ReqId == reqId);
+            var inv = entities.Inv.FirstOrDefault(i => i.ReqId == reqId);
+            if (inv == null)
+            {
+                inv = new Inv() { ReqId = reqId };
+                entities.Inv.Add(inv);
+                entities.SaveChanges();
+            }
+
+
+            InvModel model = new InvModel()
+            {
+                Address = req.Client.CompanyAddress,
+                EIK = req.Client.EIK,
+                InvDate = DateTime.Now,
+                InvNo = inv.InvId,
+                IsOriginal = true,
+                MOL = req.Client.PersonName,
+                Receiver = req.Client.CompanyName,
+                VATNo = req.Client.VAT,
+                Rows = new List<InvRowModel>()
+            };
+
+            foreach (var item in entities.Req2Good.Where(r2g => r2g.ReqId == reqId))
+            {
+                model.Rows.Add(
+                    new InvRowModel()
+                    {
+                        Article = Tools.StripHtmlTags(item.Good.GoodTitle.First().Text),
+                        Count = item.Quantity,
+                        Price = item.Good.Price / (decimal)1.2
+                    }
+                    );
+            }
+
+            return model;
+        }
         #endregion
     }
 }

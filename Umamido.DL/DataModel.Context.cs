@@ -56,6 +56,7 @@ namespace Umamido.DL
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserLevel> UserLevel { get; set; }
         public virtual DbSet<vwReq> vwReq { get; set; }
+        public virtual DbSet<Inv> Inv { get; set; }
     
         public virtual ObjectResult<CollectDetails_Result> CollectDetails(Nullable<int> reqId)
         {

@@ -121,6 +121,13 @@
           <Property Name="Filename" Type="nvarchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Inv">
+          <Key>
+            <PropertyRef Name="InvId" />
+          </Key>
+          <Property Name="InvId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReqId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Lang">
           <Key>
             <PropertyRef Name="LangId" />
@@ -472,6 +479,18 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_Inv_ReqId">
+          <End Role="Req" Type="Self.Req" Multiplicity="1" />
+          <End Role="Inv" Type="Self.Inv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Req">
+              <PropertyRef Name="ReqId" />
+            </Principal>
+            <Dependent Role="Inv">
+              <PropertyRef Name="ReqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_Req_ClientId">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
           <End Role="Req" Type="Self.Req" Multiplicity="*" />
@@ -715,6 +734,7 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <EntitySet Name="GoodDesc" EntityType="Self.GoodDesc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GoodTitle" EntityType="Self.GoodTitle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inv" EntityType="Self.Inv" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lang" EntityType="Self.Lang" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
@@ -799,6 +819,10 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <AssociationSet Name="fk_GoodTitle_LangId" Association="Self.fk_GoodTitle_LangId">
             <End Role="Lang" EntitySet="Lang" />
             <End Role="GoodTitle" EntitySet="GoodTitle" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Inv_ReqId" Association="Self.fk_Inv_ReqId">
+            <End Role="Req" EntitySet="Req" />
+            <End Role="Inv" EntitySet="Inv" />
           </AssociationSet>
           <AssociationSet Name="fk_Req_ClientId" Association="Self.fk_Req_ClientId">
             <End Role="Client" EntitySet="Client" />
@@ -1054,6 +1078,11 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             <End Role="TextDesc" EntitySet="TextDesc" />
           </AssociationSet>
           <EntitySet Name="vwReq" EntityType="UmamidoModel.vwReq" />
+          <EntitySet Name="Inv" EntityType="UmamidoModel.Inv" />
+          <AssociationSet Name="fk_Inv_ReqId" Association="UmamidoModel.fk_Inv_ReqId">
+            <End Role="Req" EntitySet="Req" />
+            <End Role="Inv" EntitySet="Inv" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="CollectDetails_Result">
           <Property Type="Int32" Name="reqId" Nullable="false" />
@@ -1291,6 +1320,7 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <NavigationProperty Name="Client" Relationship="UmamidoModel.fk_Req_ClientId" FromRole="Req" ToRole="Client" />
           <NavigationProperty Name="PaymentType" Relationship="UmamidoModel.fk_Req_PaymentTypeId" FromRole="Req" ToRole="PaymentType" />
           <NavigationProperty Name="Req2Good" Relationship="UmamidoModel.fk_Req2Good_ReqId" FromRole="Req" ToRole="Req2Good" />
+          <NavigationProperty Name="Inv" Relationship="UmamidoModel.fk_Inv_ReqId" FromRole="Req" ToRole="Inv" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -1838,6 +1868,26 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Name="StatusId" Type="Int32" Nullable="false" />
           <Property Name="ClientId" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Inv">
+          <Key>
+            <PropertyRef Name="InvId" />
+          </Key>
+          <Property Name="InvId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Req" Relationship="UmamidoModel.fk_Inv_ReqId" FromRole="Inv" ToRole="Req" />
+        </EntityType>
+        <Association Name="fk_Inv_ReqId">
+          <End Type="UmamidoModel.Req" Role="Req" Multiplicity="1" />
+          <End Type="UmamidoModel.Inv" Role="Inv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Req">
+              <PropertyRef Name="ReqId" />
+            </Principal>
+            <Dependent Role="Inv">
+              <PropertyRef Name="ReqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2208,6 +2258,14 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="OnDate" ColumnName="OnDate" />
                 <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inv">
+            <EntityTypeMapping TypeName="UmamidoModel.Inv">
+              <MappingFragment StoreEntitySet="Inv">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="InvId" ColumnName="InvId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

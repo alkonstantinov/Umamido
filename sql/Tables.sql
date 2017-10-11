@@ -657,3 +657,23 @@ go
 exec p_ak_create_fk_indeces 'ClientAddress'
 go
 
+
+if object_id('Inv') is not null
+begin
+  exec p_ak_drop_all_foreign_keys 'Inv'
+  drop table Inv
+end
+go
+
+
+
+create table Inv
+( 
+  InvId int not null identity(1,1)
+  , ReqId int not null
+  , constraint pk_InvId primary key(InvId)   
+  , constraint fk_Inv_ReqId foreign key (ReqId) references Req(ReqId)
+)
+go
+exec p_ak_create_fk_indeces 'Inv'
+go

@@ -67,6 +67,8 @@
         <AssociationConnector Association="UmamidoModel.fk_SliderTitle_SliderId" />
         <AssociationConnector Association="UmamidoModel.fk_TextDesc_RestaurantId" />
         <EntityTypeShape EntityType="UmamidoModel.vwReq" Width="1.5" PointX="7.375" PointY="9.75" />
+        <EntityTypeShape EntityType="UmamidoModel.Inv" Width="1.5" PointX="7.5" PointY="31.625" />
+        <AssociationConnector Association="UmamidoModel.fk_Inv_ReqId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

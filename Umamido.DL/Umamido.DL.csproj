@@ -114,6 +114,9 @@
     <Compile Include="Image.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Inv.cs">
+      <DependentUpon>DataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Lang.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>

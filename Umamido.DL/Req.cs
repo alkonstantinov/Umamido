@@ -18,6 +18,7 @@ namespace Umamido.DL
         public Req()
         {
             this.Req2Good = new HashSet<Req2Good>();
+            this.Inv = new HashSet<Inv>();
         }
     
         public int ReqId { get; set; }
@@ -35,5 +36,7 @@ namespace Umamido.DL
         public virtual PaymentType PaymentType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Req2Good> Req2Good { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Inv> Inv { get; set; }
     }
 }
