@@ -67,7 +67,9 @@
         BasePage.HideErrors();
         BasePage.ApplyNumbersOnly();
         forCollect.LoadReqs();
-
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 5000);
 
     })
 </script>

@@ -16,7 +16,6 @@ namespace Umamido.DL
         public int ReqId { get; set; }
         public string Receiver { get; set; }
         public string Address { get; set; }
-        public bool Paid { get; set; }
         public string PaymentTypeName { get; set; }
         public System.DateTime OnDate { get; set; }
         public string StatusName { get; set; }

@@ -5,7 +5,7 @@ go
 
 create procedure SearchReq @from datetime2 , @to datetime2, @restaurantId int as 
 begin
-  select r.ReqId, r.Receiver, r.Address, r.Paid, pt.PaymentTypeName, r2s.OnDate, s.StatusName, r2s.Note, 
+  select r.ReqId, r.Receiver, r.Address, pt.PaymentTypeName, r2s.OnDate, s.StatusName, r2s.Note, 
   (select sum (r2q.Price*r2q.Quantity) from  Req2Good r2q where r2q.ReqId = r.ReqId) Total
   from Req r
   join Req2Status r2s on r2s.ReqId = r.ReqId

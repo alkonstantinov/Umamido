@@ -245,7 +245,7 @@ class Restaurant {
                 left += dLeft;
             jQuery("#ulProducts").append(item);
         }
-
+        Restaurant.ShowProperButton(jQuery("#hIsLogged").val() === "True");
 
     }
 
@@ -271,7 +271,6 @@ class Restaurant {
             goodId: jQuery(el).parent().find(".__Id").val(),
             quantity: jQuery(el).val()
         }
-        alert(JSON.stringify(data));
         var result;
         jQuery.ajax({
             cache: false,

@@ -28,6 +28,8 @@
 
     <link rel='stylesheet prefetch' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
     <link rel="stylesheet" id="fly-to-cart" href="css/fly-to-cart.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/jquery.kwicks.css" type="text/css"
+          media="all">
 
     @*
     
@@ -350,24 +352,15 @@
     <script>
         $(window).scroll(function () {
             if ($(this).scrollTop() > 1) {
-                $('header').addClass("sticky");
+                $('#masthead').addClass("sticky");
             }
             else {
-                $('header').removeClass("sticky");
+                $('#masthead').removeClass("sticky");
             }
         });
     </script>
 
-    <script>
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 1) {
-                $('header').addClass("sticky");
-            }
-            else {
-                $('header').removeClass("sticky");
-            }
-        });
-    </script>
+    
 
     <script src="~/js/pages/map.js"></script>
     <script>

@@ -25,7 +25,6 @@ var Map = (function () {
             }
         });
         this.result = rslt;
-        alert(JSON.stringify(this.result));
         if (this.result.length == 0) {
             jQuery("#dNotFound").show();
             return;

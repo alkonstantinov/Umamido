@@ -68,8 +68,8 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
           <Property Name="Faimly" Type="nvarchar" MaxLength="200" />
           <Property Name="Address" Type="nvarchar" MaxLength="200" />
-          <Property Name="Phone" Type="nvarchar" MaxLength="200" />
           <Property Name="Address2" Type="nvarchar" MaxLength="200" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="DistantAddress">
           <Key>
@@ -88,10 +88,10 @@
           <Property Name="ImageId" Type="int" Nullable="false" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="CookMinutes" Type="int" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="Similar1Id" Type="int" />
           <Property Name="Similar2Id" Type="int" />
           <Property Name="Similar3Id" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="GoodDesc">
           <Key>
@@ -159,15 +159,15 @@
             <PropertyRef Name="ReqId" />
           </Key>
           <Property Name="ReqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OnDate" Type="date" Nullable="false" />
           <Property Name="PaymentTypeId" Type="int" Nullable="false" />
           <Property Name="ClientId" Type="int" Nullable="false" />
-          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Invoice" Type="bit" Nullable="false" />
-          <Property Name="Address2" Type="nvarchar(max)" />
-          <Property Name="Note" Type="nvarchar(max)" />
-          <Property Name="OnDate" Type="date" Nullable="false" />
           <Property Name="Receiver" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar(max)" />
           <Property Name="LatLong" Type="nvarchar" MaxLength="100" />
+          <Property Name="Invoice" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Req2Good">
           <Key>
@@ -912,11 +912,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Parameter Name="userId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ForDispatch" ReturnType="Collection(UmamidoModel.ForDispatch_Result)" />
-          <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
-            <Parameter Name="from" Mode="In" Type="DateTime" />
-            <Parameter Name="to" Mode="In" Type="DateTime" />
-            <Parameter Name="restaurantId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="AddressCheck" EntityType="UmamidoModel.AddressCheck" />
           <EntitySet Name="Blog" EntityType="UmamidoModel.Blog" />
           <EntitySet Name="BlogDesc" EntityType="UmamidoModel.BlogDesc" />
@@ -1083,6 +1078,11 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             <End Role="Req" EntitySet="Req" />
             <End Role="Inv" EntitySet="Inv" />
           </AssociationSet>
+          <FunctionImport Name="SearchReq" ReturnType="Collection(UmamidoModel.SearchReq_Result)">
+            <Parameter Name="from" Mode="In" Type="DateTime" />
+            <Parameter Name="to" Mode="In" Type="DateTime" />
+            <Parameter Name="restaurantId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="CollectDetails_Result">
           <Property Type="Int32" Name="reqId" Nullable="false" />
@@ -1108,17 +1108,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
           <Property Type="String" Name="Receiver" Nullable="false" />
           <Property Type="String" Name="Address" Nullable="false" />
           <Property Type="String" Name="LatLong" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="SearchReq_Result">
-          <Property Type="Int32" Name="ReqId" Nullable="false" />
-          <Property Type="String" Name="Receiver" Nullable="false" />
-          <Property Type="String" Name="Address" Nullable="false" />
-          <Property Type="Boolean" Name="Paid" Nullable="false" />
-          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
-          <Property Type="DateTime" Name="OnDate" Nullable="false" />
-          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Note" Nullable="true" />
-          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <EntityType Name="AddressCheck">
           <Key>
@@ -1888,6 +1877,16 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="SearchReq_Result">
+          <Property Type="Int32" Name="ReqId" Nullable="false" />
+          <Property Type="String" Name="Receiver" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="false" />
+          <Property Type="String" Name="PaymentTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="OnDate" Nullable="false" />
+          <Property Type="String" Name="StatusName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Note" Nullable="true" />
+          <Property Type="Decimal" Name="Total" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1932,21 +1931,6 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
                 <ScalarProperty Name="Receiver" ColumnName="Receiver" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="LatLong" ColumnName="LatLong" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
-                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Paid" ColumnName="Paid" />
-                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
-                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
-                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -2269,6 +2253,20 @@ warning 6002: The table/view 'Umamido.dbo.vwReq' does not have a primary key def
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SearchReq" FunctionName="UmamidoModel.Store.SearchReq">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UmamidoModel.SearchReq_Result">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PaymentTypeName" ColumnName="PaymentTypeName" />
+                <ScalarProperty Name="OnDate" ColumnName="OnDate" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

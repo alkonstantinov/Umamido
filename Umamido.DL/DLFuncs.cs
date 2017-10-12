@@ -541,9 +541,9 @@ namespace Umamido.DL
                     IsActive = model.IsActive,
                     Price = model.Price,
                     CookMinutes = model.CookTime,
-                    Similar1Id = model.Similar1Id,
-                    Similar2Id = model.Similar2Id,
-                    Similar3Id = model.Similar3Id
+                    Similar1Id = model.Similar1Id == 0 ? null : (int?)model.Similar1Id,
+                    Similar2Id = model.Similar2Id == 0 ? null : (int?)model.Similar2Id,
+                    Similar3Id = model.Similar3Id == 0 ? null : (int?)model.Similar3Id
                 };
                 entities.Good.Add(r);
                 entities.SaveChanges();

@@ -78,8 +78,8 @@ create table Client
 go
 exec p_ak_create_fk_indeces 'Client'
 go
-insert into Client (Name, Password) values ('a','202cb962ac59075b964b07152d234b70')
-go
+--insert into Client (Name, Password) values ('a','202cb962ac59075b964b07152d234b70')
+--go
 
 if object_id('Lang') is not null
 begin

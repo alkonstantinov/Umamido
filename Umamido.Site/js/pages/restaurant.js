@@ -202,6 +202,7 @@ var Restaurant = (function () {
                 left += dLeft;
             jQuery("#ulProducts").append(item);
         }
+        Restaurant.ShowProperButton(jQuery("#hIsLogged").val() === "True");
     };
     Restaurant.RedisplayCart = function () {
         var total = 0.00;
@@ -221,7 +222,6 @@ var Restaurant = (function () {
             goodId: jQuery(el).parent().find(".__Id").val(),
             quantity: jQuery(el).val()
         };
-        alert(JSON.stringify(data));
         var result;
         jQuery.ajax({
             cache: false,

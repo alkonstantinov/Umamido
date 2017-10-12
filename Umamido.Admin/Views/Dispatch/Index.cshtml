@@ -36,19 +36,18 @@
                         <label class="control-label">Deliverer</label>
                     </div>
                     <div class="col-lg-8">
-                        <select id="ddlUser" class="form-control">
-
-                        </select>
+                        <select id="ddlUser" class="form-control"></select>
                         <div class="label-danger" id="lErrddlUser">Please, select deliverer</div>
                     </div>
                 </div>
-                
-            <div class="modal-footer">
-                <div class="col-md-1 pull-right">
-                    <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="dispatch.Dispatch()"></span>
-                </div>
-                <div class="col-md-1 pull-right">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="dispatch.CancelDispatch()"></span>
+
+                <div class="modal-footer">
+                    <div class="col-md-1 pull-right">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true" onclick="dispatch.Dispatch()"></span>
+                    </div>
+                    <div class="col-md-1 pull-right">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="dispatch.CancelDispatch()"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,7 +61,9 @@
         BasePage.ApplyNumbersOnly();
         dispatch.LoadReqs();
         dispatch.LoadUsers();
-
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 5000);
 
     })
 </script>
